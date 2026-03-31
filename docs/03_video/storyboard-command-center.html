@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linz Hostel V3 — Storyboard Command Center</title>
+<style>
+  :root {
+    --charcoal: #4A4543;
+    --cream: #C8BCB4;
+    --copper: #C4997E;
+    --coral: #E76E50;
+    --teal: #4A7C7E;
+    --dark: #2A2826;
+    --card-bg: #3A3836;
+    --approved: #4A7C7E;
+    --rejected: #8B4049;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    line-height: 1.5;
+  }
+  .header {
+    background: var(--charcoal);
+    padding: 10px 40px 8px;
+    border-bottom: 2px solid var(--coral);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px; color: var(--cream); margin-bottom: 2px;
+    display: inline; margin-right: 12px;
+  }
+  .header .subtitle { color: var(--copper); font-size: 12px; display: inline; }
+  .progress-bar {
+    display: flex; gap: 4px; margin-top: 6px; align-items: center;
+  }
+  .progress-bar .segment {
+    height: 4px; flex: 1; border-radius: 2px;
+    background: var(--card-bg); transition: background 0.3s;
+  }
+  .progress-bar .segment.approved { background: var(--teal); }
+  .progress-bar .segment.rejected { background: var(--rejected); }
+  .progress-bar .counter {
+    font-size: 13px; color: var(--copper); min-width: 80px; text-align: right;
+  }
+  .chapter-section {
+    max-width: 1400px; margin: 0 auto; padding: 40px;
+    border-bottom: 1px solid var(--card-bg);
+  }
+  .chapter-header {
+    display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px;
+  }
+  .chapter-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px; color: var(--coral);
+  }
+  .chapter-header .timing {
+    font-size: 13px; color: var(--teal);
+    background: rgba(74,124,126,0.15); padding: 2px 10px;
+    border-radius: 12px;
+  }
+  .chapter-header .ch-tag {
+    font-size: 11px; color: var(--copper); text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .script-block {
+    background: var(--charcoal); border-left: 3px solid var(--copper);
+    padding: 16px 20px; margin: 12px 0 8px;
+    border-radius: 0 8px 8px 0;
+    font-style: italic; font-size: 15px; color: var(--cream);
+    line-height: 1.7;
+  }
+  .visual-direction {
+    font-size: 13px; color: rgba(200,188,180,0.6); margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  .candidates {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card-bg); border-radius: 12px;
+    overflow: hidden; position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .card.recommended { border-color: var(--coral); }
+  .card.state-approved { border-color: var(--teal); background: rgba(74,124,126,0.08); }
+  .card.state-rejected { display: none; }
+  .rec-badge {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    background: var(--coral); color: #fff; font-size: 10px;
+    font-weight: 700; padding: 3px 8px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .video-wrap {
+    position: relative; width: 100%; aspect-ratio: 16/9;
+    background: #1a1a1a; cursor: pointer;
+  }
+  .video-wrap video {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+  }
+  .video-wrap .poster-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transition: opacity 0.3s;
+  }
+  .video-wrap .poster-img.hidden { opacity: 0; }
+  .video-wrap .play-icon {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px; height: 48px; background: rgba(0,0,0,0.6);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .video-wrap .play-icon.hidden { opacity: 0; }
+  .play-icon svg { width: 20px; height: 20px; fill: #fff; margin-left: 2px; }
+  .thumb-strip {
+    display: flex; gap: 2px; padding: 2px;
+    background: var(--dark);
+  }
+  .thumb-strip img {
+    flex: 1; height: 48px; object-fit: cover;
+    border-radius: 2px; opacity: 0.7;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .thumb-strip img:hover { opacity: 1; }
+  .card-info {
+    padding: 14px 16px 8px;
+  }
+  .card-info .title {
+    font-size: 14px; font-weight: 600; color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .card-meta {
+    display: flex; gap: 12px; font-size: 12px;
+    color: rgba(200,188,180,0.5); margin-bottom: 10px;
+  }
+  .card-meta span { display: flex; align-items: center; gap: 4px; }
+  .card-actions {
+    display: flex; gap: 8px; padding: 0 16px 8px;
+  }
+  .comment-wrap {
+    padding: 0 16px 14px; position: relative;
+  }
+  .comment-toggle {
+    background: none; border: 1px solid rgba(200,188,180,0.15);
+    color: var(--copper); font-size: 12px; padding: 4px 10px;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .comment-toggle:hover { border-color: var(--copper); }
+  .comment-toggle.has-comment { border-color: var(--coral); color: var(--coral); }
+  .comment-toggle svg { width: 12px; height: 12px; fill: currentColor; }
+  .comment-area {
+    display: none; margin-top: 8px;
+  }
+  .comment-area.open { display: block; }
+  .comment-area textarea {
+    width: 100%; background: var(--dark); border: 1px solid rgba(200,188,180,0.2);
+    border-radius: 6px; padding: 8px 10px; color: var(--cream);
+    font-family: 'Inter', sans-serif; font-size: 12px; resize: vertical;
+    min-height: 48px; line-height: 1.5; outline: none;
+    transition: border-color 0.2s;
+  }
+  .comment-area textarea:focus { border-color: var(--copper); }
+  .comment-area textarea::placeholder { color: rgba(200,188,180,0.3); }
+  .ch-comment-wrap {
+    margin: 12px 0 20px; padding: 0;
+  }
+  .ch-comment-area {
+    width: 100%; background: var(--dark); border: 1px solid rgba(200,188,180,0.15);
+    border-radius: 8px; padding: 10px 14px; color: var(--cream);
+    font-family: 'Inter', sans-serif; font-size: 13px; resize: vertical;
+    min-height: 40px; line-height: 1.5; outline: none;
+    transition: border-color 0.2s;
+  }
+  .ch-comment-area:focus { border-color: var(--copper); }
+  .ch-comment-area::placeholder { color: rgba(200,188,180,0.25); }
+  .ch-comment-label {
+    font-size: 11px; color: var(--copper); text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 6px; display: flex;
+    align-items: center; gap: 6px;
+  }
+  .btn {
+    flex: 1; padding: 8px; border: none; border-radius: 6px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .btn-approve {
+    background: rgba(74,124,126,0.2); color: var(--teal);
+    border: 1px solid var(--teal);
+  }
+  .btn-approve:hover { background: var(--teal); color: #fff; }
+  .btn-reject {
+    background: rgba(139,64,73,0.15); color: #a05060;
+    border: 1px solid rgba(139,64,73,0.3);
+  }
+  .btn-reject:hover { background: var(--rejected); color: #fff; }
+  .btn-pexels {
+    background: transparent; color: var(--copper);
+    border: 1px solid rgba(196,153,126,0.3); flex: 0 0 auto;
+    padding: 8px 12px;
+  }
+  .btn-pexels:hover { background: rgba(196,153,126,0.15); }
+  .btn.active-approve {
+    background: var(--teal) !important; color: #fff !important;
+  }
+  .btn.active-reject {
+    background: var(--rejected) !important; color: #fff !important;
+  }
+  .export-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--charcoal); border-top: 2px solid var(--coral);
+    padding: 14px 40px; display: flex; justify-content: space-between;
+    align-items: center; z-index: 100;
+  }
+  .export-bar .status { font-size: 14px; color: var(--copper); }
+  .export-btn {
+    background: var(--coral); color: #fff; border: none;
+    padding: 10px 24px; border-radius: 8px; font-size: 14px;
+    font-weight: 700; cursor: pointer; text-transform: uppercase;
+    letter-spacing: 1px; transition: all 0.2s;
+  }
+  .export-btn:hover { background: #d4603e; transform: scale(1.02); }
+  .export-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .manim-section {
+    max-width: 1400px; margin: 0 auto; padding: 40px;
+    border-bottom: 1px solid var(--card-bg);
+  }
+  .manim-note {
+    background: var(--charcoal); border-radius: 12px; padding: 20px;
+    display: flex; gap: 20px; align-items: center;
+  }
+  .manim-note .info { flex: 1; }
+  .manim-note .info h3 { color: var(--teal); font-size: 16px; margin-bottom: 4px; }
+  .manim-note .info p { font-size: 13px; color: rgba(200,188,180,0.6); }
+  .manim-actions { display: flex; gap: 8px; }
+  footer { height: 80px; }
+  @media (max-width: 900px) {
+    .candidates { grid-template-columns: 1fr; }
+    .chapter-section, .header { padding: 20px; }
+  }
+  /* toast */
+  .toast {
+    position: fixed; top: 20px; right: 20px; z-index: 200;
+    background: var(--teal); color: #fff; padding: 12px 20px;
+    border-radius: 8px; font-size: 14px; font-weight: 600;
+    transform: translateY(-100px); opacity: 0;
+    transition: all 0.3s ease;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  /* ── Color Grade Preview ── */
+  .grade-bar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    margin-top: 8px; padding-top: 6px;
+    border-top: 1px solid rgba(200,188,180,0.08);
+  }
+  .grade-label { font-size: 11px; color: var(--copper); text-transform: uppercase; letter-spacing: 1px; }
+  .grade-btn {
+    background: transparent; border: 1px solid rgba(200,188,180,0.2);
+    color: rgba(200,188,180,0.45); font-size: 10px; font-weight: 700;
+    padding: 2px 9px; border-radius: 4px; cursor: pointer;
+    transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .grade-btn:hover { border-color: var(--copper); color: var(--copper); }
+  .grade-btn.active { background: var(--copper); color: #fff; border-color: var(--copper); }
+  body[data-grade="moody"]    { --grade-filter: contrast(1.25) saturate(0.7) brightness(0.95); }
+  body[data-grade="cinematic"]{ --grade-filter: contrast(1.2) saturate(0.95); }
+  body[data-grade="warm"]     { --grade-filter: contrast(1.05) saturate(1.1) brightness(1.03) sepia(0.12); }
+  body[data-grade="teal"]     { --grade-filter: contrast(1.1) saturate(1.15); }
+  body[data-grade] .video-wrap video,
+  body[data-grade] .video-wrap .poster-img,
+  body[data-grade] .thumb-strip img {
+    filter: var(--grade-filter, none);
+    transition: filter 0.4s ease;
+  }
+  /* ── Narration Player ── */
+  .audio-bar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-top: 8px; padding-top: 6px;
+    border-top: 1px solid rgba(200,188,180,0.08);
+  }
+  .audio-label {
+    font-size: 11px; color: var(--teal); text-transform: uppercase;
+    letter-spacing: 1px; white-space: nowrap;
+  }
+  .audio-badge {
+    font-size: 10px; font-weight: 700; color: var(--teal);
+    border: 1px solid var(--teal); border-radius: 4px;
+    padding: 1px 7px; text-transform: uppercase; letter-spacing: 0.5px;
+    background: rgba(74,124,126,0.12);
+  }
+  .audio-bar audio {
+    height: 24px; flex: 1; min-width: 180px; max-width: 340px;
+    accent-color: var(--teal);
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="header">
+  <h1>Storyboard Command Center</h1>
+  <div class="subtitle">V3 &bull; ~96s &bull; 8Ch &bull; Social Hub Montage &bull; Pexels-First</div>
+  <div class="progress-bar" id="progressBar"></div>
+  <div class="grade-bar">
+    <span class="grade-label">Grade:</span>
+    <button class="grade-btn active" data-g="off"       onclick="applyGrade('off')">Off</button>
+    <button class="grade-btn"        data-g="moody"     onclick="applyGrade('moody')">Moody</button>
+    <button class="grade-btn"        data-g="cinematic" onclick="applyGrade('cinematic')">Cinematic</button>
+    <button class="grade-btn"        data-g="warm"      onclick="applyGrade('warm')">Warm</button>
+    <button class="grade-btn"        data-g="teal"      onclick="applyGrade('teal')">Teal-Orange</button>
+  </div>
+  <div class="audio-bar">
+    <span class="audio-label">🎙 Narration:</span>
+    <span class="audio-badge">✅ Liam v1 LOCKED</span>
+    <audio controls preload="none" src="narrator/narration-v1-liam-APPROVED.mp3"></audio>
+  </div>
+</div>
+
+<div id="app"></div>
+
+<div class="manim-section">
+  <div class="chapter-header">
+    <h2>Ch 6 &mdash; The Numbers</h2>
+    <span class="timing">12 sec</span>
+    <span class="ch-tag">MANIM ANIMATION</span>
+  </div>
+  <div class="script-block">
+    Most of this is already funded. ... It pays for itself at half capacity. ... We're not asking you to take a risk. ... We're asking you to take a seat.
+  </div>
+  <div class="visual-direction">Manim: charcoal #4A4543 bg, teal #4A7C7E numbers. Four figures: Month 14 &rarr; 48% &rarr; &euro;720K &rarr; &euro;400K. Each holds 2.5s. Liam 0.88x speed.</div>
+  <div class="manim-note">
+    <div class="info">
+      <h3>v3-financial-numbers.mp4</h3>
+      <p>Rendered &bull; 276KB &bull; Charcoal bg, no title, teal numbers, 2.5s per card</p>
+      <p style="margin-top:6px;color:var(--cream);">File: ~/remotion-videos/public/manim/v3-financial-numbers.mp4</p>
+    </div>
+    <div class="manim-actions">
+      <button class="btn btn-approve" id="manim-approve" onclick="manimDecide('approved')">Approve</button>
+      <button class="btn btn-reject" id="manim-reject" onclick="manimDecide('rejected')">Reject</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div class="export-bar">
+  <div class="status" id="statusText">Select your picks per chapter</div>
+  <div style="display:flex;gap:8px;">
+    <button class="export-btn" style="background:var(--teal);font-size:12px;padding:8px 16px;" onclick="exportAsFile()">Download .md</button>
+    <button class="export-btn" id="exportBtn" onclick="exportDecisions()">Copy to Clipboard</button>
+    <button style="background:transparent;border:1px solid rgba(200,188,180,0.2);color:var(--copper);padding:8px 12px;border-radius:8px;font-size:11px;cursor:pointer;" onclick="if(confirm('Reset ALL decisions, comments, and notes?')){localStorage.removeItem('linz-storyboard-v1');location.reload();}">Reset</button>
+  </div>
+</div>
+
+<footer></footer>
+
+<script>
+const DATA = [
+  {
+    ch: 1, title: "The Problem", timing: "12 sec", tag: "COLD / ISOLATION",
+    narration: "Austria ranks forty-nine out of fifty-three for expat friendliness. ... A million visitors pass through Linz every year. ... Twenty-four thousand international students. ... Not one place built to connect them.",
+    visual: "Pexels montage — person alone in European city, rainy tram stop, empty hotel corridor, someone eating alone. Cold blue grade. Slow tracking. Each clip 3 sec.",
+    recommended: 13657875,
+    clips: [
+      { id: 5686701, title: "Woman walking alone at night", dur: 19, res: "1920x1080", author: "Alan W",
+        poster: "https://images.pexels.com/videos/5686701/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/5686701/pictures/preview-1.jpg","https://images.pexels.com/videos/5686701/pictures/preview-5.jpg","https://images.pexels.com/videos/5686701/pictures/preview-9.jpg","https://images.pexels.com/videos/5686701/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/5686701/5686701-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/woman-walking-on-the-street-at-night-5686701/" },
+      { id: 5688544, title: "Rainy night street (London)", dur: 32, res: "1920x1080", author: "George Morina",
+        poster: "https://images.pexels.com/videos/5688544/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/5688544/pictures/preview-1.jpg","https://images.pexels.com/videos/5688544/pictures/preview-5.jpg","https://images.pexels.com/videos/5688544/pictures/preview-9.jpg","https://images.pexels.com/videos/5688544/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/5688544/5688544-sd_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/street-in-a-rainy-night-5688544/" },
+      { id: 13657875, title: "People walking in rain (4K)", dur: 18, res: "3840x2160", author: "Eng Ibrahim Wetti",
+        poster: "https://images.pexels.com/videos/13657875/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/13657875/pictures/preview-1.jpeg","https://images.pexels.com/videos/13657875/pictures/preview-5.jpeg","https://images.pexels.com/videos/13657875/pictures/preview-9.jpeg","https://images.pexels.com/videos/13657875/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/13657875/13657875-sd_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/people-walking-in-the-street-on-a-rainy-day-13657875/" },
+      { id: 30614645, title: "NEW: University campus students walkway", dur: 59, res: "1920x1080", author: "Media Hopper Studio",
+        poster: "https://images.pexels.com/videos/30614645/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/30614645/pictures/preview-1.jpg","https://images.pexels.com/videos/30614645/pictures/preview-5.jpg","https://images.pexels.com/videos/30614645/pictures/preview-9.jpg","https://images.pexels.com/videos/30614645/pictures/preview-13.jpg"],
+        video: "https://videos.pexels.com/video-files/30614645/13109978_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/university-campus-walkway-with-students-passing-library-30614645/" },
+      { id: 34762049, title: "NEW: Bustling European city street (4K)", dur: 25, res: "3840x2160", author: "Talha Uguz",
+        poster: "https://images.pexels.com/videos/34762049/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/34762049/pictures/preview-1.jpg","https://images.pexels.com/videos/34762049/pictures/preview-5.jpg","https://images.pexels.com/videos/34762049/pictures/preview-9.jpg","https://images.pexels.com/videos/34762049/pictures/preview-13.jpg"],
+        video: "https://videos.pexels.com/video-files/34762049/14737064_640_360_60fps.mp4",
+        url: "https://www.pexels.com/video/bustling-street-life-in-a-turkish-city-34762049/" },
+      { id: 34141393, title: "NEW: Traditional musicians performing in Vienna square (4K)", dur: 13, res: "3840x2160", author: "Airam Dato-on",
+        poster: "https://images.pexels.com/videos/34141393/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/34141393/pictures/preview-1.jpg","https://images.pexels.com/videos/34141393/pictures/preview-5.jpg","https://images.pexels.com/videos/34141393/pictures/preview-9.jpg","https://images.pexels.com/videos/34141393/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/34141393/14475794_640_360_24fps.mp4",
+        url: "https://www.pexels.com/video/traditional-musicians-performing-in-vienna-square-34141393/" },
+      { id: 31010653, title: "WOW ⭐ LINZ DRONE — Aerial + Ursuline Church (50fps)", dur: 5, res: "1920x1080", author: "Content Factory",
+        poster: "https://images.pexels.com/videos/31010653/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/31010653/pictures/preview-0.jpg","https://images.pexels.com/videos/31010653/pictures/preview-1.jpg","https://images.pexels.com/videos/31010653/pictures/preview-2.jpg","https://images.pexels.com/videos/31010653/pictures/preview-3.jpg"],
+        video: "https://videos.pexels.com/video-files/31010653/13254909_640_360_50fps.mp4",
+        url: "https://www.pexels.com/video/stunning-aerial-view-of-linz-with-ursuline-church-31010653/" },
+      { id: 8518452, title: "WOW ⭐ LINZ DRONE — Postlingberg pilgrimage church", dur: 7, res: "1920x1080", author: "TP Motion",
+        poster: "https://images.pexels.com/videos/8518452/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/8518452/pictures/preview-1.jpeg","https://images.pexels.com/videos/8518452/pictures/preview-5.jpeg","https://images.pexels.com/videos/8518452/pictures/preview-9.jpeg","https://images.pexels.com/videos/8518452/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/8518452/8518452-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/drone-footage-of-postlingberg-pilgrimage-church-8518452/" },
+      { id: 1088327, title: "NEW: Street performers crowd (Pflasterspektakel vibe)", dur: 56, res: "1920x1080", author: "Belen",
+        poster: "https://images.pexels.com/videos/1088327/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/1088327/pictures/preview-1.jpg","https://images.pexels.com/videos/1088327/pictures/preview-5.jpg","https://images.pexels.com/videos/1088327/pictures/preview-9.jpg","https://images.pexels.com/videos/1088327/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/1088327/1088327-sd_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/street-performers-1088327/" }
+    ]
+  },
+  {
+    ch: 2, title: "The Vision", timing: "12 sec", tag: "WARM / COMMUNAL",
+    narration: "Ninety beds. No lobby. ... A communal living room instead. ... Live-in staff. People whose only job ... is making sure nobody stays a stranger.",
+    visual: "WARM cross-dissolve from Ch1. Communal lounge, people mid-conversation, coffee, laughter. Tracking shot through space. Overhead of people around table. Warm amber grade.",
+    recommended: 5158553,
+    clips: [
+      { id: 5158553, title: "Friends welcoming each other (cottonbro)", dur: 104, res: "4096x2160", author: "cottonbro studio",
+        poster: "https://images.pexels.com/videos/5158553/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/5158553/pictures/preview-1.jpg","https://images.pexels.com/videos/5158553/pictures/preview-5.jpg","https://images.pexels.com/videos/5158553/pictures/preview-9.jpg","https://images.pexels.com/videos/5158553/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/5158553/5158553-sd_640_338_25fps.mp4",
+        url: "https://www.pexels.com/video/men-and-women-welcoming-their-friends-5158553/" },
+      { id: 4880300, title: "Bunk bed conversation (hostel)", dur: 13, res: "3840x2160", author: "Ketut Subiyanto",
+        poster: "https://images.pexels.com/videos/4880300/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/4880300/pictures/preview-1.jpeg","https://images.pexels.com/videos/4880300/pictures/preview-5.jpeg","https://images.pexels.com/videos/4880300/pictures/preview-9.jpeg","https://images.pexels.com/videos/4880300/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/4880300/4880300-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/two-women-sitting-on-a-bunk-bed-4880300/" },
+      { id: 4879986, title: "Two women talking (room door)", dur: 16, res: "3840x2160", author: "Ketut Subiyanto",
+        poster: "https://images.pexels.com/videos/4879986/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/4879986/pictures/preview-1.jpg","https://images.pexels.com/videos/4879986/pictures/preview-5.jpg","https://images.pexels.com/videos/4879986/pictures/preview-9.jpg","https://images.pexels.com/videos/4879986/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/4879986/4879986-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/two-women-talking-to-each-other-while-opening-their-room-4879986/" },
+      { id: 29323695, title: "NEW: Group ping pong game (5s, perfect dur)", dur: 5, res: "1920x1080", author: "Emeric Martin",
+        poster: "https://images.pexels.com/videos/29323695/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/29323695/pictures/preview-1.jpg","https://images.pexels.com/videos/29323695/pictures/preview-5.jpg","https://images.pexels.com/videos/29323695/pictures/preview-9.jpg","https://images.pexels.com/videos/29323695/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/29323695/12640885_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/family-ping-pong-game-in-garage-29323695/" }
+    ]
+  },
+  {
+    ch: 3, title: "The Secret Sauce", timing: "10 sec", tag: "MAKING / HANDS",
+    narration: "Guests don't just sleep here. ... They make things. ... Arrive a stranger. Leave with a skill, a project, or a friend.",
+    visual: "Overhead food prep, hands at maker table (ceramics, wood, sketching), diverse group collaborating. Close-ups, shallow DOF. Copper and cream tones.",
+    recommended: 26771961,
+    clips: [
+      { id: 26771961, title: "Cheese cutting overhead (4K)", dur: 33, res: "4096x2160", author: "Ahimsa OM",
+        poster: "https://images.pexels.com/videos/26771961/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/26771961/pictures/preview-1.jpg","https://images.pexels.com/videos/26771961/pictures/preview-5.jpg","https://images.pexels.com/videos/26771961/pictures/preview-9.jpg","https://images.pexels.com/videos/26771961/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/26771961/12003906_682_360_25fps.mp4",
+        url: "https://www.pexels.com/video/a-person-is-cutting-up-a-piece-of-cheese-on-a-wooden-board-26771961/" },
+      { id: 6138257, title: "Mixing ingredients in bowl (4K)", dur: 14, res: "3840x2160", author: "Nicole Michalou",
+        poster: "https://images.pexels.com/videos/6138257/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/6138257/pictures/preview-1.jpg","https://images.pexels.com/videos/6138257/pictures/preview-5.jpg","https://images.pexels.com/videos/6138257/pictures/preview-9.jpg","https://images.pexels.com/videos/6138257/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/6138257/6138257-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/mixing-ingredients-in-a-bowl-6138257/" },
+      { id: 8189250, title: "Hands on flour (4K, Ron Lach)", dur: 13, res: "4096x2160", author: "Ron Lach",
+        poster: "https://images.pexels.com/videos/8189250/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/8189250/pictures/preview-1.jpeg","https://images.pexels.com/videos/8189250/pictures/preview-5.jpeg","https://images.pexels.com/videos/8189250/pictures/preview-9.jpeg","https://images.pexels.com/videos/8189250/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/8189250/8189250-sd_640_338_25fps.mp4",
+        url: "https://www.pexels.com/video/hands-on-the-flour-8189250/" },
+      { id: 8136625, title: "NEW: Women painting together (4K)", dur: 27, res: "4096x2160", author: "kaboompics",
+        poster: "https://images.pexels.com/videos/8136625/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/8136625/pictures/preview-1.jpeg","https://images.pexels.com/videos/8136625/pictures/preview-5.jpeg","https://images.pexels.com/videos/8136625/pictures/preview-9.jpeg","https://images.pexels.com/videos/8136625/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/8136625/8136625-sd_640_338_24fps.mp4",
+        url: "https://www.pexels.com/video/women-painting-together-8136625/" },
+      { id: 7716850, title: "NEW: People painting poster (4K)", dur: 15, res: "4096x2160", author: "kaboompics",
+        poster: "https://images.pexels.com/videos/7716850/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/7716850/pictures/preview-1.jpg","https://images.pexels.com/videos/7716850/pictures/preview-5.jpg","https://images.pexels.com/videos/7716850/pictures/preview-9.jpg","https://images.pexels.com/videos/7716850/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/7716850/7716850-sd_640_338_25fps.mp4",
+        url: "https://www.pexels.com/video/people-painting-a-poster-7716850/" },
+      { id: 7966647, title: "NEW: Coworking room — diverse team discussing (4K)", dur: 20, res: "3840x2160", author: "Darlene Alderson",
+        poster: "https://images.pexels.com/videos/7966647/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/7966647/pictures/preview-1.jpeg","https://images.pexels.com/videos/7966647/pictures/preview-5.jpeg","https://images.pexels.com/videos/7966647/pictures/preview-9.jpeg","https://images.pexels.com/videos/7966647/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/7966647/7966647-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/coworkers-discussing-about-work-7966647/" }
+    ]
+  },
+  {
+    ch: 4, title: "The Location", timing: "12 sec", tag: "INDUSTRIAL / CREATIVE HUB",
+    narration: "Linz's innovation neighbourhood. ... Three thousand makers and founders on the doorstep. ... Raw industrial architecture flooded with light. ... This is the space. Right now. Before we open.",
+    visual: "Industrial creative hub interiors (exposed brick, high ceilings, factory windows with light), coworking with people, European urban neighbourhood. Ken Burns slow zoom. Warm LUT.",
+    recommended: 31916198,
+    clips: [
+      { id: 31916198, title: "Artist painting in sunlit industrial loft (4K)", dur: 19, res: "3840x2160", author: "Kelly",
+        poster: "https://images.pexels.com/videos/31916198/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/31916198/pictures/preview-1.jpg","https://images.pexels.com/videos/31916198/pictures/preview-5.jpg","https://images.pexels.com/videos/31916198/pictures/preview-9.jpg","https://images.pexels.com/videos/31916198/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/31916198/13595416_640_360_24fps.mp4",
+        url: "https://www.pexels.com/video/artist-painting-in-sunlit-industrial-loft-31916198/" },
+      { id: 4821691, title: "Man in processing plant (cottonbro)", dur: 10, res: "4096x2160", author: "cottonbro studio",
+        poster: "https://images.pexels.com/videos/4821691/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/4821691/pictures/preview-1.jpg","https://images.pexels.com/videos/4821691/pictures/preview-5.jpg","https://images.pexels.com/videos/4821691/pictures/preview-9.jpg","https://images.pexels.com/videos/4821691/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/4821691/4821691-sd_640_338_25fps.mp4",
+        url: "https://www.pexels.com/video/a-man-working-inside-a-processing-plant-4821691/" },
+      { id: 29913841, title: "NEW: Close-up welding industrial (4K)", dur: 15, res: "3840x2160", author: "Mario Spencer",
+        poster: "https://images.pexels.com/videos/29913841/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/29913841/pictures/preview-1.jpg","https://images.pexels.com/videos/29913841/pictures/preview-5.jpg","https://images.pexels.com/videos/29913841/pictures/preview-9.jpg","https://images.pexels.com/videos/29913841/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/29913841/12840108_640_360_24fps.mp4",
+        url: "https://www.pexels.com/video/close-up-welding-in-industrial-workshop-29913841/" },
+      { id: 15661523, title: "NEW: Engineers collaborating on-site", dur: 20, res: "1920x1080", author: "Fabiola Rocha",
+        poster: "https://images.pexels.com/videos/15661523/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/15661523/pictures/preview-1.jpeg","https://images.pexels.com/videos/15661523/pictures/preview-5.jpeg","https://images.pexels.com/videos/15661523/pictures/preview-9.jpeg","https://images.pexels.com/videos/15661523/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/15661523/15661523-sd_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/obreros-trabajando-15661523/" },
+      { id: 35556852, title: "NEW: Festive outdoor event with lights & crowd (4K)", dur: 22, res: "3840x2160", author: "Sapol Churanon",
+        poster: "https://images.pexels.com/videos/35556852/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/35556852/pictures/preview-1.jpg","https://images.pexels.com/videos/35556852/pictures/preview-5.jpg","https://images.pexels.com/videos/35556852/pictures/preview-9.jpg","https://images.pexels.com/videos/35556852/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/35556852/15065899_640_360_60fps.mp4",
+        url: "https://www.pexels.com/video/festive-night-party-with-lights-and-music-35556852/" }
+    ]
+  },
+  {
+    ch: 5, title: "The Ecosystem", timing: "10 sec", tag: "COWORKING / PARTNERS",
+    narration: "We don't build the ecosystem. We plug into one. ... JKU's twenty-four thousand students. Grand Garage. Factory Three Hundred. ... A city that draws seven hundred thousand festival visitors a year.",
+    visual: "Coworking energy, university campus, makerspace workshop, European street festival. Partner names as clean text labels. Tracking shots.",
+    recommended: 7668490,
+    clips: [
+      { id: 7668490, title: "Group meeting / collaboration (4K)", dur: 32, res: "3840x2160", author: "Yaroslav Shuraev",
+        poster: "https://images.pexels.com/videos/7668490/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/7668490/pictures/preview-1.jpg","https://images.pexels.com/videos/7668490/pictures/preview-5.jpg","https://images.pexels.com/videos/7668490/pictures/preview-9.jpg","https://images.pexels.com/videos/7668490/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/7668490/7668490-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/group-of-people-having-a-meeting-7668490/" },
+      { id: 5940602, title: "Coworkers hugging in office (4K)", dur: 8, res: "3840x2160", author: "Theo Decker",
+        poster: "https://images.pexels.com/videos/5940602/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/5940602/pictures/preview-1.jpg","https://images.pexels.com/videos/5940602/pictures/preview-5.jpg","https://images.pexels.com/videos/5940602/pictures/preview-9.jpg","https://images.pexels.com/videos/5940602/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/5940602/5940602-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/group-of-coworkers-hugging-and-talking-in-office-5940602/" },
+      { id: 6913848, title: "Colleagues working hard (4K)", dur: 27, res: "3840x2160", author: "Tima Miroshnichenko",
+        poster: "https://images.pexels.com/videos/6913848/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/6913848/pictures/preview-1.jpg","https://images.pexels.com/videos/6913848/pictures/preview-5.jpg","https://images.pexels.com/videos/6913848/pictures/preview-9.jpg","https://images.pexels.com/videos/6913848/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/6913848/6913848-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/colleagues-working-hard-6913848/" },
+      { id: 30328849, title: "NEW ⭐ FESTIVAL: Outdoor crowd hands up — no city shown (5s)", dur: 5, res: "1920x1080", author: "Steven HAuse",
+        poster: "https://images.pexels.com/videos/30328849/pictures/preview-2.jpg",
+        thumbs: ["https://images.pexels.com/videos/30328849/pictures/preview-0.jpg","https://images.pexels.com/videos/30328849/pictures/preview-1.jpg","https://images.pexels.com/videos/30328849/pictures/preview-2.jpg","https://images.pexels.com/videos/30328849/pictures/preview-3.jpg"],
+        video: "https://videos.pexels.com/video-files/30328849/13000582_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/energetic-outdoor-music-festival-crowd-vibes-30328849/" },
+      { id: 2941128, title: "NEW ⭐ FESTIVAL: Concert crowd gathering mid-shot (4K, 15s)", dur: 15, res: "4096x2160", author: "Kelly",
+        poster: "https://images.pexels.com/videos/2941128/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/2941128/pictures/preview-1.jpg","https://images.pexels.com/videos/2941128/pictures/preview-5.jpg","https://images.pexels.com/videos/2941128/pictures/preview-9.jpg","https://images.pexels.com/videos/2941128/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/2941128/2941128-sd_640_338_24fps.mp4",
+        url: "https://www.pexels.com/video/a-crowd-gathering-on-a-musical-concert-2941128/" },
+      { id: 36218487, title: "NEW ⭐ FESTIVAL: Street parade trumpet band (European vibe, 27s)", dur: 27, res: "1920x1440", author: "Davis Sánchez",
+        poster: "https://images.pexels.com/videos/36218487/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/36218487/pictures/preview-0.jpg","https://images.pexels.com/videos/36218487/pictures/preview-4.jpg","https://images.pexels.com/videos/36218487/pictures/preview-8.jpg","https://images.pexels.com/videos/36218487/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/36218487/15359145_480_360_24fps.mp4",
+        url: "https://www.pexels.com/video/vibrant-street-parade-with-festive-trumpet-band-36218487/" }
+    ]
+  },
+  {
+    ch: 7, title: "The Team", timing: "10 sec", tag: "GROWTH / METAPHOR",
+    narration: "Two roots. One from South Africa. One from Austria. ... Eight years of building hostels from nothing. ... Now they're growing something new.",
+    visual: "Plant time-lapse. Two seedlings becoming intertwined. Roots in soil. Leaves unfurling in golden light. Macro close-ups. Slow and beautiful.",
+    recommended: 18356706,
+    clips: [
+      { id: 18356706, title: "Plant timelapse bloom (4K)", dur: 10, res: "3840x2160", author: "Tony Flanagan",
+        poster: "https://images.pexels.com/videos/18356706/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/18356706/pictures/preview-1.jpeg","https://images.pexels.com/videos/18356706/pictures/preview-5.jpeg","https://images.pexels.com/videos/18356706/pictures/preview-9.jpeg","https://images.pexels.com/videos/18356706/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/18356706/18356706-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/plant-tl-2-18356706/" },
+      { id: 6508756, title: "Seedlings panning shot (4K)", dur: 9, res: "3840x2160", author: "Tima Miroshnichenko",
+        poster: "https://images.pexels.com/videos/6508756/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/6508756/pictures/preview-1.jpg","https://images.pexels.com/videos/6508756/pictures/preview-5.jpg","https://images.pexels.com/videos/6508756/pictures/preview-9.jpg","https://images.pexels.com/videos/6508756/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/6508756/6508756-sd_640_360_24fps.mp4",
+        url: "https://www.pexels.com/video/panning-shot-of-seedlings-6508756/" },
+      { id: 30895151, title: "Plant growth (black bg timelapse)", dur: 10, res: "1920x1080", author: "Just For Music And Film",
+        poster: "https://images.pexels.com/videos/30895151/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/30895151/pictures/preview-1.jpg","https://images.pexels.com/videos/30895151/pictures/preview-4.jpg","https://images.pexels.com/videos/30895151/pictures/preview-6.jpg","https://images.pexels.com/videos/30895151/pictures/preview-8.jpg"],
+        video: "https://videos.pexels.com/video-files/30895151/13208985_640_360_24fps.mp4",
+        url: "https://www.pexels.com/video/timelapse-of-plant-growth-against-black-background-30895151/" },
+      { id: 855867, title: "NEW: Flowers blooming timelapse (classic)", dur: 20, res: "1920x1080", author: "Pixabay",
+        poster: "https://images.pexels.com/videos/855867/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/855867/pictures/preview-1.jpg","https://images.pexels.com/videos/855867/pictures/preview-5.jpg","https://images.pexels.com/videos/855867/pictures/preview-9.jpg","https://images.pexels.com/videos/855867/pictures/preview-13.jpg"],
+        video: "https://videos.pexels.com/video-files/855867/855867-sd_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/flowers-blooming-855867/" },
+      { id: 35304485, title: "NEW: Red Amaryllis bloom 4K (stunning)", dur: 33, res: "3840x2160", author: "Townsend Walton",
+        poster: "https://images.pexels.com/videos/35304485/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/35304485/pictures/preview-1.jpg","https://images.pexels.com/videos/35304485/pictures/preview-5.jpg","https://images.pexels.com/videos/35304485/pictures/preview-9.jpg","https://images.pexels.com/videos/35304485/pictures/preview-13.jpg"],
+        video: "https://videos.pexels.com/video-files/35304485/14957683_640_360_30fps.mp4",
+        url: "https://www.pexels.com/video/timelapse-of-vibrant-red-amaryllis-in-full-bloom-35304485/" },
+      { id: 31145885, title: "NEW: White flower close-up bloom 4K", dur: 10, res: "3840x2160", author: "Kelly",
+        poster: "https://images.pexels.com/videos/31145885/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/31145885/pictures/preview-1.jpg","https://images.pexels.com/videos/31145885/pictures/preview-3.jpg","https://images.pexels.com/videos/31145885/pictures/preview-5.jpg","https://images.pexels.com/videos/31145885/pictures/preview-7.jpg"],
+        video: "https://videos.pexels.com/video-files/31145885/13308104_640_360_24fps.mp4",
+        url: "https://www.pexels.com/video/close-up-timelapse-of-blooming-white-flower-31145885/" }
+    ]
+  },
+  {
+    ch: 8, title: "The Ask", timing: "10 sec", tag: "GATHERING / WARMTH",
+    narration: "Every contribution builds this. Ten thousand. Fifty. A hundred. ... It all compounds. ... Three phases. Secure the space. Build it out. Open the doors. ... Be part of what happens next. ... Nobody stays a stranger.",
+    visual: "[Daniel placeholder]. Then: communal room full of people, laughter, warmth. Slow push-in. The payoff of everything they just watched.",
+    recommended: 8921921,
+    clips: [
+      { id: 5617258, title: "People toasting close-up (4K)", dur: 11, res: "3840x2160", author: "Askar Abayev",
+        poster: "https://images.pexels.com/videos/5617258/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/5617258/pictures/preview-1.jpg","https://images.pexels.com/videos/5617258/pictures/preview-5.jpg","https://images.pexels.com/videos/5617258/pictures/preview-9.jpg","https://images.pexels.com/videos/5617258/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/5617258/5617258-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/close-up-view-of-people-toasting-5617258/" },
+      { id: 5616499, title: "Serving food at gathering (4K)", dur: 24, res: "3840x2160", author: "Askar Abayev",
+        poster: "https://images.pexels.com/videos/5616499/pictures/preview-3.jpg",
+        thumbs: ["https://images.pexels.com/videos/5616499/pictures/preview-1.jpg","https://images.pexels.com/videos/5616499/pictures/preview-5.jpg","https://images.pexels.com/videos/5616499/pictures/preview-9.jpg","https://images.pexels.com/videos/5616499/pictures/preview-12.jpg"],
+        video: "https://videos.pexels.com/video-files/5616499/5616499-sd_640_360_25fps.mp4",
+        url: "https://www.pexels.com/video/girl-serving-food-on-the-table-5616499/" },
+      { id: 8921921, title: "Friends warm conversation (4K)", dur: 38, res: "4096x2160", author: "Ron Lach",
+        poster: "https://images.pexels.com/videos/8921921/pictures/preview-3.jpeg",
+        thumbs: ["https://images.pexels.com/videos/8921921/pictures/preview-1.jpeg","https://images.pexels.com/videos/8921921/pictures/preview-5.jpeg","https://images.pexels.com/videos/8921921/pictures/preview-9.jpeg","https://images.pexels.com/videos/8921921/pictures/preview-12.jpeg"],
+        video: "https://videos.pexels.com/video-files/8921921/8921921-sd_640_338_25fps.mp4",
+        url: "https://www.pexels.com/video/a-group-of-friends-having-conversation-8921921/" }
+    ]
+  }
+];
+
+// ─── PERSISTENCE (localStorage) ─────────────────────
+const STORAGE_KEY = 'linz-storyboard-v1';
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { decisions: {}, clipComments: {}, chComments: {}, manimState: null };
+}
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      decisions, clipComments, chComments, manimState
+    }));
+  } catch(e) {}
+}
+
+// State (restored from localStorage)
+const saved = loadState();
+const decisions = saved.decisions || {};
+const clipComments = saved.clipComments || {};
+const chComments = saved.chComments || {};
+let totalClips = 0;
+DATA.forEach(ch => { totalClips += ch.clips.length; });
+
+function applyGrade(preset) {
+  if (preset === 'off') {
+    document.body.removeAttribute('data-grade');
+  } else {
+    document.body.setAttribute('data-grade', preset);
+  }
+  document.querySelectorAll('.grade-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.g === preset);
+  });
+}
+
+function toggleComment(clipId) {
+  const area = document.getElementById('comment-' + clipId);
+  area.classList.toggle('open');
+  if (area.classList.contains('open')) {
+    area.querySelector('textarea').focus();
+  }
+}
+function saveClipComment(clipId, val) {
+  if (val.trim()) { clipComments[clipId] = val.trim(); }
+  else { delete clipComments[clipId]; }
+  saveState();
+  // Update toggle button text
+  const card = document.getElementById('card-' + clipId);
+  if (card) {
+    const toggle = card.querySelector('.comment-toggle');
+    if (toggle) {
+      toggle.classList.toggle('has-comment', !!clipComments[clipId]);
+      toggle.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z"/></svg> ${clipComments[clipId] ? 'Edit note' : 'Add note'}`;
+    }
+  }
+}
+function saveChComment(ch, val) {
+  if (val.trim()) { chComments[ch] = val.trim(); }
+  else { delete chComments[ch]; }
+  saveState();
+}
+
+function render() {
+  const app = document.getElementById('app');
+  let html = '';
+  DATA.forEach(ch => {
+    html += `<div class="chapter-section">
+      <div class="chapter-header">
+        <span class="ch-tag">CH${ch.ch}</span>
+        <h2>${ch.title}</h2>
+        <span class="timing">${ch.timing}</span>
+        <span class="ch-tag">${ch.tag}</span>
+      </div>
+      <div class="script-block">${ch.narration}</div>
+      <div class="visual-direction">${ch.visual}</div>
+      <div class="ch-comment-wrap">
+        <div class="ch-comment-label"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> Chapter notes</div>
+        <textarea class="ch-comment-area" placeholder="Notes for Ch${ch.ch}..." oninput="saveChComment(${ch.ch}, this.value)">${chComments[ch.ch] || ''}</textarea>
+      </div>
+      <div class="candidates">`;
+    ch.clips.forEach(clip => {
+      const isRec = clip.id === ch.recommended;
+      const state = decisions[clip.id] || '';
+      html += `<div class="card ${isRec ? 'recommended' : ''} ${state ? 'state-' + state : ''}" id="card-${clip.id}">
+        ${isRec ? '<div class="rec-badge">My Pick</div>' : ''}
+        <div class="video-wrap" onclick="toggleVideo(this, ${clip.id})">
+          <video src="${clip.video}" muted loop preload="none" playsinline></video>
+          <img class="poster-img" src="${clip.poster}" alt="${clip.title}">
+          <div class="play-icon"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></div>
+        </div>
+        <div class="thumb-strip">
+          ${clip.thumbs.map(t => `<img src="${t}" alt="frame" onclick="event.stopPropagation()">`).join('')}
+        </div>
+        <div class="card-info">
+          <div class="title">${clip.title}</div>
+          <div class="card-meta">
+            <span>${clip.dur}s</span>
+            <span>${clip.res}</span>
+            <span>${clip.author}</span>
+            <span>ID: ${clip.id}</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-approve ${state === 'approved' ? 'active-approve' : ''}" onclick="decide(${clip.id}, 'approved', ${ch.ch})">Approve</button>
+          <button class="btn btn-reject ${state === 'rejected' ? 'active-reject' : ''}" onclick="decide(${clip.id}, 'rejected', ${ch.ch})">Reject</button>
+          <button class="btn btn-pexels" onclick="window.open('${clip.url}','_blank')">Pexels</button>
+        </div>
+        <div class="comment-wrap">
+          <button class="comment-toggle ${clipComments[clip.id] ? 'has-comment' : ''}" onclick="toggleComment(${clip.id})">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z"/></svg>
+            ${clipComments[clip.id] ? 'Edit note' : 'Add note'}
+          </button>
+          <div class="comment-area ${clipComments[clip.id] ? 'open' : ''}" id="comment-${clip.id}">
+            <textarea placeholder="e.g. use only 0:05-0:12 segment, pair with torn paper transition..."
+              oninput="saveClipComment(${clip.id}, this.value)">${clipComments[clip.id] || ''}</textarea>
+          </div>
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  app.innerHTML = html;
+  updateProgress();
+}
+
+function toggleVideo(wrap, id) {
+  const video = wrap.querySelector('video');
+  const poster = wrap.querySelector('.poster-img');
+  const icon = wrap.querySelector('.play-icon');
+  if (video.paused) {
+    video.play();
+    poster.classList.add('hidden');
+    icon.classList.add('hidden');
+  } else {
+    video.pause();
+    poster.classList.remove('hidden');
+    icon.classList.remove('hidden');
+  }
+}
+
+function decide(clipId, action, ch) {
+  if (decisions[clipId] === action) {
+    delete decisions[clipId];
+  } else {
+    decisions[clipId] = action;
+  }
+  saveState();
+  render();
+  const approved = Object.values(decisions).filter(d => d === 'approved').length;
+  showToast(`Ch${ch}: clip ${clipId} ${decisions[clipId] || 'cleared'} (${approved} approved total)`);
+}
+
+function updateProgress() {
+  const bar = document.getElementById('progressBar');
+  const allClipIds = [];
+  DATA.forEach(ch => ch.clips.forEach(c => allClipIds.push(c.id)));
+  let segs = '';
+  allClipIds.forEach(id => {
+    const s = decisions[id] || '';
+    segs += `<div class="segment ${s}"></div>`;
+  });
+  const decided = Object.keys(decisions).length;
+  const approved = Object.values(decisions).filter(d => d === 'approved').length;
+  segs += `<div class="counter">${approved} approved / ${totalClips} clips</div>`;
+  bar.innerHTML = segs;
+  document.getElementById('statusText').textContent =
+    approved > 0 ? `${approved} clips approved across ${countChaptersWithApprovals()} chapters` : 'Select your picks per chapter';
+}
+
+function countChaptersWithApprovals() {
+  const chaptersApproved = new Set();
+  DATA.forEach(ch => {
+    ch.clips.forEach(c => {
+      if (decisions[c.id] === 'approved') chaptersApproved.add(ch.ch);
+    });
+  });
+  return chaptersApproved.size;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function buildMarkdown() {
+  const lines = ['## Storyboard Decisions', '', `**Exported:** ${new Date().toLocaleString()}`, ''];
+  lines.push('### Ch6 \u2014 The Numbers (Manim)');
+  const mi = manimState === 'approved' ? '\u2705' : manimState === 'rejected' ? '\u274c' : '\u2b1c';
+  lines.push(`${mi} Manim v3-financial-numbers.mp4 \u2014 ${manimState || 'undecided'}`, '');
+  DATA.forEach(ch => {
+    lines.push(`### Ch${ch.ch} \u2014 ${ch.title} (${ch.timing})`);
+    if (chComments[ch.ch]) lines.push(`> ${chComments[ch.ch]}`, '');
+    ch.clips.forEach(c => {
+      const s = decisions[c.id] || 'undecided';
+      const icon = s === 'approved' ? '\u2705' : s === 'rejected' ? '\u274c' : '\u2b1c';
+      lines.push(`${icon} ${c.id} \u2014 ${c.title} (${c.dur}s, ${c.res})`);
+      if (s === 'approved') lines.push(`   \ud83d\udd17 ${c.url}`);
+      if (clipComments[c.id]) lines.push(`   \ud83d\udcdd ${clipComments[c.id]}`);
+    });
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+
+function exportAsFile() {
+  const md = buildMarkdown();
+  const blob = new Blob([md], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'storyboard-decisions.md';
+  a.click();
+  showToast('Downloaded storyboard-decisions.md!');
+}
+
+function exportDecisions() {
+  const md = buildMarkdown();
+  navigator.clipboard.writeText(md).then(() => {
+    showToast('Decisions copied to clipboard!');
+  }).catch(() => {
+    exportAsFile();
+  });
+}
+
+let manimState = saved.manimState || null;
+function manimDecide(action) {
+  const approveBtn = document.getElementById('manim-approve');
+  const rejectBtn = document.getElementById('manim-reject');
+  if (manimState === action) {
+    manimState = null;
+    approveBtn.classList.remove('active-approve');
+    rejectBtn.classList.remove('active-reject');
+    showToast('Manim Ch6: cleared');
+  } else {
+    manimState = action;
+    approveBtn.classList.toggle('active-approve', action === 'approved');
+    rejectBtn.classList.toggle('active-reject', action === 'rejected');
+    showToast('Manim Ch6: ' + action);
+  }
+  saveState();
+}
+
+render();
+// Restore Manim button state on load
+if (manimState) {
+  const approveBtn = document.getElementById('manim-approve');
+  const rejectBtn = document.getElementById('manim-reject');
+  if (approveBtn && rejectBtn) {
+    approveBtn.classList.toggle('active-approve', manimState === 'approved');
+    rejectBtn.classList.toggle('active-reject', manimState === 'rejected');
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festival Village - Ars Electronica Partnership</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark: #1a1714;
+            --copper: #C4997E;
+            --coral: #E76E50;
+            --cream: #C8BCB4;
+            --off-white: #F5F0EC;
+            --charcoal: #2a2520;
+            --subtle-gray: #4a4540;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background-color: var(--dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Grain texture overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" /></svg>');
+            z-index: 9999;
+        }
+
+        /* Sticky navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 23, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(196, 153, 126, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        nav.visible {
+            opacity: 1;
+        }
+
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--copper);
+            font-weight: 700;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: var(--off-white);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--copper);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1714 0%, #2a2520 50%, #1a1714 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: radial-gradient(ellipse at center bottom, rgba(196, 153, 126, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" /></svg>');
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(196, 153, 126, 0.15);
+            border: 1px solid var(--copper);
+            color: var(--copper);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: var(--off-white);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            font-weight: 900;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(245, 240, 236, 0.8);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--copper);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--copper);
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--copper);
+        }
+
+        /* Section base styles */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        .section-light {
+            background: var(--off-white);
+        }
+
+        .section-warm {
+            background: linear-gradient(135deg, #f9f6f1 0%, #f5f0ec 100%);
+        }
+
+        .section-dark {
+            background: var(--dark);
+            color: var(--off-white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .section-dark .section-title {
+            color: var(--off-white);
+        }
+
+        /* Video Section */
+        .video-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .video-frame {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #4a4540 0%, #2a2520 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(196, 153, 126, 0.1) 0%, transparent 70%);
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--copper);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid var(--dark);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 4px;
+        }
+
+        /* Numbers Bar */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--copper);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-dark .stat-number {
+            color: var(--copper);
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .section-dark .stat-label {
+            color: var(--off-white);
+            opacity: 0.8;
+        }
+
+        /* Two-Tier Offer */
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 6px solid var(--copper);
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .offer-card.tier-a {
+            border-left-color: var(--coral);
+        }
+
+        .offer-tier {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--copper);
+            margin-bottom: 1rem;
+        }
+
+        .offer-card.tier-a .offer-tier {
+            color: var(--coral);
+        }
+
+        .offer-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .offer-features {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .offer-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .offer-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Benefit Cards */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--copper);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .benefit-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .benefit-card p {
+            font-size: 0.95rem;
+            color: var(--subtle-gray);
+            line-height: 1.6;
+        }
+
+        /* Mission Alignment */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .mission-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .mission-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--copper);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+        }
+
+        .mission-box.hostel h4 {
+            color: var(--coral);
+        }
+
+        .mission-box p {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .mission-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .connector-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--copper);
+            border-radius: 50%;
+        }
+
+        .connector-line {
+            width: 3px;
+            height: 80px;
+            background: var(--copper);
+        }
+
+        /* Risk Bar */
+        .risk-bar {
+            background: var(--coral);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .risk-bar p {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Timeline */
+        .timeline {
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--copper);
+            transform: translateX(-50%);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--copper);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item h4 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.9rem;
+            color: var(--subtle-gray);
+        }
+
+        /* Proof Models Grid */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .model-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .model-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--copper);
+            margin-bottom: 0.5rem;
+        }
+
+        .model-location {
+            font-size: 0.85rem;
+            color: var(--subtle-gray);
+            margin-bottom: 1rem;
+        }
+
+        .model-card p {
+            font-size: 0.95rem;
+            color: var(--subtle-gray);
+            line-height: 1.6;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-header {
+            background: white;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .section-dark .accordion-header {
+            background: var(--charcoal);
+            color: var(--off-white);
+        }
+
+        .accordion-header:hover {
+            background: #f9f6f1;
+        }
+
+        .section-dark .accordion-header:hover {
+            background: var(--subtle-gray);
+        }
+
+        .accordion-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .accordion-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--copper);
+        }
+
+        .accordion-content {
+            display: none;
+            background: #fafaf8;
+            padding: 2rem;
+        }
+
+        .section-dark .accordion-content {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .argument-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .argument-item {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid var(--copper);
+        }
+
+        .section-dark .argument-item {
+            background: var(--charcoal);
+            color: var(--off-white);
+        }
+
+        .argument-item h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .section-dark .argument-item h4 {
+            color: var(--off-white);
+        }
+
+        .argument-item p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--subtle-gray);
+        }
+
+        .section-dark .argument-item p {
+            color: rgba(245, 240, 236, 0.8);
+        }
+
+        /* Master Narrative */
+        .narrative-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .narrative-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--copper);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-dark .narrative-item {
+            background: var(--charcoal);
+            border-top-color: var(--copper);
+        }
+
+        .narrative-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--copper);
+            margin-bottom: 0.5rem;
+        }
+
+        .narrative-item p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--dark);
+        }
+
+        .section-dark .narrative-item p {
+            color: var(--off-white);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--off-white);
+        }
+
+        .cta-section .cta-subtitle {
+            font-size: 1.2rem;
+            color: rgba(245, 240, 236, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .cta-email {
+            display: inline-block;
+            background: var(--copper);
+            color: var(--dark);
+            padding: 1.2rem 3rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--copper);
+            margin-bottom: 2rem;
+        }
+
+        .cta-email:hover {
+            background: transparent;
+            color: var(--copper);
+        }
+
+        .cta-signature {
+            font-size: 1rem;
+            color: var(--copper);
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-connector {
+                flex-direction: row;
+                height: 60px;
+            }
+
+            .connector-line {
+                width: 60px;
+                height: 3px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-grid {
+                grid-template-columns: 1fr;
+                margin-left: 60px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        /* Loading state for images */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">Festival Village</div>
+        <ul class="nav-links">
+            <li><a href="#offer">Offer</a></li>
+            <li><a href="#mission">Mission</a></li>
+            <li><a href="#proof">Proof</a></li>
+            <li><a href="#narrative">Story</a></li>
+            <li><a href="#cta">Conversation</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Letter of Intent — Zero cost, zero risk</div>
+            <h1>Festivals have venues. Yours deserves a village.</h1>
+            <p>A 90-bed social impact hub. September to September. Where artists, entrepreneurs, and emerging voices build belonging instead of attending solo.</p>
+            <a href="#cta" class="cta-button">Start Conversation</a>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="section-warm">
+        <div class="container">
+            <div class="video-container">
+                <div class="video-frame">
+                    <div class="play-button"></div>
+                    <!-- Replace with: <iframe src="YOUR_VIDEO_URL" width="100%" height="100%" frameborder="0" allowfullscreen></iframe> -->
+                </div>
+                <p style="margin-top: 1.5rem; color: var(--subtle-gray); font-size: 0.95rem;">Linz Hostel: The Social Impact Hub — 90 beds, €28/night, September 2027</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Numbers Bar -->
+    <section class="section-dark">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">90</div>
+                    <div class="stat-label">Beds</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">€28</div>
+                    <div class="stat-label">vs €90+ elsewhere</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">122K</div>
+                    <div class="stat-label">Ars visitors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Risk (full refund)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Two-Tier Offer -->
+    <section class="section-light" id="offer">
+        <div class="container">
+            <h2 class="section-title">Two Ways to Join</h2>
+            <div class="offer-grid">
+                <!-- Tier B: Letter of Intent -->
+                <div class="offer-card">
+                    <div class="offer-tier">Tier B</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem;">Letter of Intent</h3>
+                    <div class="offer-price">€0</div>
+                    <p style="color: var(--subtle-gray); margin-bottom: 2rem;">One-page signed letter. No legal commitment.</p>
+                    <ul class="offer-features">
+                        <li><strong>Zero financial risk</strong> — No commitment beyond signature</li>
+                        <li><strong>Strengthens Sparkasse loan</strong> — Named supporter in application</li>
+                        <li><strong>Ars listed as supporter</strong> — Positioning before construction</li>
+                        <li><strong>Conversation foundation</strong> — Opens door to Tier A later</li>
+                    </ul>
+                </div>
+
+                <!-- Tier A: Founding Partner -->
+                <div class="offer-card tier-a">
+                    <div class="offer-tier">Tier A</div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem;">Founding Partner</h3>
+                    <div class="offer-price">€15,000</div>
+                    <p style="color: var(--subtle-gray); margin-bottom: 2rem;">Over 3 years (€5k/yr). Full partnership.</p>
+                    <ul class="offer-features">
+                        <li><strong>25 beds</strong> during Ars week at €28/night</li>
+                        <li><strong>Transferable vouchers</strong> — Give to your guests</li>
+                        <li><strong>Priority booking</strong> — Year-round 365 days</li>
+                        <li><strong>Permanent lobby installation</strong> — Curated by Ars artists</li>
+                        <li><strong>Flow Zone satellite venue</strong> — 100m², 24/7 access</li>
+                        <li><strong>Full refund guarantee</strong> — If hostel doesn't open</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Cards -->
+    <section class="section-warm">
+        <div class="container">
+            <h2 class="section-title">What You Get</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h4>Festival Week Beds</h4>
+                    <p>25 beds during Ars week at €28/night. Operational convenience — guests sleep 100m from your venue instead of 3km away.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Permanent Lobby Installation</h4>
+                    <p>A rotating, Ars-curated exhibition in the hostel lobby. Your artists' work becomes permanent hospitality infrastructure.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Year-Round Booking</h4>
+                    <p>Priority access 365 days for your guests, artists, and residency participants. Not just September — ongoing utility.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Transferable Vouchers</h4>
+                    <p>Give beds as prizes, speaker gifts, or residency incentives. Your brand travels with every voucher.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Flow Zone Satellite Space</h4>
+                    <p>100m² event space, 24/7 access. Host workshops, exhibitions, or late-night conversations outside your main venue.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>ESG/SDG Reporting</h4>
+                    <p>Official co-developer of a social innovation space. Count as SDG 3 (health/wellbeing), SDG 11 (inclusive communities), SDG 17 (partnerships).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Alignment -->
+    <section class="section-light" id="mission">
+        <div class="container">
+            <h2 class="section-title">Mission Alignment</h2>
+            <div class="mission-grid">
+                <div class="mission-box">
+                    <h4>Ars Electronica</h4>
+                    <p>"Where art, technology, and society intersect."</p>
+                </div>
+                <div class="mission-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-dot"></div>
+                    <div class="connector-line"></div>
+                </div>
+                <div class="mission-box hostel">
+                    <h4>Linz Hostel</h4>
+                    <p>"Address the loneliness crisis through hospitality innovation."</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 3rem; color: var(--subtle-gray); font-size: 1rem;">
+                Your past exhibitions (GEMeinsam, Kyrielle, Social Play) explored exactly what we're building: serendipity infrastructure, third places, and the power of weak ties. Give your themes a physical home.
+            </p>
+        </div>
+    </section>
+
+    <!-- Risk Bar -->
+    <section class="section-light">
+        <div class="container">
+            <div class="risk-bar">
+                <p>Full refund if the hostel does not open. Every cent. Zero risk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="section-warm">
+        <div class="container">
+            <h2 class="section-title">Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-grid">
+                    <div class="timeline-item">
+                        <div class="timeline-number">1</div>
+                        <h4>Conversation</h4>
+                        <p>30 minutes. We talk.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">2</div>
+                        <h4>Letter of Intent</h4>
+                        <p>One page. Signed.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">3</div>
+                        <h4>Founding Agreement</h4>
+                        <p>Legal clarity. Full partnership.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">4</div>
+                        <h4>Sparkasse Secured</h4>
+                        <p>Construction loan approved with Ars backing.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">5</div>
+                        <h4>Village Opens</h4>
+                        <p>September 2027. Your permanent home.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Models -->
+    <section class="section-light" id="proof">
+        <div class="container">
+            <h2 class="section-title">Proof Models — They Work</h2>
+            <div class="models-grid">
+                <div class="model-card">
+                    <h4>magdas Hotel</h4>
+                    <p class="model-location">Vienna, Austria</p>
+                    <p>Profitable social-mission hotel. Employs refugee chefs. Guests pay market rate. Profit funds integration programs. Proof that quality + mission = sustainable.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Largo Residências</h4>
+                    <p class="model-location">Lisbon, Portugal</p>
+                    <p>Creative neighbourhood co-working + co-living hybrid. Artists, makers, remote workers share kitchen. Serendipity becomes marketing.</p>
+                </div>
+                <div class="model-card">
+                    <h4>The Social Hub</h4>
+                    <p class="model-location">Vienna & Amsterdam</p>
+                    <p>Hostel + coworking + café hybrid model. 365-day utilization. Guests become members. Community stability funds operations.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Welcommon</h4>
+                    <p class="model-location">Athens, Greece</p>
+                    <p>Social-mix demand stabilizer. Tourists, locals, residents share space. Mix stabilizes occupancy. Serendipity is measurable revenue.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Pfefferbett</h4>
+                    <p class="model-location">Berlin, Germany</p>
+                    <p>Industrial space + social inclusion mixed. Artists, unhoused residents, tourists. Industrial aesthetic attracts paying guests. Subsidy-free.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Wild Elephant</h4>
+                    <p class="model-location">Bratislava, Slovakia</p>
+                    <p>Vibe = loyalty. Shared kitchen creates community. Guests return specifically for "family feeling." Repeat rate 35% (vs 12% industry average).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Library: Accordions -->
+    <section class="section-light">
+        <div class="container">
+            <h2 class="section-title">Why This Works — 48 Reasons</h2>
+            <div class="accordion">
+                <!-- Financial Arguments -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>💰 Financial (9 reasons)</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="argument-list">
+                            <div class="argument-item">
+                                <h4>F1: Accommodation Arbitrage</h4>
+                                <p>€90+ per night standard Ars hotels vs €28/night partnership beds. Your 25 beds = €1,550/night savings for your guests. €46,500 value over September.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F2: Transferable Voucher Play</h4>
+                                <p>Give beds to speakers, jury members, artists. Costs you nothing; saves them €2,160 per stay. Status gift that travels. Your brand in 50+ wallets year-round.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F3: Inflation Hedge (3-year lock)</h4>
+                                <p>€28/night rate locked for 3 years. Accommodation cost inflation ≈ 4-6%/year. You're locked at 2026 prices into 2029. That's €8-12K saved value.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F4: Zero Downside (full refund)</h4>
+                                <p>If hostel doesn't open by Sept 2028, every euro refunded. This isn't a bet — it's an option. You pay premium for certainty.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F5: Founding ≠ Later Sponsor</h4>
+                                <p>Early movers lock benefits. Later sponsors get nothing. Moving first costs €15K and gives you permanent naming + priority + installation. Moving later costs the same and gives nothing.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F6: Already Spend This Money</h4>
+                                <p>You already budget for guest accommodation, speaker housing, artist residencies. This redirects existing spend to value-add: your name, priority, installation.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F7: Tax-Deductible Betriebsausgabe</h4>
+                                <p>Ars is a non-profit. €15K is operational expense (guest services, artist support infrastructure). Consult your accountant — likely 100% deductible. Effective cost: €9K.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F8: €80K Tipping Point</h4>
+                                <p>At €80K from all partners, hostel construction is fully pre-funded. Every €15K gets us closer to that certainty. You're not betting on the hostel — you're funding its certainty.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>F9: Opportunity Cost</h4>
+                                <p>Say no today; say yes to a sponsorship deal tomorrow that gives you nothing. Early partnership = optionality. Late entry = commodity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practical Arguments -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>⚙️ Practical (9 reasons)</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="argument-list">
+                            <div class="argument-item">
+                                <h4>P1: September Nightmare Solved</h4>
+                                <p>Ars week = hotel crisis. Guests scattered across 5 hotels, 3-5km apart. Your speakers arrive at different times, tired. Our 90-bed village fixes this: everyone sleeps 100m from Ars Elektronik Centerplatz.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P2: Proximity (one address)</h4>
+                                <p>Doesn't sound like much until breakfast. Artists, jury, startup founders, tech leads all eat at 8am in one kitchen. Those conversations don't happen in hotel isolation.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P3: 24/7 Flow Zone (100m²)</h4>
+                                <p>Your main venue closes at 11pm. The conversation continues at the hostel. Flow Zone = 100m² with your branding. Late-night workshops, DJ sets, salon talks. Operational freedom.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P4: Staff & Volunteer Housing</h4>
+                                <p>Your 80-person volunteer team needs beds. Hotels charge €80/night. Hostel costs €28. That's €4,160 savings per 10 volunteers over one week. Housing is a line-item problem solved.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P5: Priority Year-Round Booking</h4>
+                                <p>February artist residency? March speaker tour? October board retreat? Your name = first priority. Not a "we'll try to fit you in" situation. You're built-in infrastructure.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P6: 365-Day Operations (not just September)</h4>
+                                <p>Futurelab staff: 35 full-time (need housing year-round for visiting colleagues). Center: 365-day programming. Your priority booking pays dividends 12 months/year, not just one week.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P7: Artist Residency Housing</h4>
+                                <p>If you run artist residencies, housing is always a constraint. Our partnership tier includes artist-focused blocks. Emerging makers get stable housing. Ars gets resident credibility.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P8: Satellite Event Space</h4>
+                                <p>Don't have room at your main venue? Workshop overflows to Flow Zone. Decentralized programming. Your brand stretches across two addresses. Operational resilience.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>P9: Create Your World + Festival University</h4>
+                                <p>Both are edge programming that need flexible space. Hostel is inherently flexible. Bedrooms become classrooms, kitchen becomes salon, lobby becomes gallery. Cost: zero. Utility: immense.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scientific Arguments -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>🔬 Scientific & Cultural (9 reasons)</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="argument-list">
+                            <div class="argument-item">
+                                <h4>S1: Your Exhibitions Predicted This</h4>
+                                <p>GEMeinsam (2023): loneliness in Austria. Kyrielle (2024): collective housing models. Social Play (2025): serendipity design. We're building your exhibition in concrete. Give your curated ideas a home.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S2: Serendipity Infrastructure (MIT/Pixar research)</h4>
+                                <p>Baker & Bulkley (MIT): random encounters in shared kitchens generate 40% more creative output. Hostel breakfast table ≠ hotel isolation. We're architecturalizing creative density.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S3: Teachcation = Pedagogy</h4>
+                                <p>Not tourism, not work — learning + living. Hostel is textbook teachcation space. Your guests don't just attend Ars; they live the experience. Knowledge transfer accelerates in daily contact.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S4: Hub as Exhibition (CAMPUS model)</h4>
+                                <p>Your CAMPUS program exhibits how art institutions can be inclusive. Hostel is the exhibition. Guests aren't observing inclusion — they're living it. Immersive pedagogy.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S5: Austrian Loneliness (8% but concentrated)</h4>
+                                <p>Austria's loneliness rate is low by European standards (8% vs 20% UK). But it's concentrated in emerging voices, global transients, and isolated makers. Ars guests are exactly that population.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S6: Third Places (Oldenburg sociology)</h4>
+                                <p>Oldenburg: first place = home, second = work, third = community gathering. Hostel is engineered third place. Ars + hostel = festival + community + identity stability.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S7: Social Prescribing Austria (6 pilots, 86% positive)</h4>
+                                <p>Austrian healthcare now prescribes social connection. Hostel is prescribable infrastructure. Your guests don't just see art; they get prescribed belonging. Institutional validation of serendipity.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S8: Weak Ties (Granovetter)</h4>
+                                <p>Weak ties ≈ information flow + opportunity access. Every hostel conversation is weak-tie formation. Startup founders meet industry veterans. Emerging artists meet curators. Structural opportunity.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>S9: Post-COVID Migration (112K→122K)</h4>
+                                <p>Ars attendance +10K post-COVID (remote workers relocating). They're not tourists — they're transient community members needing stable third places. Hostel solves their actual need.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emotional Arguments -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>❤️ Emotional & Identity (10 reasons)</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="argument-list">
+                            <div class="argument-item">
+                                <h4>E1: September = Ars, Ars = Linz</h4>
+                                <p>When people think "Ars Electronica," they think September, Linz, cutting-edge ideas, and now: belonging. Your brand becomes synonymous with hospitality innovation, not just curation.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E2: Linz Identity</h4>
+                                <p>Linz is remaking itself post-industrial. Ars is the cultural anchor. Hostel is the social anchor. Together: Linz is a city that doesn't just think about technology — it lives it ethically.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E3: Pioneers Home</h4>
+                                <p>Every pioneer starts alone. Hostel is where the lonely pioneer becomes the community founder. Your guests don't just attend; they belong. They tell that story for 20 years.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E4: Belonging vs Scattered</h4>
+                                <p>Scattered = transactional (hotel room). Belonging = relational (kitchen table, shared mission). Ars guests crave belonging. You can offer it or leave them in hotel isolation.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E5: Founding Act</h4>
+                                <p>First partners are founders. Founders are remembered. Sponsors fade. Your name in permanent installation. Your vision in permanent infrastructure. Founding > sponsoring.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E6: Mission Fit</h4>
+                                <p>You curate where art, technology, and society intersect. Hostel is exactly that intersection. You're not sponsoring sports — you're sponsoring your own thesis in concrete.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E7: Human Infrastructure</h4>
+                                <p>Cities build roads. Ars is building human infrastructure. That's rare. That's memorable. That's the kind of institution people want to be part of.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E8: "Where Did You Meet?"</h4>
+                                <p>In 20 years, art world couples will say "We met in the kitchen at the Ars hostel." That's cultural legacy. That's the story you're enabling.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E9: Partnership ≠ Sponsorship</h4>
+                                <p>Sponsors fund things. Partners build things. You're not funding a hostel — you're building the social innovation infrastructure for your own festival.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>E10: Counter-Narrative</h4>
+                                <p>Tech festivals = isolating. Art festivals = inaccessible. Ars + hostel = accessible, human-centered, loneliness-aware. You're rewriting what a 21st-century festival can be.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Arguments -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>🎯 Strategic (11 reasons)</h3>
+                        <span class="accordion-toggle">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="argument-list">
+                            <div class="argument-item">
+                                <h4>ST1: 365-Day Brand Presence</h4>
+                                <p>Sponsorship = 5 days/year. Partnership = 365 days/year. Your name on permanent installation, every hotel check-in, every social media post, every artist residency. That's 73x more brand exposure than September-only.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST2: Audience Pipeline</h4>
+                                <p>Hostel attracts founders, makers, creators, remote workers year-round. Ars can reach them directly: artist residencies, workshops, exclusive previews. Your audience pipeline strengthens 365 days.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST3: Public Funding Alignment</h4>
+                                <p>Austrian public funders (Stadt Linz, Land OÖ, BMKÖS) prioritize social innovation. Hostel is soft power for your next grant. "Ars invests in community infrastructure" = competitive advantage in cultural funding.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST4: First Mover Lock</h4>
+                                <p>Early partners get permanent installation + naming. Later sponsors get acknowledgment. The difference in legacy value is immense. Move now; lock advantage forever.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST5: Costless Optionality (0.06%)</h4>
+                                <p>€15K from Ars = 0.06% of your typical annual budget. The option value (priority booking, installation, satellite space) is worth 10x that. You're paying for certainty, not charity.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST6: Existing Touchpoint</h4>
+                                <p>You already work with hospitality partners (hotels, venues). Hostel is a natural extension of your existing infrastructure. Not a new category — a deepening of what you already do.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST7: Network Effects (domino play)</h4>
+                                <p>Ars partner → other institutions want partnership → hostel becomes de facto artist residency infrastructure → media attention → cultural status → funding. You're not just sponsoring; you're building network value.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST8: Center Foot Traffic</h4>
+                                <p>Hostel is 5 minutes from Ars Elektronik Center on foot. Your venue gets extended dwell time. Guests sleep upstairs, eat downstairs, workshop in Flow Zone, keynote in Center. Operational ecosystem.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST9: Free Press (social proof)</h4>
+                                <p>Ars partner buys credibility. Every hostel article mentions Ars (opening press, architecture press, cultural press). That's earned media you can't buy. Millions in equivalent advertising.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST10: Linz Capital of Culture (2009)</h4>
+                                <p>You helped build Linz's cultural identity post-2009. Hostel is the next chapter. You're not following trends — you're setting them. Legacy positioning.</p>
+                            </div>
+                            <div class="argument-item">
+                                <h4>ST11: ESG/SDG 3/11/17</h4>
+                                <p>Ars' institutional investors (EU grants, foundations, corporate partners) measure SDG impact. Hostel = measurable SDG contribution (health/wellbeing, inclusive cities, partnerships). Institutional necessity disguised as opportunity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Narrative Section -->
+    <section class="section-dark">
+        <div class="container">
+            <h2 class="section-title">The Story — 12 Movements</h2>
+            <div class="narrative-items">
+                <div class="narrative-item">
+                    <div class="narrative-number">I</div>
+                    <p><strong>September.</strong> Same kitchen. Tokyo, Lagos, Graz, São Paulo — the same robotics PhD, Brazilian volunteer, 17-year-old tinkerer, jury member. One building did it.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">II</div>
+                    <p><strong>Ars 1979 → 2009 → 2026.</strong> Stages exist. Venues exist. But the village that holds the energy after 11pm? That doesn't exist yet.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">III</div>
+                    <p><strong>Best moments are unscheduled.</strong> Not the keynote — the breakfast conversation. Not the panel — the midnight debate in someone's room. Those moments don't happen in hotel isolation.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">IV</div>
+                    <p><strong>Breakfast table seats twelve.</strong> Robotics PhD, 17-year-old, Brazilian volunteer, jury member, three artists, startup founder, researcher, curator, teacher. No scheduled conversation. No moderator. Just breakfast.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">V</div>
+                    <p><strong>One jury member eats alone in a hotel 3km away.</strong> Awarded artist sleeps three blocks from the Center, unreachable after 6pm. Two realities, one signature.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">VI</div>
+                    <p><strong>Architecture is not metaphor.</strong> Oldenburg's third places. Granovetter's weak ties. Pixar's serendipity density. Ars exhibited all three. Now give the ideas a building.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">VII</div>
+                    <p><strong>Basecamp: 90 beds, €28/night.</strong> Permanent Ars installation. Flow Zone, 24/7. Not September only — 365 days. The infrastructure outlives the festival.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">VIII</div>
+                    <p><strong>Where do emerging winners sleep?</strong> Village beats hotel. Cook with the scientist. Walk 5 minutes to the keynote instead of taking a cab. Belong instead of observe.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">IX</div>
+                    <p><strong>Same mission, two addresses.</strong> Ars: where art, technology, society intersect. Hostel: where those intersecting ideas become daily practice. Theory meets praxis.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">X</div>
+                    <p><strong>€15K for founding partnership.</strong> 25 beds, transferable vouchers, installation, Flow Zone, SDG credit, tax-deductible. 0.06% of budget. Full refund if it fails.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">XI</div>
+                    <p><strong>Letter of Intent.</strong> One page. No legal risk. Sparkasse sees Ars backing the idea. Conversation is the first step.</p>
+                </div>
+                <div class="narrative-item">
+                    <div class="narrative-number">XII</div>
+                    <p><strong>Festival ends September. Village doesn't.</strong> 1979 festival → 2027 village. The conversation that started in the keynote continues at breakfast, year-round.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-dark cta-section" id="cta">
+        <div class="container">
+            <h2>30 minutes. One conversation.</h2>
+            <p class="cta-subtitle">No pitch. No pressure. Just clarity.</p>
+            <a href="mailto:rafaelwabisabi@gmail.com?subject=Ars%20Electronica%20%E2%80%93%20Festival%20Village%20Partnership" class="cta-email">Start Conversation</a>
+            <div class="cta-signature">
+                <p><strong>Rafael Barros</strong></p>
+                <p>Tech Partner — Linz Hostel Initiative</p>
+                <p style="margin-top: 0.5rem; opacity: 0.7;">rafaelwabisabi@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Sticky nav visibility
+        const navbar = document.getElementById('navbar');
+        const hero = document.querySelector('.hero');
+
+        window.addEventListener('scroll', () => {
+            const heroBottom = hero.offsetHeight;
+            if (window.scrollY > heroBottom) {
+                navbar.classList.add('visible');
+            } else {
+                navbar.classList.remove('visible');
+            }
+        });
+
+        // Accordion toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.accordion-toggle');
+            
+            // Close other accordions in same section
+            const allItems = header.closest('.accordion').querySelectorAll('.accordion-content');
+            allItems.forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                    item.previousElementSibling.querySelector('.accordion-toggle').textContent = '+';
+                }
+            });
+
+            // Toggle current
+            content.classList.toggle('active');
+            toggle.textContent = content.classList.contains('active') ? '−' : '+';
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

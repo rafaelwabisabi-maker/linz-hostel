@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linz Hostel × Ars Electronica — Founding Partnership</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #000000;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== TOP NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #000000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #222222;
+      z-index: 1000;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .nav-left {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .nav-left span:nth-child(1) {
+      opacity: 0.6;
+      margin-right: 8px;
+    }
+
+    .nav-left span:nth-child(2) {
+      margin: 0 6px;
+      opacity: 0.3;
+    }
+
+    .nav-left span:nth-child(3) {
+      font-weight: 700;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-left: 40px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #E8530E;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 0;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        margin-left: 20px;
+        font-size: 10px;
+      }
+    }
+
+    /* ===== SECTIONS & SPACING ===== */
+    section {
+      padding: 100px 40px;
+    }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      letter-spacing: 0.2em;
+      margin-bottom: 30px;
+      display: block;
+    }
+
+    .section-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #cccccc;
+      max-width: 900px;
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 60px 20px;
+      }
+
+      .section-headline {
+        font-size: 32px;
+      }
+
+      .section-subtitle {
+        font-size: 16px;
+      }
+    }
+
+    /* ===== HERO SECTION ===== */
+    #hero {
+      height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
+                  url('https://images.pexels.com/photos/6208415/pexels-photo-6208415.jpeg?auto=compress&cs=tinysrgb&h=650&w=940') center/cover;
+      background-attachment: fixed;
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .hero-content {
+      padding: 0 40px;
+      max-width: 900px;
+    }
+
+    .hero-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      letter-spacing: 0.2em;
+      margin-bottom: 40px;
+    }
+
+    .hero-main {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .hero-main .accent {
+      color: #E8530E;
+    }
+
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #cccccc;
+      margin-bottom: 40px;
+      max-width: 700px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid #ffffff;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      #hero {
+        height: auto;
+        min-height: 70vh;
+      }
+
+      .hero-main {
+        font-size: 48px;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+      }
+
+      .hero-content {
+        padding: 40px 20px;
+      }
+    }
+
+    /* ===== GRID LAYOUTS ===== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .grid-2-3 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 1200px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid-2,
+      .grid-2-3,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: #111111;
+      border: 1px solid #222222;
+      transition: all 0.3s ease;
+      min-height: 300px;
+    }
+
+    .card:hover {
+      border-color: #E8530E;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-image {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4));
+      padding: 40px;
+      color: #ffffff;
+    }
+
+    .card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .card-description {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #cccccc;
+    }
+
+    .card-orange {
+      background: #E8530E;
+      color: #ffffff;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    .card-orange .card-title {
+      font-size: 28px;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .card-orange .card-description {
+      color: #ffffff;
+    }
+
+    /* ===== HERO CARD GRID ===== */
+    .hero-story {
+      grid-column: 1;
+      min-height: 500px;
+    }
+
+    .hero-story .card-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-story .card-content {
+      z-index: 2;
+    }
+
+    /* ===== VIDEO SECTION ===== */
+    .video-container {
+      max-width: 900px;
+      margin: 40px auto;
+      border: 1px solid #222222;
+      aspect-ratio: 16/9;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .video-placeholder {
+      width: 80px;
+      height: 80px;
+      background: #E8530E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .video-placeholder:hover {
+      background: #d43d08;
+      transform: scale(1.1);
+    }
+
+    .video-placeholder::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 25px solid #000000;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      margin-left: 6px;
+    }
+
+    .video-caption {
+      text-align: center;
+      margin-top: 30px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888888;
+    }
+
+    /* ===== NUMBERS BAR ===== */
+    .numbers-section {
+      background: #000000;
+      padding: 60px 40px;
+      border-top: 1px solid #222222;
+      border-bottom: 1px solid #222222;
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .number-item {
+      text-align: center;
+    }
+
+    .number-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      color: #E8530E;
+      display: block;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .number-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #888888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 1024px) {
+      .numbers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .numbers-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .number-value {
+        font-size: 36px;
+      }
+
+      .numbers-section {
+        padding: 40px 20px;
+      }
+    }
+
+    /* ===== TIER CARDS ===== */
+    .tier-card {
+      background: #111111;
+      border: 1px solid #222222;
+      padding: 40px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .tier-card:hover {
+      border-color: #E8530E;
+    }
+
+    .tier-badge {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: transparent;
+      border: 1px solid #E8530E;
+      color: #E8530E;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tier-badge.white {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    .tier-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 20px 0;
+      line-height: 1.3;
+    }
+
+    .tier-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: #E8530E;
+      margin: 30px 0;
+    }
+
+    .tier-card.orange .tier-price {
+      color: #ffffff;
+    }
+
+    .tier-features {
+      list-style: none;
+      margin: 30px 0;
+    }
+
+    .tier-features li {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 10px 0;
+      border-bottom: 1px solid #222222;
+      color: #cccccc;
+    }
+
+    .tier-features li:last-child {
+      border-bottom: none;
+    }
+
+    .tier-features li::before {
+      content: '— ';
+      color: #E8530E;
+      margin-right: 8px;
+      font-weight: 600;
+    }
+
+    .tier-card.orange .tier-features li::before {
+      color: #ffffff;
+    }
+
+    .tier-card.orange {
+      background: #E8530E;
+      color: #ffffff;
+      border-color: #E8530E;
+    }
+
+    .tier-card.orange .tier-features li {
+      color: #ffffff;
+      border-bottom-color: rgba(255,255,255,0.2);
+    }
+
+    .tier-card.orange h3 {
+      color: #ffffff;
+    }
+
+    /* ===== BENEFITS GRID ===== */
+    .benefit-card {
+      background: #111111;
+      border: 1px solid #222222;
+      border-left: 4px solid #E8530E;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      border-color: #E8530E;
+      transform: translateX(10px);
+    }
+
+    .benefit-card h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      color: #E8530E;
+    }
+
+    .benefit-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    /* ===== MISSION ALIGNMENT ===== */
+    .mission-section {
+      padding: 100px 40px;
+      background: #000000;
+    }
+
+    .mission-content {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+
+    .mission-block {
+      text-align: left;
+    }
+
+    .mission-block.right {
+      text-align: left;
+    }
+
+    .mission-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      letter-spacing: 0.2em;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .mission-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-style: italic;
+      line-height: 1.5;
+      color: #ffffff;
+    }
+
+    .mission-equals {
+      font-size: 48px;
+      color: #E8530E;
+      font-weight: 300;
+    }
+
+    .mission-footer {
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .mission-note {
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #888888;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      .mission-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .mission-equals {
+        display: none;
+      }
+
+      .mission-block.right::before {
+        content: '=';
+        display: block;
+        font-size: 36px;
+        color: #E8530E;
+        margin: 20px 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mission-section {
+        padding: 60px 20px;
+      }
+
+      .mission-quote {
+        font-size: 20px;
+      }
+    }
+
+    /* ===== STORYBOARD: TWO REALITIES ===== */
+    .storyboard {
+      padding: 100px 40px;
+    }
+
+    .storyboard-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+      line-height: 1.1;
+    }
+
+    .storyboard-headline .dim { opacity: 0.3; }
+
+    .storyboard-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-bottom: 3px;
+    }
+
+    .story-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .story-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .story-card:hover img { transform: scale(1.04); }
+
+    .story-card .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+    }
+
+    .story-card .story-text {
+      position: relative;
+      z-index: 2;
+      padding: 30px;
+    }
+
+    .story-card .story-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #E8530E;
+      margin-bottom: 8px;
+    }
+
+    .story-card .story-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(20px, 2.5vw, 32px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .story-card .story-desc {
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.5;
+      max-width: 400px;
+    }
+
+    .story-card-orange {
+      background: #E8530E;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .story-card-orange .story-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(26px, 3vw, 42px);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    .story-card-orange .story-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* single wide story card */
+    .story-card-wide {
+      grid-column: 1 / -1;
+      min-height: 400px;
+    }
+
+    /* "who sleeps here" character cards */
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .character-card {
+      background: #0A0A0A;
+      border: 1px solid #1a1a1a;
+      padding: 40px 30px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.3s;
+    }
+
+    .character-card:hover { border-color: #E8530E; }
+
+    .character-card .char-role {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #E8530E;
+    }
+
+    .character-card .char-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(22px, 2vw, 30px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin: 12px 0;
+    }
+
+    .character-card .char-desc {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .character-card .char-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: #C4997E;
+      margin-top: 16px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .storyboard-row { grid-template-columns: 1fr; }
+      .character-grid { grid-template-columns: 1fr; }
+      .storyboard { padding: 60px 20px; }
+    }
+
+    /* ===== IMAGE BREAK ===== */
+    .image-break {
+      height: 50vh;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                  url('https://images.pexels.com/photos/4907209/pexels-photo-4907209.jpeg?auto=compress&cs=tinysrgb&h=650&w=940') center/cover;
+      background-attachment: fixed;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .image-break-content {
+      max-width: 900px;
+      padding: 0 40px;
+    }
+
+    .image-break-quote {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.3;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .image-break-accent {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      color: #E8530E;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .image-break {
+        height: 40vh;
+      }
+
+      .image-break-quote {
+        font-size: 28px;
+      }
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+      position: relative;
+      padding-left: 0;
+    }
+
+    .timeline-number {
+      width: 100px;
+      height: 100px;
+      border: 3px solid #E8530E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #E8530E;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child) .timeline-number::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 200px;
+      background: #E8530E;
+      left: 48.5px;
+      top: 100%;
+    }
+
+    .timeline-content h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: #E8530E;
+    }
+
+    .timeline-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-item {
+        grid-template-columns: 80px 1fr;
+        gap: 20px;
+      }
+
+      .timeline-number {
+        width: 80px;
+        height: 80px;
+        font-size: 24px;
+      }
+
+      .timeline-item:not(:last-child) .timeline-number::after {
+        left: 39.5px;
+      }
+    }
+
+    /* ===== RISK STATEMENT ===== */
+    .risk-section {
+      background: #E8530E;
+      padding: 100px 40px;
+      text-align: center;
+    }
+
+    .risk-statement {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .risk-subtext {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .risk-section {
+        padding: 60px 20px;
+      }
+
+      .risk-statement {
+        font-size: 32px;
+      }
+    }
+
+    /* ===== PROOF CARDS ===== */
+    .proof-card {
+      background: #111111;
+      border: 1px solid #222222;
+      border-left: 4px solid #E8530E;
+      padding: 30px;
+      transition: all 0.3s ease;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .proof-card:hover {
+      transform: translateX(10px);
+      border-color: #E8530E;
+    }
+
+    .proof-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      margin-bottom: 8px;
+    }
+
+    .proof-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #888888;
+      margin-bottom: 15px;
+    }
+
+    .proof-description {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #cccccc;
+      line-height: 1.5;
+    }
+
+    /* ===== ACCORDION ===== */
+    .accordion {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .accordion-item {
+      background: #111111;
+      border: 1px solid #222222;
+      border-left: 4px solid #E8530E;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-item.active {
+      border-color: #E8530E;
+    }
+
+    .accordion-header {
+      padding: 30px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111111;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-header:hover {
+      background: #0a0a0a;
+    }
+
+    .accordion-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+    }
+
+    .accordion-chevron {
+      font-size: 20px;
+      color: #E8530E;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 30px;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 2000px;
+      padding: 0 30px 30px 30px;
+    }
+
+    .accordion-list {
+      list-style: none;
+    }
+
+    .accordion-list li {
+      padding: 15px 0;
+      border-bottom: 1px solid #222222;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    .accordion-list li:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-list li strong {
+      color: #E8530E;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ===== NARRATIVE SECTION ===== */
+    .narrative-card {
+      background: #111111;
+      border: 1px solid #222222;
+      border-left: 4px solid #E8530E;
+      padding: 30px;
+    }
+
+    .narrative-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      margin-bottom: 20px;
+    }
+
+    .narrative-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #cccccc;
+    }
+
+    .narrative-text .movement {
+      margin: 20px 0;
+      padding-left: 20px;
+      border-left: 2px solid #E8530E;
+    }
+
+    .movement-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      color: #E8530E;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      text-align: center;
+      padding: 100px 40px;
+    }
+
+    .cta-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #E8530E;
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+    }
+
+    .cta-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .cta-body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      color: #cccccc;
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #E8530E;
+      color: #ffffff;
+      padding: 18px 40px;
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 40px;
+    }
+
+    .cta-button:hover {
+      background: #d43d08;
+      transform: translateY(-2px);
+    }
+
+    .cta-footer {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #888888;
+      line-height: 1.6;
+    }
+
+    .cta-footer strong {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section {
+        padding: 60px 20px;
+      }
+
+      .cta-headline {
+        font-size: 32px;
+      }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #000000;
+      padding: 40px;
+      border-top: 1px solid #222222;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #888888;
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .max-width {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .separator {
+      width: 100%;
+      height: 1px;
+      background: #222222;
+      margin: 60px 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ===== SMOOTH SCROLL ===== */
+    .smooth {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP NAVIGATION ===== -->
+  <nav>
+    <div class="nav-left">
+      <span>ars electronica</span>
+      <span>×</span>
+      <span>linz hostel</span>
+    </div>
+    <div class="nav-right">
+      <a href="#vision">The Village</a>
+      <a href="#offer">The Offer</a>
+      <a href="#case">The Case</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-label">Partnership Proposal — March 2026</div>
+      <h1 class="hero-main">Festivals have venues<br>Yours deserves<br><span class="accent">A village</span></h1>
+      <p class="hero-subtitle">A founding accommodation partnership between Ars Electronica and Linz Hostel: The Social Impact Hub</p>
+      <div class="hero-badge">Letter of Intent — Zero cost, zero risk</div>
+    </div>
+    <div style="border-bottom: 1px solid #222222; position: absolute; bottom: 0; width: 100%;"></div>
+  </section>
+
+  <!-- ===== SECTION 2: PROBLEM CARDS ===== -->
+  <section>
+    <span class="section-label">The Problem</span>
+    <div class="grid-2-3">
+      <div class="card hero-story">
+        <img src="https://images.pexels.com/photos/32674843/pexels-photo-32674843.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Austria aerial view" class="card-image" loading="lazy">
+        <div class="card-content">
+          <span class="card-label">September</span>
+          <h3 class="card-title">122,000 people come to Linz</h3>
+          <p class="card-description">Every year for Ars Electronica. They experience extraordinary programming. Then they sleep in scattered hotels and eat breakfast alone.</p>
+        </div>
+      </div>
+      <div class="card card-orange">
+        <h3 class="card-title">The Stages Exist<br>The Galleries Exist<br>The Labs Exist<br><strong>The Village Doesn't</strong></h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STORYBOARD 1: TWO REALITIES ===== -->
+  <section class="storyboard">
+    <span class="section-label">Two Realities</span>
+    <div class="storyboard-headline">One signature apart</div>
+
+    <div class="storyboard-row">
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/16634005/pexels-photo-16634005.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Person alone in dark room" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">Without the Village</div>
+          <div class="story-title">9 PM. Judging ends.</div>
+          <div class="story-desc">A Prix Ars jury member takes a taxi 20 minutes across Linz. Eats alone at the hotel bar. Goes to bed.</div>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/5738245/pexels-photo-5738245.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Friends laughing at table" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">With the Village</div>
+          <div class="story-title">9 PM. Judging ends.</div>
+          <div class="story-desc">She walks 5 minutes to the Basecamp. Joins a table in the kitchen. Meets the artist she just awarded. Collaboration starts over pasta.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="storyboard-row">
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/6754012/pexels-photo-6754012.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Woman alone in blue room" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">Without the Village</div>
+          <div class="story-title">Breakfast. Table for one.</div>
+          <div class="story-desc">She never finds out the emerging artist from Medellín was three blocks away. Same time. Same silence.</div>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/3184195/pexels-photo-3184195.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Group eating together overhead" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">With the Village</div>
+          <div class="story-title">Breakfast. Table for twelve.</div>
+          <div class="story-desc">Robotics PhD from Zurich. Brazilian street artist. Festival University student from Seoul. The jury member puts her phone down.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="storyboard-row">
+      <div class="story-card-orange">
+        <div class="story-title">You programme every minute of the festival.<br>The most important moment?<br>You don't programme it.</div>
+        <div class="story-desc">It's the conversation at breakfast. The midnight kitchen. The lobby encounter that becomes a three-year collaboration. Those moments need architecture — not luck.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIDEO SECTION ===== -->
+  <section>
+    <div class="video-container">
+      <div class="video-placeholder" onclick="alert('Video player would be embedded here');"></div>
+    </div>
+    <div class="video-caption">The Partnership — Watch</div>
+    <!-- REPLACE: <iframe src="https://www.youtube.com/embed/VIDEO_ID" width="100%" height="600" frameborder="0" allowfullscreen></iframe> -->
+  </section>
+
+  <!-- ===== VISION CARDS ===== -->
+  <section id="vision">
+    <span class="section-label">The Vision</span>
+    <h2 class="section-headline">From Blueprint to Village</h2>
+    <div class="grid-4">
+      <div class="card">
+        <img src="https://images.pexels.com/photos/8961295/pexels-photo-8961295.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Blueprint" class="card-image" loading="lazy">
+        <div class="card-content">
+          <span class="card-label">Planning</span>
+          <h3 class="card-title">The Blueprint</h3>
+          <p class="card-description">Two founders, one blueprint, one mission.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.pexels.com/photos/5505930/pexels-photo-5505930.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Industrial hall" class="card-image" loading="lazy">
+        <div class="card-content">
+          <span class="card-label">The Space</span>
+          <h3 class="card-title">90 Beds Raw</h3>
+          <p class="card-description">Converted industrial building. Walking distance from Ars venues.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.pexels.com/photos/4090093/pexels-photo-4090093.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Pod hotel" class="card-image" loading="lazy">
+        <div class="card-content">
+          <span class="card-label">The Pods</span>
+          <h3 class="card-title">Design-Led Beds</h3>
+          <p class="card-description">€28/night — not €90+.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.pexels.com/photos/5146887/pexels-photo-5146887.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Breakfast" class="card-image" loading="lazy">
+        <div class="card-content">
+          <span class="card-label">The Kitchen</span>
+          <h3 class="card-title">Where Festival Happens</h3>
+          <p class="card-description">The conversation that was never programmed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STORYBOARD 2: A NIGHT AT THE VILLAGE ===== -->
+  <section class="storyboard">
+    <span class="section-label">Festival Week</span>
+    <div class="storyboard-headline">A night at the village<br><span class="dim">September 2027</span></div>
+
+    <div class="storyboard-row">
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/5146887/pexels-photo-5146887.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Breakfast together" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">08:00</div>
+          <div class="story-title">The Kitchen Table</div>
+          <div class="story-desc">A Futurelab scientist and a Create Your World finalist share toast. By the second coffee, they're sketching on a napkin. Nobody scheduled this.</div>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Creative collaboration" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">14:00</div>
+          <div class="story-title">The Flow Zone</div>
+          <div class="story-desc">Overflow workshop from Ars. 30 people in the communal lounge. An informal session that couldn't fit in the festival programme. No extra venue cost.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="storyboard-row">
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/15988007/pexels-photo-15988007.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Art gallery dark" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">19:00</div>
+          <div class="story-title">The Lobby Installation</div>
+          <div class="story-desc">Guests check in past a rotating Ars Electronica exhibition. Curated by Ars artists. Permanent. Not a pop-up. Not a banner. Their space inside our building.</div>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="https://images.pexels.com/photos/3184177/pexels-photo-3184177.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Friends sharing food" loading="lazy">
+        <div class="overlay"></div>
+        <div class="story-text">
+          <div class="story-label">23:00</div>
+          <div class="story-title">Midnight Kitchen</div>
+          <div class="story-desc">The Brazilian volunteer teaches the ETH physicist how to make caipirinhas. A Prix Ars winner joins. By 1 AM they're planning a joint installation for next year.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="storyboard-row">
+      <div class="story-card-orange" style="grid-column: 1 / -1;">
+        <div class="story-title">The festival ends every September.<br>The village doesn't.</div>
+        <div class="story-desc">365 days a year. Futurelab visitors in February. ArtScience Residents in May. Festival University students in July. The community never stops forming.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NUMBERS BAR ===== -->
+  <div class="numbers-section">
+    <div class="numbers-grid">
+      <div class="number-item">
+        <span class="number-value">90</span>
+        <span class="number-label">Pod-Style Beds</span>
+      </div>
+      <div class="number-item">
+        <span class="number-value">€28</span>
+        <span class="number-label">Per Night vs €90+ Market</span>
+      </div>
+      <div class="number-item">
+        <span class="number-value">122K</span>
+        <span class="number-label">Ars Visitors Per Year</span>
+      </div>
+      <div class="number-item">
+        <span class="number-value">€0</span>
+        <span class="number-label">Risk — Full Refund Clause</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OFFER SECTION ===== -->
+  <section id="offer">
+    <span class="section-label">The Partnership</span>
+    <h2 class="section-headline">Two Paths. Both Start with a Conversation.</h2>
+    <div class="grid-2">
+      <div class="tier-card">
+        <div class="tier-badge">Tier B</div>
+        <h3>Letter of Intent</h3>
+        <div class="tier-price">€0</div>
+        <ul class="tier-features">
+          <li>1-page signed letter</li>
+          <li>Confirms Ars would reserve beds during festival week</li>
+          <li>No legal commitment, no board approval needed</li>
+          <li>Strengthens Sparkasse loan application</li>
+          <li>Ars listed as institutional supporter</li>
+        </ul>
+      </div>
+      <div class="tier-card orange">
+        <div class="tier-badge white">Tier A — Founding Partner</div>
+        <h3>Full Partnership</h3>
+        <div class="tier-price">€15,000 / 3 Years</div>
+        <ul class="tier-features">
+          <li>25 beds reserved Festival Week at €28/night</li>
+          <li>Transferable digital vouchers for exhibitors, jury, staff</li>
+          <li>Priority year-round booking for residency & Futurelab guests</li>
+          <li>Permanent lobby installation curated by Ars artists</li>
+          <li>Flow Zone as satellite venue during festival</li>
+          <li>Founding Partner naming rights</li>
+          <li>Full refund if hostel doesn't open</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BENEFITS SECTION ===== -->
+  <section>
+    <span class="section-label">What Ars Electronica Gets</span>
+    <div class="grid-3">
+      <div class="benefit-card">
+        <h4>Festival Week Beds</h4>
+        <p>25 beds every September, €28/night, one address instead of six hotels.</p>
+      </div>
+      <div class="benefit-card">
+        <h4>Lobby Installation</h4>
+        <p>Permanent space curated by Ars artists, rotating exhibitions year-round.</p>
+      </div>
+      <div class="benefit-card">
+        <h4>Year-Round Booking</h4>
+        <p>Priority rates for Futurelab, ArtScience Residents, Festival University, Create Your World.</p>
+      </div>
+      <div class="benefit-card">
+        <h4>Transferable Vouchers</h4>
+        <p>Bundle into exhibitor packages, recoup commitment, net cost zero.</p>
+      </div>
+      <div class="benefit-card">
+        <h4>Satellite Event Space</h4>
+        <p>Flow Zone 100m² for overflow events, screenings, informal sessions.</p>
+      </div>
+      <div class="benefit-card">
+        <h4>ESG & SDG Reporting</h4>
+        <p>SDG 3, 11, 17 reportable line item, compliance-useful for EU funding.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MISSION ALIGNMENT ===== -->
+  <section class="mission-section">
+    <div class="mission-content">
+      <div class="mission-block">
+        <span class="mission-label">Ars Electronica</span>
+        <p class="mission-quote">Where art, technology, and society intersect.</p>
+      </div>
+      <div class="mission-equals">=</div>
+      <div class="mission-block right">
+        <span class="mission-label">Linz Hostel</span>
+        <p class="mission-quote">Address the loneliness crisis through hospitality innovation.</p>
+      </div>
+    </div>
+    <div class="mission-footer">Not two projects. One project, two addresses.</div>
+    <div class="mission-note">Ars has exhibited on loneliness and connection: GEMeinsam, Kyrielle (2025 Prix Ars Award of Distinction), Social Play.</div>
+  </section>
+
+  <!-- ===== IMAGE BREAK ===== -->
+  <section class="image-break">
+    <div class="image-break-content">
+      <div class="image-break-quote">The most important conversation at Ars Electronica happens at breakfast.<br>Except it doesn't.</div>
+      <div class="image-break-accent">— Yet.</div>
+    </div>
+  </section>
+
+  <!-- ===== STORYBOARD 3: WHO SLEEPS HERE ===== -->
+  <section class="storyboard">
+    <span class="section-label">The People</span>
+    <div class="storyboard-headline">Who sleeps here</div>
+
+    <div class="character-grid">
+      <div class="character-card">
+        <div>
+          <div class="char-role">Prix Ars Winner</div>
+          <div class="char-title">Camila, 24<br>Medellín</div>
+          <div class="char-desc">Award of Distinction in Digital Communities. Her stipend doesn't cover a hotel. At the Basecamp: €28/night, kitchen access, and a table where she meets the jury member who awarded her work.</div>
+        </div>
+        <div class="char-quote">"Where did you two meet?" — "The Basecamp during Ars."</div>
+      </div>
+
+      <div class="character-card">
+        <div>
+          <div class="char-role">Futurelab Researcher</div>
+          <div class="char-title">Dr. Yuki Tanaka<br>Tokyo</div>
+          <div class="char-desc">3-month Futurelab residency. Currently bouncing between Airbnbs. At the Basecamp: a standing booking channel, community from day one, and a 5-minute walk to the lab.</div>
+        </div>
+        <div class="char-quote">"The building did what three months of networking couldn't."</div>
+      </div>
+
+      <div class="character-card">
+        <div>
+          <div class="char-role">Festival Volunteer</div>
+          <div class="char-title">Pedro, 22<br>São Paulo</div>
+          <div class="char-desc">Street artist. Volunteering at Ars for the experience. Currently sleeping on a friend's couch 40 minutes away. At the Basecamp: €28/night, central, and surrounded by the community he came to find.</div>
+        </div>
+        <div class="char-quote">"I came for the festival. I stayed for the kitchen."</div>
+      </div>
+
+      <div class="character-card">
+        <div>
+          <div class="char-role">Festival University</div>
+          <div class="char-title">Min-Ji, Soo-Yeon &amp; Jae<br>Seoul</div>
+          <div class="char-desc">Three JKU exchange students sharing a budget. Hotels: €270/night for a triple. Basecamp: €84/night total. The difference pays for a month of groceries.</div>
+        </div>
+        <div class="char-quote">"We could finally afford to attend the whole week."</div>
+      </div>
+
+      <div class="character-card">
+        <div>
+          <div class="char-role">CAMPUS Presenter</div>
+          <div class="char-title">Amara Diallo<br>Dakar</div>
+          <div class="char-desc">First time presenting at CAMPUS. First time in Europe. Arrives knowing nobody. At the Basecamp: by the second morning she's co-authoring a paper with someone she met at breakfast.</div>
+        </div>
+        <div class="char-quote">"The hostel was the real conference."</div>
+      </div>
+
+      <div class="character-card" style="background: #E8530E; border-color: #E8530E;">
+        <div>
+          <div class="char-role" style="color: rgba(255,255,255,0.7);">The Question</div>
+          <div class="char-title">These people exist.<br>Right now.<br>Every September.</div>
+          <div class="char-desc" style="color: rgba(255,255,255,0.85);">They come to Linz for Ars Electronica. They sleep in scattered hotels, eat alone, miss every unscripted encounter. The only question is: do they get the village, or don't they?</div>
+        </div>
+        <div class="char-quote" style="color: #fff;">You decide which reality they get.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE SECTION ===== -->
+  <section id="case">
+    <span class="section-label">The Process</span>
+    <h2 class="section-headline">From Conversation to Village</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-number">1</div>
+        <div class="timeline-content">
+          <h4>30-Minute Conversation</h4>
+          <p>Present the project, answer questions. No commitment.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">2</div>
+        <div class="timeline-content">
+          <h4>Letter of Intent</h4>
+          <p>One page. No payment. Signals Ars would reserve beds.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">3</div>
+        <div class="timeline-content">
+          <h4>Founding Partner Agreement</h4>
+          <p>€15K/3yr. Activates at €80K minimum viability threshold.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">4</div>
+        <div class="timeline-content">
+          <h4>Sparkasse Loan Secured</h4>
+          <p>Institutional pre-commitments demonstrate demand.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">5</div>
+        <div class="timeline-content">
+          <h4>The Village Opens — 2027</h4>
+          <p>90 beds. Flow Zone. Ars installation in the lobby.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RISK STATEMENT ===== -->
+  <section class="risk-section">
+    <div class="risk-statement">Full Refund If The Hostel Does Not Open</div>
+    <div class="risk-subtext">Every cent. Zero risk.</div>
+  </section>
+
+  <!-- ===== PROOF OF CONCEPT ===== -->
+  <section>
+    <span class="section-label">Proven Models</span>
+    <h2 class="section-headline">Case Studies: It Works</h2>
+    <div class="grid-3">
+      <div class="proof-card">
+        <div class="proof-title">Magdas Hotel</div>
+        <div class="proof-subtitle">Vienna, Austria</div>
+        <div class="proof-description">Austria's first profitable social-mission hotel. Employment + hospitality.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-title">Largo Residências</div>
+        <div class="proof-subtitle">Lisbon, Portugal</div>
+        <div class="proof-description">Creative-neighbourhood symbiosis = higher RevPAR + community morale.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-title">The Social Hub</div>
+        <div class="proof-subtitle">Vienna & Amsterdam</div>
+        <div class="proof-description">Hybrid model maximises revenue/m². Coliving + events.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-title">WelcomMon</div>
+        <div class="proof-subtitle">Athens, Greece</div>
+        <div class="proof-description">Social-mix model stabilises demand across seasons.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-title">Pfefferbett</div>
+        <div class="proof-subtitle">Berlin, Germany</div>
+        <div class="proof-description">Industrial space + inclusion = lower labour costs, higher margins.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-title">Wild Elephant</div>
+        <div class="proof-subtitle">Bratislava, Slovakia</div>
+        <div class="proof-description">Authentic vibe = low CAC + premium pricing justified by community.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FULL CASE SECTION ===== -->
+  <section>
+    <span class="section-label">The Full Case</span>
+    <h2 class="section-headline">48 Reasons. Fact-Checked.</h2>
+    <p class="section-subtitle" style="margin-bottom: 40px;">Every claim verified against Ars Electronica sources, Statistics Austria, Gesundheit Österreich GmbH — March 2026.</p>
+
+    <div class="accordion">
+      <!-- FINANCIAL -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">Financial (9 reasons)</span>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-content">
+          <ul class="accordion-list">
+            <li><strong>F1 Accommodation Arbitrage</strong> €90+/night market vs €28–50 = 45–70% saving = €300–600 per 7-night stay</li>
+            <li><strong>F2 Transferable Voucher Play</strong> Bundle into exhibitor packages, net cost zero after resale</li>
+            <li><strong>F3 Inflation Hedge</strong> 3-year fixed-rate lock protects against market volatility</li>
+            <li><strong>F4 Zero Downside</strong> Full refund if hostel doesn't open by end of 2027</li>
+            <li><strong>F5 Founding ≠ Later</strong> Wait = rack rate €32, no naming, no installation. First-mover advantage</li>
+            <li><strong>F6 Already Spend This</strong> Redirects existing accommodation budget into owned asset</li>
+            <li><strong>F7 Tax-Deductible</strong> Betriebsausgabe classification, pre-purchase of services eligible for tax offset</li>
+            <li><strong>F8 Tipping Point</strong> €80K minimum viability threshold protects Ars from downside</li>
+            <li><strong>F9 Opportunity Cost</strong> Opens without them = full price, no founding credit, no installation</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PRACTICAL -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">Practical (9 reasons)</span>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-content">
+          <ul class="accordion-list">
+            <li><strong>P1 September Nightmare</strong> Weeks of email coordination scattered across six hotels</li>
+            <li><strong>P2 Proximity</strong> One address, walking distance from Ars Electronica Centre</li>
+            <li><strong>P3 24/7 Community</strong> Flow Zone 100m² lounge, kitchen, events space always open</li>
+            <li><strong>P4 Staff & Volunteers</strong> Block booking solves annual housing need for 40–50 people</li>
+            <li><strong>P5 Priority Booking</strong> First pick before public, September week guaranteed</li>
+            <li><strong>P6 Not Just September</strong> Centre operational 365 days: Futurelab ~35 staff, residencies, Create Your World</li>
+            <li><strong>P7 Artist Housing</strong> ArtScience Residency, European Digital Deal €25K allocation, Futurelab Residencies</li>
+            <li><strong>P8 Satellite Space</strong> Flow Zone for overflow events, screenings, informal sessions beyond fest</li>
+            <li><strong>P9 Create Your World</strong> Youth & students need budget beds; hostel becomes de facto CYW accommodation</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SCIENTIFIC -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">Scientific (9 reasons)</span>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-content">
+          <ul class="accordion-list">
+            <li><strong>S1 Exhibition Territory</strong> Ars exhibited GEMeinsam, Kyrielle (2025 Prix Ars Award of Distinction), Social Play</li>
+            <li><strong>S2 Serendipity</strong> MIT Building 20, Bell Labs, Pixar atrium: accidental adjacency = breakthrough ideas</li>
+            <li><strong>S3 Teachcation</strong> Tourists become makers via ecosystem: hostels + workshops + Futurelab overflow</li>
+            <li><strong>S4 Exhibition Subject</strong> CAMPUS 2025 featured 37 universities; Linz Hostel as standalone exhibition case</li>
+            <li><strong>S5 Austrian Loneliness</strong> 8% national baseline (low), but high among young, mobile, migrant populations (Ars cohort)</li>
+            <li><strong>S6 Third Places</strong> Oldenburg 1989 framework: cafes, pubs, hostels as incubation zones. 35+ years peer-reviewed</li>
+            <li><strong>S7 Social Prescribing</strong> 6 Austrian federal pilots in progress; 86% referral completion, 98% recommend</li>
+            <li><strong>S8 Weak Ties</strong> Granovetter 1973: casual acquaintances drive information flow & career breakthroughs</li>
+            <li><strong>S9 Post-COVID</strong> 112K → 122K attendance growth, but connection quality question: are bonds deepening?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EMOTIONAL -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">Emotional (10 reasons)</span>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-content">
+          <ul class="accordion-list">
+            <li><strong>E1 September Belongs</strong> 122K+ people; they deserve a home, not a transaction</li>
+            <li><strong>E2 Linz Identity</strong> Ars IS Linz. This is Linz's gift back to its festival</li>
+            <li><strong>E3 Pioneers Deserve</strong> Artists, technologists, scientists deserve a home base, not budget business hotels</li>
+            <li><strong>E4 Belonging Signal</strong> Basecamp creates tribe mentality: "we" vs isolated "I attended"</li>
+            <li><strong>E5 Founding Act</strong> Origin story worth owning: Ars built the festival (1979), Ars built the village (2027)</li>
+            <li><strong>E6 Mission Fit</strong> Same sentence, different addresses. Art-tech-society applied</li>
+            <li><strong>E7 Human Infrastructure</strong> Missing piece of Linz's ecosystem. Ars can see itself in it</li>
+            <li><strong>E8 Where Did You Meet</strong> Accidental encounters in kitchens spark collaborations decade later</li>
+            <li><strong>E9 Not Sponsorship</strong> Creative ownership, not logo-slap. Curated permanent installation</li>
+            <li><strong>E10 Counter-Narrative</strong> "I attended Ars" vs "I was part of the Ars village"</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- STRATEGIC -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">Strategic (11 reasons)</span>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-content">
+          <ul class="accordion-list">
+            <li><strong>ST1 Year-Round Presence</strong> Lobby installation 365 days, not just 5 days in September</li>
+            <li><strong>ST2 Audience Pipeline</strong> Nomadic creatives, makers, students: pre-qualified early-stage innovators</li>
+            <li><strong>ST3 Funding Alignment</strong> Reportable for EU grants: SDG impact, cultural infrastructure</li>
+            <li><strong>ST4 First Mover</strong> Festival basecamp model untested at scale in art-tech space</li>
+            <li><strong>ST5 Costless Option</strong> €25M revenue stream; €15K = 0.06% of annual budget</li>
+            <li><strong>ST6 Network Touch</strong> Rafael submitted Erosion to Prix Ars; ongoing open channel</li>
+            <li><strong>ST7 Network Effects</strong> Ars → JKU → tech2b → Sparkasse. Multi-stakeholder buy-in</li>
+            <li><strong>ST8 Foot Traffic</strong> Centre needs visitors outside September; hostel becomes traffic driver</li>
+            <li><strong>ST9 Free Press</strong> Dezeen, ArchDaily, Fast Company story writes itself: "Festival + Hostel"</li>
+            <li><strong>ST10 Culture Legacy</strong> Linz 2009: 3.5M attendances over three months. This extends that energy</li>
+            <li><strong>ST11 ESG/SDG</strong> SDG 3 (health), 11 (sustainable cities), 17 (partnerships) for annual impact reports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MASTER NARRATIVE ===== -->
+  <section>
+    <div class="narrative-card">
+      <h3>Read the Full Story: Festivals Have Venues. Festivals Don't Have Villages.</h3>
+      <button class="cta-button" onclick="toggleNarrative()" style="width: auto; margin: 30px 0 0 0;">Expand Full Story</button>
+      <div class="narrative-text" id="narrative-text" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+        <div class="movement">
+          <span class="movement-number">I</span>
+          September. Linz. Sound artist Tokyo, biologist Lagos, 19-year-old Graz. By 10 PM same kitchen. Nobody planned this. The building did.
+        </div>
+        <div class="movement">
+          <span class="movement-number">II</span>
+          1979 Ars born. 2009 European Capital of Culture, 3.5M attendances. 2026: 122K come, scattered hotels, breakfast alone. Stages exist. Village doesn't.
+        </div>
+        <div class="movement">
+          <span class="movement-number">III</span>
+          You programme every minute. But the most important moment? Breakfast conversation. Midnight kitchen. Lobby encounter → 3-year collaboration. Not happening.
+        </div>
+        <div class="movement">
+          <span class="movement-number">IV</span>
+          Breakfast table seats twelve. Robotics PhD ETH Zurich. 17-year-old Graz. Brazilian volunteer/street artist. Prix Ars jury member puts phone down. That table doesn't exist in any hotel.
+        </div>
+        <div class="movement">
+          <span class="movement-number">V</span>
+          Jury member finishes judging 9 PM. Taxi 20min. Eats alone. Breakfast: table for one. Never knows awarded artist was 3 blocks away. Two realities. One signature apart.
+        </div>
+        <div class="movement">
+          <span class="movement-number">VI</span>
+          Not metaphor. Architecture. Oldenburg third places. Granovetter weak ties. Ars exhibited: GEMeinsam, Kyrielle, Social Play. Given ideas a stage. Give them a building.
+        </div>
+        <div class="movement">
+          <span class="movement-number">VII</span>
+          The Basecamp. 90 beds, one kitchen, one lounge. Walking distance. €28/night. Permanent Ars installation, curated year-round. Not 5 days. 365.
+        </div>
+        <div class="movement">
+          <span class="movement-number">VIII</span>
+          Where do Prix winners sleep? Not the famous ones. 24-year-old Medellín. Researcher Dakar. Seoul students. Sleep in village. Cook with Futurelab scientist. Walk to venue 5 min.
+        </div>
+        <div class="movement">
+          <span class="movement-number">IX</span>
+          Your mission: art/tech/society. Our building: loneliness crisis, spatial architecture, creative community since 1979. Not two projects. One project, two addresses.
+        </div>
+        <div class="movement">
+          <span class="movement-number">X</span>
+          €15,000 for 3 years = 0.06% revenue. 25 beds €28/night. Vouchers. Installation 12 months. Priority booking. SDG 3,11,17. Tax-deductible. Full refund. Zero risk.
+        </div>
+        <div class="movement">
+          <span class="movement-number">XI</span>
+          Not asking for decision. Asking for conversation. Letter of intent: no money, no legal, no board approval. When Sparkasse sees "Ars Electronica" on commitment sheet: "how fast can we close?"
+        </div>
+        <div class="movement">
+          <span class="movement-number">XII</span>
+          Last exhibition closes. Stages go dark. 122K go home. Festival ends every September. Village doesn't. 1979: you built the festival. 2027: build the village.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section class="cta-section" id="contact">
+    <div class="cta-label">Next Step</div>
+    <h2 class="cta-headline">30 Minutes. One Conversation.</h2>
+    <p class="cta-body">The letter of intent is one page. No payment, no legal complexity, no board approval required.</p>
+    <a href="mailto:rafaelwabisabi@gmail.com?subject=Linz%20Hostel%20%C3%97%20Ars%20Electronica%20%E2%80%94%20Partnership%20Conversation" class="cta-button">Schedule a Conversation →</a>
+    <div class="cta-footer">
+      <strong>Rafael Barros</strong> — Tech Partner<br>
+      Linz Hostel: The Social Impact Hub
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    © 2026 Linz Hostel: The Social Impact Hub. Photos: Pexels (CC0). All figures verified March 2026.
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      const isActive = item.classList.contains('active');
+      
+      // Close all other items
+      document.querySelectorAll('.accordion-item').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Toggle current item
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    function toggleNarrative() {
+      const text = document.getElementById('narrative-text');
+      if (text.style.maxHeight === '0px' || text.style.maxHeight === '') {
+        text.style.maxHeight = text.scrollHeight + 'px';
+      } else {
+        text.style.maxHeight = '0px';
+      }
+    }
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // Fix nav on scroll
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 10) {
+        nav.style.borderBottomColor = '#333333';
+      } else {
+        nav.style.borderBottomColor = '#222222';
+      }
+    });
+  </script>
+
+</body>
+</html>

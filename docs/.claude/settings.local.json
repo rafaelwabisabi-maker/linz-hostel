@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "mcp__PDF_Tools_-_Analyze__Extract__Fill__Compare__read_pdf_content",
+      "Bash(node --version:*)",
+      "Bash(npm:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(curl:*)",
+      "mcp__Claude_in_Chrome__switch_browser",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo list:*)",
+      "Bash(npx vercel:*)",
+      "Bash(command -v:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebFetch(domain:hostel-pitch-ai.vercel.app)",
+      "Bash(python3:*)",
+      "WebFetch(domain:tabakfabrik-linz.at)",
+      "WebFetch(domain:archello.com)"
+    ]
+  }
+}

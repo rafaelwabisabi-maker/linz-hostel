@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KraftWerk Hostel — Brand Moodboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-bg: #4A4543;
+    --brand-bg-dark: #3E3A38;
+    --brand-bg-card: #5A5552;
+    --brand-peach: #D4B8A0;
+    --brand-peach-light: #E8D5C4;
+    --brand-cream: #C8BCB4;
+    --brand-white: #F5F0EB;
+    --brand-copper: #C4997E;
+    --brand-terracotta: #A0522D;
+    --brand-teal: #4A7C7E;
+    --brand-coral: #E76E50;
+    --brand-dark-brown: #30231D;
+    --brand-nav-brown: #846D62;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1817;
+    color: var(--brand-cream);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .hero {
+    background: var(--brand-bg);
+    padding: 80px 60px;
+    text-align: center;
+    border-bottom: 2px solid var(--brand-copper);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--brand-peach);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+  .hero .subtitle {
+    font-size: 1rem;
+    color: var(--brand-cream);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .hero .meta {
+    margin-top: 24px;
+    font-size: 0.85rem;
+    color: var(--brand-cream);
+    opacity: 0.5;
+  }
+  .section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .section-header {
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(196,153,126,0.3);
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--brand-peach);
+    font-weight: 400;
+  }
+  .section-header .section-num {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand-copper);
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    color: var(--brand-cream);
+    opacity: 0.65;
+    max-width: 700px;
+  }
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+  }
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--brand-bg-card);
+  }
+  .swatch-color { height: 120px; }
+  .swatch-info { padding: 16px; }
+  .swatch-info .name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--brand-white);
+    margin-bottom: 4px;
+  }
+  .swatch-info .hex {
+    font-size: 0.8rem;
+    color: var(--brand-cream);
+    opacity: 0.6;
+    font-family: monospace;
+  }
+  .swatch-info .usage {
+    font-size: 0.75rem;
+    color: var(--brand-cream);
+    opacity: 0.45;
+    margin-top: 6px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+  .badge-existing { background: var(--brand-copper); color: #1a1817; }
+  .badge-suggested { background: var(--brand-teal); color: var(--brand-white); }
+  .type-samples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .type-card {
+    background: var(--brand-bg);
+    border-radius: 12px;
+    padding: 40px;
+    border: 1px solid rgba(196,153,126,0.15);
+  }
+  .type-card .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--brand-copper);
+    margin-bottom: 16px;
+  }
+  .type-card .sample {
+    margin-bottom: 20px;
+    color: var(--brand-peach-light);
+  }
+  .type-card .meta-info {
+    font-size: 0.8rem;
+    color: var(--brand-cream);
+    opacity: 0.5;
+  }
+  .img-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .img-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--brand-bg-card);
+    position: relative;
+  }
+  .img-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+  }
+  .img-card.tall img { height: 360px; }
+  .img-card .caption {
+    padding: 14px 16px;
+    font-size: 0.8rem;
+    color: var(--brand-cream);
+  }
+  .img-card .caption strong {
+    color: var(--brand-peach);
+    font-weight: 500;
+  }
+  .img-card .overlay-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .ref-card {
+    background: var(--brand-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(196,153,126,0.12);
+    transition: border-color 0.3s;
+  }
+  .ref-card:hover { border-color: var(--brand-copper); }
+  .ref-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .ref-card .ref-info { padding: 20px; }
+  .ref-card .ref-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--brand-peach);
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .ref-card .ref-info .location {
+    font-size: 0.8rem;
+    color: var(--brand-copper);
+    margin-bottom: 10px;
+  }
+  .ref-card .ref-info p {
+    font-size: 0.85rem;
+    color: var(--brand-cream);
+    opacity: 0.6;
+    line-height: 1.5;
+  }
+  .ref-card .tags {
+    padding: 0 20px 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    border: 1px solid rgba(196,153,126,0.3);
+    color: var(--brand-cream);
+    opacity: 0.7;
+  }
+  .suggestion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  .suggestion-card {
+    background: var(--brand-bg);
+    border-radius: 12px;
+    padding: 36px;
+    border: 2px dashed rgba(74,124,126,0.5);
+  }
+  .suggestion-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--brand-peach);
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+  .suggestion-card .option-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--brand-teal);
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .stock-card {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .stock-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+  .stock-card .stock-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(26,24,23,0.85));
+    padding: 24px 12px 10px;
+    font-size: 0.72rem;
+    color: var(--brand-cream);
+  }
+  .notes-box {
+    background: var(--brand-bg);
+    border-radius: 12px;
+    padding: 32px;
+    border-left: 3px solid var(--brand-copper);
+    margin-top: 40px;
+  }
+  .notes-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--brand-peach);
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  .notes-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .notes-box ul li {
+    padding: 6px 0;
+    font-size: 0.88rem;
+    color: var(--brand-cream);
+    opacity: 0.7;
+    padding-left: 16px;
+    position: relative;
+  }
+  .notes-box ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--brand-copper);
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(196,153,126,0.15);
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .section { padding: 40px 20px; }
+    .type-samples, .suggestion-grid { grid-template-columns: 1fr; }
+    .img-grid, .stock-grid { grid-template-columns: repeat(2, 1fr); }
+    .ref-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>KraftWerk Hostel</h1>
+  <div class="subtitle">Brand Encyclopedia — Linz, Austria</div>
+  <div class="meta">Compiled from linzhostel.com, 5 pitch decks & presentations, location footage, and worldwide references · Feb 2026</div>
+  <div style="margin-top:20px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+    <a href="https://www.linzhostel.com/" target="_blank" style="display:inline-block; padding:10px 24px; background:var(--brand-coral); color:var(--brand-white); border-radius:8px; text-decoration:none; font-size:0.85rem; font-weight:500; letter-spacing:0.05em;">Live Website →</a>
+    <a href="#source-annex" style="display:inline-block; padding:10px 24px; background:transparent; color:var(--brand-copper); border:1px solid var(--brand-copper); border-radius:8px; text-decoration:none; font-size:0.85rem; font-weight:500; letter-spacing:0.05em;">Source Documents ↓</a>
+  </div>
+</div>
+
+<!-- 01 — COLOR PALETTE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">01 — Extracted from Pitch Deck</div>
+    <h2>Color Palette</h2>
+    <p>These colors are already established in Friedo's pitch deck. The dark warm palette conveys grounded warmth — industrial heritage meets community intimacy.</p>
+  </div>
+  <div class="palette-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#4A4543;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Warm Charcoal</div>
+        <div class="hex">#4A4543</div>
+        <div class="usage">Primary background — all slides</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4B8A0;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Blush Peach</div>
+        <div class="hex">#D4B8A0</div>
+        <div class="usage">Headlines, accent text, dividers</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#C4997E;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Copper</div>
+        <div class="hex">#C4997E</div>
+        <div class="usage">Accents, lines, ecosystem diagram</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#C8BCB4;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Warm Cream</div>
+        <div class="hex">#C8BCB4</div>
+        <div class="usage">Body text throughout</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#3E3A38;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Deep Char</div>
+        <div class="hex">#3E3A38</div>
+        <div class="usage">Card backgrounds, depth layers</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F5F0EB;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Warm White</div>
+        <div class="hex">#F5F0EB</div>
+        <div class="usage">Key headlines, high contrast text</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E76E50;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Coral CTA</div>
+        <div class="hex">#E76E50</div>
+        <div class="usage">Primary call-to-action buttons on linzhostel.com — energetic, action-driving</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#846D62;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Nav Brown</div>
+        <div class="hex">#846D62</div>
+        <div class="usage">Navigation links, muted text on linzhostel.com</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#30231D;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-existing">Existing</span>
+        <div class="name" style="margin-top:8px;">Dark Espresso</div>
+        <div class="hex">#30231D</div>
+        <div class="usage">Body text color on website (light sections)</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#4A7C7E;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-suggested">Suggested</span>
+        <div class="name" style="margin-top:8px;">Tabakfabrik Teal</div>
+        <div class="hex">#4A7C7E</div>
+        <div class="usage">From the actual window frames at the location — secondary accent for digital</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#A0522D;"></div>
+      <div class="swatch-info">
+        <span class="badge badge-suggested">Suggested</span>
+        <div class="name" style="margin-top:8px;">Terracotta</div>
+        <div class="hex">#A0522D</div>
+        <div class="usage">From the actual brick floors at the location — warm earth anchor</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 02 — TYPOGRAPHY -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">02 — Typography</div>
+    <h2>Fonts & Type Hierarchy</h2>
+    <p>CONFIRMED from linzhostel.com source code: Playfair Display for headlines, Inter for body. Both are Google Fonts, free, and already live.</p>
+  </div>
+  <div class="type-samples">
+    <div class="type-card">
+      <div class="label"><span class="badge badge-existing">Confirmed — from linzhostel.com</span></div>
+      <div class="sample" style="font-family:'Playfair Display',serif; font-size:2.4rem; line-height:1.2;">Kraftwerk Linz</div>
+      <div class="sample" style="font-family:'Playfair Display',serif; font-size:1.2rem; font-style:italic; opacity:0.7;">In Linz beginnt's — Deine Reise zu Zugehörigkeit und Verbindung</div>
+      <div class="sample" style="font-family:'Inter',sans-serif; font-size:0.95rem; margin-top:16px; opacity:0.6; line-height:1.7;">Der neue soziale Kraftplatz für Zugehörigkeit, Begegnung und kulturelle Verbindung in Linz. Wir verwandeln Einsamkeit in Gemeinschaft.</div>
+      <div style="margin-top:20px; display:flex; gap:12px;">
+        <span style="display:inline-block; background:#E76E50; color:white; padding:12px 24px; border-radius:12px; font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:500;">Teil der Bewegung werden</span>
+        <span style="display:inline-block; background:rgba(252,250,248,0.15); color:var(--brand-white); padding:12px 24px; border-radius:12px; font-family:'Inter',sans-serif; font-size:0.9rem; border:1px solid rgba(252,250,248,0.3);">Unsere Vision entdecken</span>
+      </div>
+      <div class="meta-info" style="margin-top:24px;">
+        Headlines: <strong>Playfair Display</strong> (Georgia fallback)<br>
+        Body: <strong>Inter</strong> (system-ui fallback)<br>
+        CTA Buttons: Inter 500, 12px border-radius, coral #E76E50<br>
+        <em>Both are free Google Fonts. Already deployed on linzhostel.com.</em>
+      </div>
+    </div>
+    <div class="type-card">
+      <div class="label"><span class="badge badge-existing">Type Hierarchy — Live on Site</span></div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:0.7rem; color:var(--brand-copper); margin-bottom:4px;">H1 — 96px</div>
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--brand-peach-light);">Kraftwerk Linz</div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:0.7rem; color:var(--brand-copper); margin-bottom:4px;">H2 — 48px</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach-light);">Kein Hostel. Kein Coworking. Ein Kraftplatz.</div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:0.7rem; color:var(--brand-copper); margin-bottom:4px;">SECTION LABEL — uppercase, coral</div>
+        <div style="font-family:'Inter',sans-serif; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.15em; color:#E76E50;">Events &amp; Programm</div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:0.7rem; color:var(--brand-copper); margin-bottom:4px;">BODY — Inter 400</div>
+        <div style="font-family:'Inter',sans-serif; font-size:0.95rem; color:var(--brand-cream); opacity:0.6;">Jedes Event bewusst gestaltet — um Verbindung zu stiften, Wachstum zu ermöglichen und Zugehörigkeit erlebbar zu machen.</div>
+      </div>
+      <div>
+        <div style="font-size:0.7rem; color:var(--brand-copper); margin-bottom:4px;">NAV LINKS — Inter, #846D62</div>
+        <div style="font-family:'Inter',sans-serif; font-size:0.9rem; color:#846D62;">Home &nbsp; Konzept &nbsp; Hostel &nbsp; Über Uns &nbsp; Partner &nbsp; Kontakt</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 03 — LOGO -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">03 — Logo Treatment</div>
+    <h2>Current Logo & Mark Suggestions</h2>
+    <p>The live website (linzhostel.com) reveals a LOGO with sunrise icon + "LINZ HOSTEL" + tagline "THE SOCIAL IMPACT HUB". This differs from the pitch deck wordmark.</p>
+  </div>
+  <div class="suggestion-grid">
+    <div class="suggestion-card" style="border-color:rgba(196,153,126,0.4); border-style:solid;">
+      <h3>What Exists — Two Versions</h3>
+      <div style="background:var(--brand-bg-dark); border-radius:8px; padding:24px; text-align:center; margin-top:12px;">
+        <svg width="50" height="35" viewBox="0 0 50 35" style="margin-bottom:6px;">
+          <line x1="25" y1="2" x2="25" y2="8" stroke="#E76E50" stroke-width="1.5"/>
+          <line x1="12" y1="6" x2="16" y2="11" stroke="#E76E50" stroke-width="1.5"/>
+          <line x1="38" y1="6" x2="34" y2="11" stroke="#E76E50" stroke-width="1.5"/>
+          <line x1="5" y1="17" x2="11" y2="17" stroke="#E76E50" stroke-width="1.5"/>
+          <line x1="39" y1="17" x2="45" y2="17" stroke="#E76E50" stroke-width="1.5"/>
+          <path d="M13 24 Q25 8 37 24" stroke="#E76E50" stroke-width="2" fill="none"/>
+          <line x1="9" y1="24" x2="41" y2="24" stroke="#E76E50" stroke-width="1.5"/>
+        </svg>
+        <div style="font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:600; color:var(--brand-white); letter-spacing:0.12em;">LINZ HOSTEL</div>
+        <div style="font-family:'Inter',sans-serif; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--brand-cream); opacity:0.5; margin-top:2px;">The Social Impact Hub</div>
+        <div style="font-size:0.65rem; color:var(--brand-teal); margin-top:8px;">↑ Website version (linzhostel.com)</div>
+      </div>
+      <div style="background:var(--brand-bg-dark); border-radius:8px; padding:24px; text-align:center; margin-top:12px;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--brand-peach); letter-spacing:0.02em;">KraftWerk</div>
+        <div style="font-family:'Inter',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--brand-copper); margin-top:4px;">Hostel · Linz</div>
+        <div style="font-size:0.65rem; color:var(--brand-teal); margin-top:8px;">↑ Pitch deck version</div>
+      </div>
+      <p style="font-size:0.82rem; opacity:0.5; margin-top:14px;">Two logo treatments coexist. Website has sunrise icon + sans-serif "LINZ HOSTEL". Pitch deck uses serif wordmark "KraftWerk". <strong style="color:var(--brand-peach);">Decision needed: align on ONE primary mark.</strong></p>
+    </div>
+    <div class="suggestion-card">
+      <h3>Icon / Mark Suggestions</h3>
+      <div class="option-label">Option A — Monogram</div>
+      <div style="background:var(--brand-bg-dark); border-radius:8px; padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:3rem; color:var(--brand-peach); letter-spacing:-0.05em; line-height:1;">KW</div>
+        <div style="font-size:0.7rem; color:var(--brand-cream); opacity:0.4; margin-top:4px;">Interlocking K+W monogram — works at any size</div>
+      </div>
+      <div class="option-label">Option B — Factory + Connection Symbol</div>
+      <div style="background:var(--brand-bg-dark); border-radius:8px; padding:24px; text-align:center;">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <rect x="22" y="10" width="16" height="35" rx="2" stroke="#D4B8A0" stroke-width="1.5" fill="none"/>
+          <rect x="26" y="5" width="8" height="8" rx="1" stroke="#D4B8A0" stroke-width="1.5" fill="none"/>
+          <line x1="18" y1="45" x2="42" y2="45" stroke="#C4997E" stroke-width="1.5"/>
+          <circle cx="18" cy="45" r="3" fill="#D4B8A0"/>
+          <circle cx="30" cy="45" r="3" fill="#D4B8A0"/>
+          <circle cx="42" cy="45" r="3" fill="#D4B8A0"/>
+          <line x1="18" y1="48" x2="24" y2="55" stroke="#C4997E" stroke-width="1" opacity="0.5"/>
+          <line x1="30" y1="48" x2="30" y2="55" stroke="#C4997E" stroke-width="1" opacity="0.5"/>
+          <line x1="42" y1="48" x2="36" y2="55" stroke="#C4997E" stroke-width="1" opacity="0.5"/>
+          <circle cx="24" cy="55" r="2" fill="#C4997E" opacity="0.6"/>
+          <circle cx="30" cy="55" r="2" fill="#C4997E" opacity="0.6"/>
+          <circle cx="36" cy="55" r="2" fill="#C4997E" opacity="0.6"/>
+        </svg>
+        <div style="font-size:0.7rem; color:var(--brand-cream); opacity:0.4; margin-top:4px;">Factory silhouette with network nodes<br>(Kraft = power/making, Werk = work/factory)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 04 — ILLUSTRATION LIBRARY -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">04 — Illustration Library</div>
+    <h2>The Complete Visual Language</h2>
+    <p>Daniel's decks contain a rich, consistent hand-drawn illustration library across 5 presentations. These are the core brand visuals — every future asset should match this style.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:32px;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:32px;">
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:16px;">Illustration Characteristics</div>
+      <ul style="list-style:none; padding:0;">
+        <li style="padding:8px 0; border-bottom:1px solid rgba(196,153,126,0.1); font-size:0.9rem;">
+          <strong style="color:var(--brand-peach);">Line Work</strong><br>
+          <span style="opacity:0.6;">Black/dark outlines with hand-drawn quality, not perfectly geometric</span>
+        </li>
+        <li style="padding:8px 0; border-bottom:1px solid rgba(196,153,126,0.1); font-size:0.9rem;">
+          <strong style="color:var(--brand-peach);">Color Fills</strong><br>
+          <span style="opacity:0.6;">Warm earth tones — peach, cream, soft orange, muted brown — matching the brand palette</span>
+        </li>
+        <li style="padding:8px 0; border-bottom:1px solid rgba(196,153,126,0.1); font-size:0.9rem;">
+          <strong style="color:var(--brand-peach);">Subjects</strong><br>
+          <span style="opacity:0.6;">Diverse groups in communal settings, cozy interiors, plants, bookshelves, industrial ceilings, makers at work</span>
+        </li>
+        <li style="padding:8px 0; border-bottom:1px solid rgba(196,153,126,0.1); font-size:0.9rem;">
+          <strong style="color:var(--brand-peach);">Linz Imagery</strong><br>
+          <span style="opacity:0.6;">Historic cityscape + Danube views used alongside illustrations (Linz church tower, Tabakfabrik, golden sunset)</span>
+        </li>
+        <li style="padding:8px 0; font-size:0.9rem;">
+          <strong style="color:var(--brand-peach);">Special Formats</strong><br>
+          <span style="opacity:0.6;">Superhero-style founder portraits, before/after renderings, circular journey diagrams, celebration scenes</span>
+        </li>
+      </ul>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:32px;">
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:16px;">Mood & Feeling</div>
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.4; margin-bottom:20px;">"Warm, grounded, inclusive — like a sketchbook from someone who genuinely cares about people."</div>
+      <p style="font-size:0.88rem; opacity:0.55; line-height:1.6;">The illustration style communicates handmade authenticity, human warmth, and unpretentiousness. It avoids corporate polish while maintaining professionalism. This is the visual embodiment of the "engineered connection" concept — intentional design that still feels organic and personal.</p>
+      <div style="margin-top:20px; padding:16px; background:var(--brand-bg-dark); border-radius:8px;">
+        <div style="font-size:0.75rem; color:var(--brand-teal); font-weight:500;">RECOMMENDATION</div>
+        <div style="font-size:0.85rem; opacity:0.6; margin-top:4px;">Commission the same illustrator (or find the style source) for all future brand materials — website, merch, signage, social media. This style IS the brand.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Illustrations from the Decks -->
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Hero Illustrations — From Pitch Decks</div>
+  <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-bottom:24px;">
+    <div class="img-card tall">
+      <img src="moodboard_assets/teach_cover_illustration.png" alt="Teachcation Cover — Hostel + Workshop Scene">
+      <div class="caption"><strong>Teachcation Cover</strong> — The hero illustration: hostel lounge meets maker workshop. Industrial ceiling, plants, cozy seating, workbench. <em>This is the definitive brand image.</em></div>
+    </div>
+    <div class="img-card tall">
+      <img src="moodboard_assets/pitchdeck_cover.png" alt="Anchor Hostel Cover — Linz Danube Scene">
+      <div class="caption"><strong>Anchor Hostel Cover</strong> — Linz Danube promenade scene with bridge, church towers, outdoor café. Hand-drawn line art with warm earth fills. Shows the city-integrated vision.</div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+    <div class="img-card">
+      <img src="moodboard_assets/teach_makers_week.png" alt="Maker's Week Illustration">
+      <div class="caption"><strong>Maker's Week</strong> — Women crafting at table. Product A visualization.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/teach_celebration_crowd.png" alt="Community Celebration">
+      <div class="caption"><strong>The Vision</strong> — Diverse crowd celebrating in industrial space. Confetti, joy, community.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/teach_founders_portrait.png" alt="Daniel & Anna — Founders Portrait">
+      <div class="caption"><strong>Founders Portrait</strong> — Daniel & Anna at laptop. Clean line art, professional warmth.</div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_common_room.png" alt="Social Impact Hub Concept">
+      <div class="caption"><strong>The Hub Concept</strong> — Bookshelf-lined common room, warm wood, natural light. The "Kraftplatz" vision.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/teach_circular_journey.png" alt="Teachcation Journey Diagram">
+      <div class="caption"><strong>Teachcation Cycle</strong> — Arrival → Soft Landing → Hard Skills → Creation → Departure. Key product diagram.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/teach_maker_workshop.png" alt="Maker in Workshop">
+      <div class="caption"><strong>The Maker</strong> — Young craftsperson in industrial workshop. "From Tourists to Makers" concept.</div>
+    </div>
+  </div>
+
+  <!-- Linz Cityscapes & Context Images -->
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Linz City Imagery — From Decks</div>
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_linz_map_stats.png" alt="In Linz beginnt's — City Stats">
+      <div class="caption"><strong>"In Linz beginnt's"</strong> — Historic Danube view + key stats: 16k+ new residents, 24K+ students, 1M+ tourist stays, 112K Ars Electronica.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_revenue_linz_skyline.png" alt="Linz Night Skyline — Lentos & AEC">
+      <div class="caption"><strong>Linz Night Skyline</strong> — Lentos Kunstmuseum + AEC lit up. The 4-way revenue model with Linz as backdrop.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_closing_linz.png" alt="Linz Church Tower Sunset">
+      <div class="caption"><strong>Linz Sunset</strong> — Church tower in golden light. "Let's Build This Together" closing image. Beautiful hero shot.</div>
+    </div>
+  </div>
+
+  <!-- Founder Superhero Portraits & Before/After -->
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Special Format Illustrations</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+    <div class="img-card tall">
+      <img src="moodboard_assets/anchor_team_superheroes.png" alt="Team Superheroes — Daniel & Anna">
+      <div class="caption"><strong>The Team: Superhero Treatment</strong> — Daniel as "The Visionary" (floating above city), Anna as "Creator of Hope" (superhero cape). Bold, playful, memorable. This format is UNIQUE to KraftWerk.</div>
+    </div>
+    <div class="img-card tall">
+      <img src="moodboard_assets/anchor_before_after.png" alt="Before/After Building Transformation">
+      <div class="caption"><strong>Before → After</strong> — Vacant building transformed into activated community space. Architectural rendering style. Key visual for investor pitches.</div>
+    </div>
+  </div>
+
+  <!-- Tabakfabrik Vision Deck -->
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Tabakfabrik Vision — Collaborative Deck Imagery</div>
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:16px;">
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_personal_story.png" alt="Daniel's Personal Story — Austrian Landscape">
+      <div class="caption"><strong>The Origin Story</strong> — Man in golden field, Austrian landscape. Daniel's journey "from isolation to connection."</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_festivals.png" alt="Linz Festivals Partnership">
+      <div class="caption"><strong>Festival Partnerships</strong> — Crossing Europe, Urfahraner, Bubble Days, Pflasterspektakel, Klangwolke, Ars Electronica.</div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/anchor_partners.png" alt="Partners — Social Enterprise Model">
+      <div class="caption"><strong>Social Enterprise Model</strong> — Sozialministeriumservice, AMS, JKU, Volkshilfe partnerships. The "business that does good."</div>
+    </div>
+  </div>
+
+  <div class="notes-box" style="border-left-color:var(--brand-coral);">
+    <h3>Image Asset Inventory</h3>
+    <ul>
+      <li><strong>5 presentations</strong> with consistent illustration style across all of them</li>
+      <li><strong>~20 unique illustrations</strong> — hand-drawn hostel scenes, maker workshops, community celebrations, Linz cityscapes</li>
+      <li><strong>2 founder portraits</strong> — professional line-art AND superhero treatment</li>
+      <li><strong>1 before/after rendering</strong> — building transformation concept</li>
+      <li><strong>3 diagrams</strong> — Teachcation cycle, floor plan strategy, revenue model</li>
+      <li><strong>Multiple Linz photos</strong> — night skyline, Danube panorama, church tower sunset, historic views</li>
+      <li><strong>All extracted as PNG</strong> in <code>moodboard_assets/</code> folder — ready for reuse</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 05 — THE FOUNDERS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">05 — The Founders</div>
+    <h2>Daniel Kruger & Anna</h2>
+    <p>The team behind KraftWerk. Their personal stories ARE the brand narrative.</p>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div style="background:var(--brand-bg); border-radius:12px; overflow:hidden;">
+      <div style="padding:32px;">
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:8px;">Co-Founder</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--brand-peach); margin-bottom:4px;">Daniel Kruger</div>
+        <div style="font-size:0.85rem; color:var(--brand-copper); margin-bottom:16px;">The Visionary & Community Builder</div>
+        <p style="font-size:0.88rem; opacity:0.6; line-height:1.6; margin-bottom:16px;">Journey from South Africa to Linz taught him the pain of the "loneliness pandemic." Expertise in sales, IT, and community building. The mission was born from personal experience with isolation, rejection, and depression after arriving in Austria in 2022.</p>
+        <div style="padding:12px 16px; background:var(--brand-bg-dark); border-radius:8px; font-size:0.82rem; color:var(--brand-cream); opacity:0.7; font-style:italic;">"If we prove this in Linz, it becomes the blueprint for all of Austria."</div>
+      </div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; overflow:hidden;">
+      <div style="padding:32px;">
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:8px;">Co-Founder</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--brand-peach); margin-bottom:4px;">Anna</div>
+        <div style="font-size:0.85rem; color:var(--brand-copper); margin-bottom:16px;">The Operator & Hostel Professional</div>
+        <p style="font-size:0.88rem; opacity:0.6; line-height:1.6; margin-bottom:16px;">Qualified Hotelkauffrau with 8 years building and running 2 hostels in India from the ground up. Provides proven operational mastery. "Creator of Hope" — she provides the 'How' to Daniel's 'Why.'</p>
+        <div style="padding:12px 16px; background:var(--brand-bg-dark); border-radius:8px; font-size:0.82rem; color:var(--brand-cream); opacity:0.7; font-style:italic;">"I provide the 'How.' Daniel provides the 'Why.' Anna provides the 'How.'"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 06 — LOCATION IMAGES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">06 — Location & Tabakfabrik</div>
+    <h2>Tabakfabrik Space — Jan 2026</h2>
+    <p>38 video snapshots from Daniel's walkthrough of the potential space at Tabakfabrik Linz. Raw industrial heritage with massive potential. The building itself IS the brand.</p>
+  </div>
+  <div class="img-grid">
+    <div class="img-card tall">
+      <img src="moodboard_assets/location_01.jpg" alt="Tabakfabrik interior — drywall framing and industrial columns">
+      <div class="caption"><strong>Drywall framing + concrete columns</strong><br>Raw industrial bones — exposed infrastructure, red brick floor</div>
+      <div class="overlay-badge"><span class="badge badge-existing">From folder</span></div>
+    </div>
+    <div class="img-card tall">
+      <img src="moodboard_assets/location_02.jpg" alt="Tabakfabrik — frosted glass partitions, natural light">
+      <div class="caption"><strong>Glass partitions + factory windows</strong><br>Beautiful natural light through grid windows, frosted glass dividers</div>
+      <div class="overlay-badge"><span class="badge badge-existing">From folder</span></div>
+    </div>
+    <div class="img-card tall">
+      <img src="moodboard_assets/location_03.jpg" alt="Tabakfabrik — open plan with glass walls and concrete">
+      <div class="caption"><strong>Open plan + teal window frames</strong><br>The teal-green steel frames are a signature of the Tabakfabrik building</div>
+      <div class="overlay-badge"><span class="badge badge-existing">From folder</span></div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/location_04.jpg" alt="Tabakfabrik — columns and construction materials">
+      <div class="caption"><strong>Column grid + high ceilings</strong><br>Concrete column rhythm creates natural zone separation</div>
+      <div class="overlay-badge"><span class="badge badge-existing">From folder</span></div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/location_05.jpg" alt="Tabakfabrik — large windows and columns">
+      <div class="caption"><strong>Double-height + sunlight</strong><br>Light flooding through massive grid windows</div>
+      <div class="overlay-badge"><span class="badge badge-existing">From folder</span></div>
+    </div>
+    <div class="img-card">
+      <img src="moodboard_assets/location_06.jpg" alt="Tabakfabrik — mezzanine view with steel beam">
+      <div class="caption"><strong>Mezzanine / upper level</strong><br>Orange steel beam, white tile floor — multi-level potential</div>
+      <div class="overlay-badge"><span class="badge badge-existing">From folder</span></div>
+    </div>
+  </div>
+  <div class="notes-box">
+    <h3>Key Architectural Features to Preserve in Design</h3>
+    <ul>
+      <li>Exposed concrete columns with raw aggregate texture — these become the "industrial soul" of the space</li>
+      <li>Factory grid windows with teal/green steel frames — unique to Tabakfabrik, a signature visual element</li>
+      <li>Terracotta/red brick floor tiles — warm, historical, grounding (connect to brand terracotta color)</li>
+      <li>High ceilings with exposed HVAC ductwork — keep industrial, don't hide it</li>
+      <li>Natural light patterns through grid windows — the diamond light patterns on floors are beautiful</li>
+      <li>Orange/rust steel structural elements — patina tells the building's story</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 07 — LINZ & AUSTRIA CONTEXT -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">07 — Linz & Austria</div>
+    <h2>"In Linz beginnt's" — The City Context</h2>
+    <p>Linz is booming. The market data, festival ecosystem, and cultural identity that make this the right city for KraftWerk.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:16px; margin-bottom:32px; text-align:center;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--brand-coral); font-weight:700;">16k+</div>
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown); margin-top:4px;">New Residents / Year</div>
+      <div style="font-size:0.75rem; color:var(--brand-cream); opacity:0.5; margin-top:8px;">Annual population growth bringing fresh energy and diversity</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--brand-coral); font-weight:700;">24K+</div>
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown); margin-top:4px;">University Students</div>
+      <div style="font-size:0.75rem; color:var(--brand-cream); opacity:0.5; margin-top:8px;">JKU alone: 15% international from 100+ countries</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--brand-coral); font-weight:700;">1M+</div>
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown); margin-top:4px;">Tourist Stays</div>
+      <div style="font-size:0.75rem; color:var(--brand-cream); opacity:0.5; margin-top:8px;">Breaking records as a cultural destination</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--brand-coral); font-weight:700;">112K</div>
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown); margin-top:4px;">Ars Electronica</div>
+      <div style="font-size:0.75rem; color:var(--brand-cream); opacity:0.5; margin-top:8px;">International artists & tech creatives annually</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--brand-coral); font-weight:700;">200k+</div>
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown); margin-top:4px;">Pflasterspektakel</div>
+      <div style="font-size:0.75rem; color:var(--brand-cream); opacity:0.5; margin-top:8px;">Europe's largest street art festival, 3 days</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Festival & Events Calendar — Partnership Opportunities</div>
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:24px;">
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px; border-left:3px solid var(--brand-coral);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Crossing Europe</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">International film festival — April</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px; border-left:3px solid var(--brand-coral);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Urfahraner Markt</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">Traditional fair — Spring & Autumn</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px; border-left:3px solid var(--brand-coral);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Bubble Days</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">Danube festival — Summer</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px; border-left:3px solid var(--brand-copper);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Pflasterspektakel</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">200k+ visitors, street art — July</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px; border-left:3px solid var(--brand-copper);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Klangwolke</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">Sound cloud spectacle — September</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px; border-left:3px solid var(--brand-copper);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Ars Electronica</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">112k visitors, art+tech — September</div>
+    </div>
+  </div>
+
+  <div style="background:var(--brand-bg); border-radius:12px; padding:24px; text-align:center;">
+    <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--brand-peach); margin-bottom:8px;">"In Linz beginnt's"</div>
+    <div style="font-size:0.9rem; color:var(--brand-cream); opacity:0.6;">It starts in Linz. — The city's own slogan, which Daniel reframes: <strong style="color:var(--brand-coral);">"In Linz beginnt's... with Belonging."</strong></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 08 — PARTNERS & STAKEHOLDERS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">08 — Partners & Stakeholders</div>
+    <h2>The Ecosystem</h2>
+    <p>Every organization Daniel has identified as a partner, supporter, or stakeholder. These are the logos and names that will appear on materials.</p>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Strategic Partners — Named in Decks</div>
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:24px;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Grand Garage</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Makerspace</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Tabakfabrik makerspace. "Teachcation" co-creator. Provides machinery + courses for Maker's Week.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Tabakfabrik Linz</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Location / Ecosystem</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Former tobacco factory, now creative quarter. 300+ companies, co-working, events. The physical home of KraftWerk.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Linz Tourismus</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Tourism Board</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Festival partnership for traveler market. Co-marketing for Pflasterspektakel, Ars Electronica, Crossing Europe.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Sparkasse</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Banking Partner</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Named as potential financial partner. #glaubandich initiative alignment.</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Social Impact Partners</div>
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:24px;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(74,124,126,0.3);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Sozialministerium&shy;service</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-teal);">Inclusive Employment</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Government partner for inclusive employment. Unlocks wage subsidies and grants for neuro-inclusive workforce model.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(74,124,126,0.3);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">AMS</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-teal);">Employment Integration</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Austrian employment service. KraftWerk as integration landing space for new workers.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(74,124,126,0.3);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">JKU</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-teal);">University</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Johannes Kepler University. Student housing pipeline + international student landing space.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(74,124,126,0.3);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Volkshilfe</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-teal);">Social Services</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Social services coordination. Refugee and newcomer integration support.</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Startup & Innovation Ecosystem</div>
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:16px;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Startrampe</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Startup Program</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Named alongside Sparkasse as startup support partner.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">VantArc Agency</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Design Agency</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Built linzhostel.com. Credited in website footer. "Website by VantArc Agency."</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:20px; text-align:center; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brand-peach); margin-bottom:4px;">Friedo</div>
+      <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-copper);">Creative Partner</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Created the original pitch deck with VantArc. The illustration style originates from this collaboration.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 09 — KEY CONCEPTS & MESSAGING -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">09 — Key Concepts & Messaging</div>
+    <h2>The Language of KraftWerk</h2>
+    <p>Every tagline, concept name, and messaging framework Daniel has developed. Use these consistently across all content.</p>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Primary Taglines</div>
+  <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-bottom:24px;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:28px; border-left:3px solid var(--brand-coral);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.3; margin-bottom:8px;">"Sleep Here. Create There. Grow Together."</div>
+      <div style="font-size:0.78rem; opacity:0.5;">Teachcation initiative tagline — the value proposition in 7 words</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:28px; border-left:3px solid var(--brand-coral);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.3; margin-bottom:8px;">"The Social Impact Hub"</div>
+      <div style="font-size:0.78rem; opacity:0.5;">Website tagline under "LINZ HOSTEL" — the positioning statement</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:28px; border-left:3px solid var(--brand-copper);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.3; margin-bottom:8px;">"Der soziale Kraftplatz für Zugehörigkeit"</div>
+      <div style="font-size:0.78rem; opacity:0.5;">German tagline from website — "The social power-place for belonging"</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:28px; border-left:3px solid var(--brand-copper);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.3; margin-bottom:8px;">"From Isolation to Connection"</div>
+      <div style="font-size:0.78rem; opacity:0.5;">Main pitch deck title — Daniel's personal journey and the brand mission</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:28px; border-left:3px solid var(--brand-teal);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.3; margin-bottom:8px;">"The Living Room of Linz"</div>
+      <div style="font-size:0.78rem; opacity:0.5;">Anchor Hostel pitch deck — the community space metaphor</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:28px; border-left:3px solid var(--brand-teal);">
+      <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--brand-peach); line-height:1.3; margin-bottom:8px;">"Where every beginning finds its community."</div>
+      <div style="font-size:0.78rem; opacity:0.5;">Anchor Hostel deck subtitle — the emotional promise</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Product & Program Names</div>
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brand-coral);">The "Teachcation"</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Educational tourism concept. Anchor Hostel × Grand Garage partnership. The umbrella brand for maker programs.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brand-coral);">Maker's Week</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Product A — B2C package: 5 nights + 1 Grand Garage course. Off-season growth driver.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brand-coral);">The Residency</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Product B — B2B social impact. Long-term stays with skill exchange and community integration.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brand-copper);">Kraftplatz</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">"Power-place" — The core concept. A space that generates energy, connection, and growth. Austrian cultural resonance.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brand-copper);">Anchor Model</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">The "Neuro-Inclusive Anchor Model" — V2 business model. Stable student labor + high-yield tourism. Staff Sanctuary + Tourist Zone.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:12px; padding:24px;">
+      <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brand-copper);">Shift & Skill</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:8px;">Residents teach their passions (German, yoga, coding). Teaching feels less like work. Everyone learns from everyone.</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Key Hashtags & CTAs</div>
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+    <span style="padding:8px 16px; background:var(--brand-bg); border-radius:20px; font-size:0.85rem; color:var(--brand-coral); border:1px solid var(--brand-coral);">#glaubandich</span>
+    <span style="padding:8px 16px; background:var(--brand-bg); border-radius:20px; font-size:0.85rem; color:var(--brand-copper); border:1px solid var(--brand-copper);">Teil der Bewegung werden</span>
+    <span style="padding:8px 16px; background:var(--brand-bg); border-radius:20px; font-size:0.85rem; color:var(--brand-copper); border:1px solid var(--brand-copper);">Unsere Vision entdecken</span>
+    <span style="padding:8px 16px; background:var(--brand-bg); border-radius:20px; font-size:0.85rem; color:var(--brand-teal); border:1px solid var(--brand-teal);">In Linz beginnt's</span>
+    <span style="padding:8px 16px; background:var(--brand-bg); border-radius:20px; font-size:0.85rem; color:var(--brand-teal); border:1px solid var(--brand-teal);">Participatory Revitalization</span>
+    <span style="padding:8px 16px; background:var(--brand-bg); border-radius:20px; font-size:0.85rem; color:var(--brand-peach); border:1px solid rgba(212,184,160,0.4);">Post-City Healing Commune</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 10 — WORLD REFERENCES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">10 — Worldwide References</div>
+    <h2>Hostels & Spaces That Share KraftWerk's DNA</h2>
+    <p>These are the closest analogues globally — community-focused, design-led, often in converted industrial spaces.</p>
+  </div>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=640&q=80" alt="Industrial hostel common area">
+      <div class="ref-info">
+        <h3>KEX Hostel</h3>
+        <div class="location">Reykjavik, Iceland</div>
+        <p>Former biscuit factory turned design hostel. Preserved industrial bones — original beams, factory windows, tiled walls. Bar/restaurant as community anchor. THE benchmark for converted-factory hostels.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">Converted factory</span>
+        <span class="tag">Community bar</span>
+        <span class="tag">Industrial heritage</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=640&q=80" alt="Modern hostel lounge">
+      <div class="ref-info">
+        <h3>Selina</h3>
+        <div class="location">80+ locations worldwide</div>
+        <p>The hostel+coworking hybrid at scale. Each property designed with local artists. Custom typeface, 20-color country palette system. Closest business model parallel to KraftWerk.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">Coworking + hostel</span>
+        <span class="tag">Local artist collabs</span>
+        <span class="tag">Digital nomads</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=640&q=80" alt="Communal hostel space">
+      <div class="ref-info">
+        <h3>Generator Hostels</h3>
+        <div class="location">15+ European cities</div>
+        <p>Sold for &euro;776M in 2025 — proving the hybrid hostel model has massive exit value. Design-led, event-driven, bar/caf&eacute; as revenue anchors.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">&euro;776M exit</span>
+        <span class="tag">Design-led chain</span>
+        <span class="tag">Event programming</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=640&q=80" alt="Coworking space">
+      <div class="ref-info">
+        <h3>COMBO</h3>
+        <div class="location">Venice, Milan, Bologna, Turin</div>
+        <p>5-Star Hostel award winners across all locations. Mixes social, luxury, comfort, and epic design. Strong local cultural programming.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">5-star hostel</span>
+        <span class="tag">Cultural programming</span>
+        <span class="tag">Design excellence</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=640&q=80" alt="Industrial converted space">
+      <div class="ref-info">
+        <h3>Nui Hostel</h3>
+        <div class="location">Tokyo, Japan</div>
+        <p>Converted warehouse on the Sumida river. Concrete walls + exposed roof girders turned into a playful social space. Locals and travelers mix in the bar/lounge. "Nui" = hand-sewing (craft heritage).</p>
+      </div>
+      <div class="tags">
+        <span class="tag">Converted warehouse</span>
+        <span class="tag">Locals + travelers</span>
+        <span class="tag">Craft heritage</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=640&q=80" alt="Community space">
+      <div class="ref-info">
+        <h3>The Wild Elephant Hostel</h3>
+        <div class="location">Bratislava, Slovakia</div>
+        <p>Mentioned directly in Daniel's vision document as his inspiration. The place where he experienced the power of hostel community firsthand. KraftWerk's spiritual ancestor.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">Daniel's inspiration</span>
+        <span class="tag">Intimate community</span>
+        <span class="tag">Personality-driven</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=640&q=80" alt="Modern coworking">
+      <div class="ref-info">
+        <h3>Project Bay — Workation</h3>
+        <div class="location">Lietzow, Germany</div>
+        <p>Purpose-built for coworking + coliving. Full business center, kayaking, beach. Proves the hostel+coworking audience exists in the DACH region specifically.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">DACH market</span>
+        <span class="tag">Workation model</span>
+        <span class="tag">Purpose-built</span>
+      </div>
+    </div>
+    <div class="ref-card">
+      <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=640&q=80" alt="Hostel community space">
+      <div class="ref-info">
+        <h3>Superbude</h3>
+        <div class="location">Hamburg &rarr; Linz (incoming)</div>
+        <p>DIRECT COMPETITOR arriving in Linz. 148 rooms, &euro;15M investment, similar community+culture positioning. Study their brand closely — then differentiate hard on authenticity and neuro-inclusive design.</p>
+      </div>
+      <div class="tags">
+        <span class="tag" style="border-color:#A0522D; color:#D4B8A0;">&#9888; Direct competitor</span>
+        <span class="tag">148 rooms</span>
+        <span class="tag">&euro;15M investment</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 07 — STOCK PHOTO DIRECTION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">11 — Visual References</div>
+    <h2>Stock Photography Direction</h2>
+    <p>For website, social media, and investor materials — these capture the feeling until you have your own photography.</p>
+  </div>
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Community & Connection</div>
+  <div class="stock-grid" style="margin-bottom:24px;">
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" alt="Diverse group laughing together">
+      <div class="stock-label">Diverse group, genuine laughter</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&q=80" alt="Friends around table">
+      <div class="stock-label">Shared table, real conversation</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&q=80" alt="Coworking people">
+      <div class="stock-label">Focused coworking, side by side</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&q=80" alt="Community event">
+      <div class="stock-label">Community gathering, warm light</div>
+    </div>
+  </div>
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Industrial Heritage & Spaces</div>
+  <div class="stock-grid" style="margin-bottom:24px;">
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt="Industrial interior">
+      <div class="stock-label">Exposed concrete, warm light</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=400&q=80" alt="Modern office in industrial space">
+      <div class="stock-label">Modern use of industrial bones</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1519999482648-25049ddd37b1?w=400&q=80" alt="Factory windows light">
+      <div class="stock-label">Factory window light patterns</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1585412459212-a06c5a13a66a?w=400&q=80" alt="Brick and plants">
+      <div class="stock-label">Plants softening raw materials</div>
+    </div>
+  </div>
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Cozy Interiors & Hostel Life</div>
+  <div class="stock-grid">
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&q=80" alt="Hostel common room">
+      <div class="stock-label">Common room, relaxed vibe</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" alt="Warm interior">
+      <div class="stock-label">Warm wood + textiles</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&q=80" alt="Reading nook">
+      <div class="stock-label">Quiet reading nook</div>
+    </div>
+    <div class="stock-card">
+      <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400&q=80" alt="Shared meal">
+      <div class="stock-label">Community table, shared meal</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 08 — CROWDFUNDED HOSPITALITY SUCCESS STORIES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">12 — Crowdfunding</div>
+    <h2>Crowdfunded & Investment-Backed Hospitality Wins</h2>
+  </div>
+  <p class="desc">Real projects that raised capital through crowdfunding, equity campaigns, or community investment — and delivered. These are proof points for KraftWerk's own fundraising strategy.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-bottom:32px;">
+
+    <!-- BrewDog -->
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; overflow:hidden;">
+      <div style="background:linear-gradient(135deg, #1a1a2e, #16213e); padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#F5F0EB; font-weight:700;">BrewDog</div>
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-top:4px;">Equity for Punks</div>
+      </div>
+      <div style="padding:16px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+          <div style="text-align:center;">
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-coral); font-weight:700;">£75M+</div>
+            <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Total Raised</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-copper); font-weight:700;">200k+</div>
+            <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Investors</div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--brand-cream); line-height:1.5; margin:0;">Turned customers into shareholders across 6 equity rounds. Opened 100+ bars worldwide. Investors get discounts + a stake. <strong style="color:var(--brand-coral);">The gold standard for community-funded hospitality.</strong></p>
+      </div>
+    </div>
+
+    <!-- Mirror Hotels -->
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; overflow:hidden;">
+      <div style="background:linear-gradient(135deg, #2d3436, #636e72); padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#F5F0EB; font-weight:700;">Mirror Hotels</div>
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-top:4px;">Crowdcube</div>
+      </div>
+      <div style="padding:16px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+          <div style="text-align:center;">
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-coral); font-weight:700;">£1.72M</div>
+            <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Raised</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-copper); font-weight:700;">5 hrs</div>
+            <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">To Fund</div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--brand-cream); line-height:1.5; margin:0;">Boutique hotel brand raised £1.72M in just 5 hours on Crowdcube, overfunding 344%. Strong brand story + visual identity drove viral momentum. <strong style="color:var(--brand-coral);">Proves hospitality can move fast in equity crowdfunding.</strong></p>
+      </div>
+    </div>
+
+    <!-- Kosmos -->
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; overflow:hidden;">
+      <div style="background:linear-gradient(135deg, #0d1117, #2a3a4c); padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#F5F0EB; font-weight:700;">Kosmos</div>
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-top:4px;">Basel, Switzerland</div>
+      </div>
+      <div style="padding:16px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+          <div style="text-align:center;">
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-coral); font-weight:700;">CHF 1.95M</div>
+            <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Raised</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-copper); font-weight:700;">Co-op</div>
+            <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Model</div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--brand-cream); line-height:1.5; margin:0;">Community-owned cultural space in Basel — hotel, restaurant, event venue. Funded via cooperative shares. <strong style="color:var(--brand-coral);">Closest model to KraftWerk's social-impact hub vision.</strong></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-bottom:24px;">
+
+    <!-- Oculis Lodge -->
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; overflow:hidden;">
+      <div style="background:linear-gradient(135deg, #2d5016, #4a7c28); padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#F5F0EB; font-weight:700;">Oculis Lodge</div>
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:#F5F0EB; opacity:0.8; margin-top:4px;">Indiegogo</div>
+      </div>
+      <div style="padding:16px;">
+        <div style="text-align:center; margin-bottom:12px;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-coral); font-weight:700;">$1.22M</div>
+          <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Raised on Indiegogo</div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--brand-cream); line-height:1.5; margin:0;">Eco-lodge concept that sold future stays as perks. Backers get lifetime discounts. <strong style="color:var(--brand-coral);">Reward-based model KraftWerk could adapt for hostel night packages.</strong></p>
+      </div>
+    </div>
+
+    <!-- Sun and Co. -->
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; overflow:hidden;">
+      <div style="background:linear-gradient(135deg, #c4997e, #d4b8a0); padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#30231D; font-weight:700;">Sun and Co.</div>
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:#4A4543; margin-top:4px;">Jávea, Spain</div>
+      </div>
+      <div style="padding:16px;">
+        <div style="text-align:center; margin-bottom:12px;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-coral); font-weight:700;">€17k</div>
+          <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Community Rescue Fund</div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--brand-cream); line-height:1.5; margin:0;">Coliving/coworking space saved from closure by its own community — guests and alumni crowdfunded €17k to keep it alive. <strong style="color:var(--brand-coral);">Proof that community attachment converts to financial support.</strong></p>
+      </div>
+    </div>
+
+    <!-- Hub.House -->
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; overflow:hidden;">
+      <div style="background:linear-gradient(135deg, #4A7C7E, #3a6264); padding:24px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:#F5F0EB; font-weight:700;">Hub.House</div>
+        <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em; color:#F5F0EB; opacity:0.8; margin-top:4px;">Co-operative Model</div>
+      </div>
+      <div style="padding:16px;">
+        <div style="text-align:center; margin-bottom:12px;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-coral); font-weight:700;">Member-Owned</div>
+          <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-nav-brown);">Cooperative Structure</div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--brand-cream); line-height:1.5; margin:0;">Network of member-owned coliving hubs. Members buy shares, get reduced rates + governance votes. <strong style="color:var(--brand-coral);">Co-op structure could complement KraftWerk's €400k raise.</strong></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="notes-box" style="border-left-color:var(--brand-coral);">
+    <h3>KraftWerk Fundraising Takeaways</h3>
+    <ul>
+      <li><strong>Equity crowdfunding works for hospitality</strong> — Mirror Hotels proved you can overfund 344% with strong brand + story</li>
+      <li><strong>Community co-ops build loyalty</strong> — Kosmos and Hub.House show member-owners become lifelong ambassadors</li>
+      <li><strong>Reward-based perks drive early traction</strong> — Oculis sold future stays; KraftWerk could offer founding member hostel nights</li>
+      <li><strong>Start small, scale later</strong> — BrewDog began with one bar and grew to £75M+ across 6 rounds</li>
+      <li><strong>Community will pay to save what matters</strong> — Sun and Co.'s €17k rescue proves emotional attachment converts to capital</li>
+      <li><strong>KraftWerk's €400k target is realistic</strong> — well within the range these projects have demonstrated</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 13 — SOURCE DOCUMENTS & ANNEX -->
+<div class="section" id="source-annex">
+  <div class="section-header">
+    <div class="section-num">13 — Source Documents</div>
+    <h2>Annex — All Source Materials</h2>
+    <p>Every document, presentation, and resource used to build this encyclopedia. Click to reference the originals.</p>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-coral); margin-bottom:12px;">Live Website</div>
+  <div style="background:var(--brand-bg); border-radius:12px; padding:24px; margin-bottom:24px; border:2px solid var(--brand-coral);">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="width:48px; height:48px; background:var(--brand-coral); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <div>
+        <a href="https://www.linzhostel.com/" target="_blank" style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--brand-peach); text-decoration:none;">linzhostel.com →</a>
+        <div style="font-size:0.8rem; opacity:0.5; margin-top:2px;">Built by VantArc Agency · Playfair Display + Inter · CTA coral #E76E50 · "Kraftwerk Linz | Der soziale Kraftplatz für Zugehörigkeit"</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Presentations & Documents</div>
+  <div style="display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:24px;">
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="min-width:40px; height:40px; background:var(--brand-coral); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--brand-white); font-weight:700;">PDF</div>
+      <div style="flex:1;">
+        <div style="font-weight:500; color:var(--brand-peach); font-size:0.95rem;">Kraftwerk-Hostel-Linz-1.pdf</div>
+        <div style="font-size:0.78rem; opacity:0.5;">Primary pitch deck by VantArc/Friedo via Gamma.app · 14 pages · The main investor-facing document with hand-drawn illustrations, financial model, and Linz cityscape photography</div>
+      </div>
+      <div style="font-size:0.65rem; text-transform:uppercase; color:var(--brand-copper); letter-spacing:0.1em;">Main Deck</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="min-width:40px; height:40px; background:var(--brand-copper); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--brand-white); font-weight:700;">PPTX</div>
+      <div style="flex:1;">
+        <div style="font-weight:500; color:var(--brand-peach); font-size:0.95rem;">Slide: The Anchor Model — From Isolation to Connection</div>
+        <div style="font-size:0.78rem; opacity:0.5;">26-slide extended deck · Neuro-inclusive model V2 · Superhero founder portraits · Before/after renderings · Floor plan strategy · Scalable sister-site vision</div>
+      </div>
+      <div style="font-size:0.65rem; text-transform:uppercase; color:var(--brand-coral); letter-spacing:0.1em;">Key Source</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="min-width:40px; height:40px; background:var(--brand-copper); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--brand-white); font-weight:700;">PDF</div>
+      <div style="flex:1;">
+        <div style="font-weight:500; color:var(--brand-peach); font-size:0.95rem;">Introduction: From Isolation to Connection — Redefining Austria's Narrative</div>
+        <div style="font-size:0.78rem; opacity:0.5;">8 pages · Linz city stats, festival partnerships, 4-way revenue model, team bios, social impact model, partner ecosystem (SMS, AMS, JKU, Volkshilfe), before/after renders, Linz sunset closing</div>
+      </div>
+      <div style="font-size:0.65rem; text-transform:uppercase; color:var(--brand-coral); letter-spacing:0.1em;">Key Source</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="min-width:40px; height:40px; background:var(--brand-copper); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--brand-white); font-weight:700;">PDF</div>
+      <div style="flex:1;">
+        <div style="font-weight:500; color:var(--brand-peach); font-size:0.95rem;">From Tourists to Makers: The "Teachcation" Initiative</div>
+        <div style="font-size:0.78rem; opacity:0.5;">10 pages · Anchor Hostel × Grand Garage partnership · Maker's Week & Residency products · Circular journey diagram · Hero illustrations · Founders portrait</div>
+      </div>
+      <div style="font-size:0.65rem; text-transform:uppercase; color:var(--brand-coral); letter-spacing:0.1em;">Key Source</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="min-width:40px; height:40px; background:var(--brand-teal); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--brand-white); font-weight:700;">PPTX</div>
+      <div style="flex:1;">
+        <div style="font-weight:500; color:var(--brand-peach); font-size:0.95rem;">Tabak Fabriek: Collaborative Vision for Linz</div>
+        <div style="font-size:0.78rem; opacity:0.5;">14 slides · Green community center vision · 4 pillars (Reinvestment, Access, Sustainability, Inclusion) · Partnership ask to City of Linz · Skill-sharing, sponsorship, co-development model</div>
+      </div>
+      <div style="font-size:0.65rem; text-transform:uppercase; color:var(--brand-teal); letter-spacing:0.1em;">Vision Deck</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="min-width:40px; height:40px; background:var(--brand-bg-card); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--brand-cream); font-weight:700;">PDF</div>
+      <div style="flex:1;">
+        <div style="font-weight:500; color:var(--brand-peach); font-size:0.95rem;">Pitch Deck — TheAnchorHostel 4.2.3</div>
+        <div style="font-size:0.78rem; opacity:0.5;">Earlier brand iteration · "The Anchor Hostel" naming · Linz Danube promenade cover illustration · Hand-drawn style with warm earth fills · Gamma.app format</div>
+      </div>
+      <div style="font-size:0.65rem; text-transform:uppercase; color:var(--brand-nav-brown); letter-spacing:0.1em;">Earlier Version</div>
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--brand-copper); margin-bottom:12px;">Additional Assets</div>
+  <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">Location Images / Selected Snapshots</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">38 video snapshots from Jan 2026 walkthrough of Tabakfabrik space. 6 key shots extracted for this encyclopedia.</div>
+    </div>
+    <div style="background:var(--brand-bg); border-radius:10px; padding:16px 20px; border:1px solid rgba(196,153,126,0.15);">
+      <div style="font-weight:500; color:var(--brand-peach); font-size:0.9rem;">moodboard_assets/ folder</div>
+      <div style="font-size:0.78rem; opacity:0.5; margin-top:4px;">~95 extracted images: all PDF page renders, PPTX image assets, location photos. Ready for reuse in content creation.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 14 — BRAND SUMMARY -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">14 — Summary</div>
+    <h2>Brand Identity Status</h2>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div class="notes-box" style="margin-top:0; border-left-color:var(--brand-copper);">
+      <h3>What's Confirmed</h3>
+      <ul>
+        <li><strong style="color:var(--brand-coral);">Headlines: Playfair Display</strong> — confirmed from linzhostel.com source code</li>
+        <li><strong style="color:var(--brand-coral);">Body: Inter</strong> — confirmed from linzhostel.com source code</li>
+        <li><strong style="color:var(--brand-coral);">CTA color: #E76E50</strong> (coral) — live on linzhostel.com buttons</li>
+        <li>Dark warm color palette (charcoal + peach + cream + copper) from pitch decks</li>
+        <li>Hand-drawn illustration style with warm earth fills</li>
+        <li>Website live at <strong>linzhostel.com</strong> — built by VantArc Agency</li>
+        <li>Website logo: sunrise icon + "LINZ HOSTEL" + tagline "The Social Impact Hub"</li>
+        <li>Pitch deck logo: Playfair wordmark "KraftWerk Hostel &middot; Linz"</li>
+        <li>Two complete pitch decks with consistent visual language (via Gamma.app)</li>
+        <li>38 location walkthrough snapshots from Jan 2026</li>
+        <li>Tagline (DE): "Der soziale Kraftplatz für Zugehörigkeit"</li>
+      </ul>
+    </div>
+    <div class="notes-box" style="margin-top:0; border-left-color:var(--brand-teal);">
+      <h3>What's Missing / Needs Decisions</h3>
+      <ul>
+        <li><strong style="color:var(--brand-coral);">⚠ Two different logos exist</strong> — website sunrise mark vs. pitch deck wordmark. Need to align on ONE primary mark</li>
+        <li><strong style="color:var(--brand-coral);">⚠ Name inconsistency</strong> — "KraftWerk Hostel" (decks) vs "Linz Hostel" (website) vs "The Anchor" (older deck)</li>
+        <li>No brand guidelines document — colors/fonts/usage rules not formalized</li>
+        <li>No professional location photography (only video snapshots)</li>
+        <li>No social media templates or brand kit</li>
+        <li>No illustrator identified/credited for future commissions</li>
+        <li>Website color palette diverges from pitch deck palette — need to reconcile</li>
+        <li>No secondary digital palette formalized — teal + terracotta suggested from building</li>
+        <li>No favicon or app icon derived from sunrise mark</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notes-box" style="border-left-color:var(--brand-coral); margin-top:20px;">
+    <h3>Data Sources</h3>
+    <ul>
+      <li><strong>linzhostel.com</strong> — live website, CSS extracted Feb 2026 (fonts, colors, logo, structure)</li>
+      <li><strong>Kraftwerk-Hostel-Linz-1.pdf</strong> — primary pitch deck by VantArc/Friedo via Gamma.app</li>
+      <li><strong>Pitch Deck - TheAnchorHostel 4.2.3.pdf</strong> — earlier brand iteration</li>
+      <li><strong>Location Images/Selected Snapshots/</strong> — 6 key shots from Jan 2026 walkthrough</li>
+      <li><strong>Web research</strong> — worldwide hostel/coliving references + crowdfunding case studies</li>
+    </ul>
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px; color:var(--brand-cream); opacity:0.3; font-size:0.75rem;">
+  KraftWerk Hostel Brand Encyclopedia &middot; 14 Sections &middot; Compiled Feb 2026<br>
+  Sources: <a href="https://www.linzhostel.com/" target="_blank" style="color:var(--brand-copper); text-decoration:none;">linzhostel.com</a> &middot; 5 presentations by Daniel/VantArc/Friedo &middot; 38 location photos &middot; Worldwide research
+</div>
+
+</body>
+</html>

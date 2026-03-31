@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linz Hostel × Ars Electronica — Partnership 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #000000;
+  --dark: #0c0c0c;
+  --card: #141414;
+  --card2: #1e1e1e;
+  --accent: #E8530E;   /* orange — for text, filled boxes, bullets */
+  --line:  #2A6FDB;    /* blue — for divider lines only */
+  --white: #ffffff;
+  --light: #c8c8c8;
+  --gray: #787878;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--black); }
+
+/* ── Deck container ── */
+#deck {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+}
+
+/* ── Each slide ── */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Photo background ── */
+.photo-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay-35 { position:absolute;inset:0;background:rgba(0,0,0,0.35); }
+.overlay-45 { position:absolute;inset:0;background:rgba(0,0,0,0.45); }
+.overlay-55 { position:absolute;inset:0;background:rgba(0,0,0,0.55); }
+.overlay-70 { position:absolute;inset:0;background:rgba(0,0,0,0.70); }
+.overlay-82 { position:absolute;inset:0;background:rgba(0,0,0,0.82); }
+
+/* ── Content layer ── */
+.content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5rem;
+}
+.content.center { align-items: center; text-align: center; }
+
+/* ── Typography ── */
+.label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  line-height: 1.06;
+  color: var(--white);
+}
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--white);
+}
+
+h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.35rem;
+}
+
+p, li {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--light);
+  font-weight: 300;
+}
+
+.italic-orange {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ── Orange bullet list ── */
+.dot-list { list-style: none; }
+.dot-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 0.85rem;
+}
+.dot-list li::before {
+  content: '';
+  display: block;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 0.52rem;
+  border-radius: 0;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  padding: 1.4rem 1.6rem;
+}
+.card-orange {
+  background: var(--accent);
+  padding: 1.4rem 1.6rem;
+}
+.card h3 { color: var(--white); }
+.card-orange h3, .card-orange p, .card-orange li { color: var(--white); }
+
+/* ── Grid ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem; }
+
+/* ── Stat ── */
+.stat-num {
+  font-family: var(--serif);
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Split layout (photo | black) ── */
+.split {
+  display: grid;
+  height: 100%;
+  position: relative;
+}
+.split-r { grid-template-columns: 48% 52%; }
+.split-l { grid-template-columns: 52% 48%; }
+
+.split .black-col {
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 4rem;
+  position: relative;
+  z-index: 2;
+}
+.split .photo-col {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.split-line {
+  position: absolute;
+  top: 0; width: 3px; height: 100%;
+  background: var(--line);
+  z-index: 5;
+}
+.split-r .split-line { left: calc(48% - 1.5px); }
+.split-l .split-line { left: calc(52% - 1.5px); }
+
+/* ── Top/bottom split ── */
+.tb-wrap { display: flex; flex-direction: column; height: 100%; }
+.tb-photo {
+  flex: 0 0 48%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.tb-line { height: 3px; background: var(--line); flex-shrink: 0; }
+.tb-black {
+  flex: 1;
+  background: var(--black);
+  padding: 2.2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Two-photo side by side ── */
+.two-photo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+.two-photo .panel {
+  position: relative;
+  overflow: hidden;
+}
+.two-photo .panel-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.two-photo .panel-overlay {
+  position: absolute;
+  inset: 0;
+}
+.two-photo .panel-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 2.8rem;
+}
+.panel-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.two-photo .divider-line {
+  position: absolute;
+  left: calc(50% - 1.5px);
+  top: 0; bottom: 0;
+  width: 3px;
+  background: var(--line);
+  z-index: 20;
+}
+.two-photo .footer-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.88);
+  padding: 1.1rem 3rem;
+  z-index: 25;
+  text-align: center;
+}
+
+/* ── Spec table ── */
+.spec-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+.spec-table tr { border-bottom: 1px solid #1a1a1a; }
+.spec-table tr:nth-child(odd) td { background: var(--card); }
+.spec-table td { padding: 0.8rem 1.1rem; vertical-align: middle; }
+.spec-key {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  width: 10rem;
+  white-space: nowrap;
+}
+
+/* ── Bottom info strip ── */
+.info-strip {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.82);
+  padding: 0.55rem 5rem;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  color: var(--gray);
+  letter-spacing: 0.06em;
+  text-align: center;
+  z-index: 30;
+}
+
+/* ── Timeline row ── */
+.tl-row {
+  display: grid;
+  grid-template-columns: 3.8rem 1fr;
+  gap: 1.2rem;
+  align-items: start;
+  margin-bottom: 1.3rem;
+}
+.tl-year {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1.1;
+  padding-top: 0.05rem;
+}
+
+/* ── Prose block ── */
+.prose {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.4rem;
+}
+
+/* ── Animations ── */
+.a {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.a.d1 { transition-delay: 0.1s; }
+.a.d2 { transition-delay: 0.22s; }
+.a.d3 { transition-delay: 0.36s; }
+.a.d4 { transition-delay: 0.5s; }
+.a.d5 { transition-delay: 0.64s; }
+.a.d6 { transition-delay: 0.78s; }
+.a.d7 { transition-delay: 0.92s; }
+
+.slide.active .a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Nav dots ── */
+#nav {
+  position: fixed;
+  right: 1.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+  z-index: 200;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.18);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dot:hover { background: rgba(255,255,255,0.45); }
+.dot.on {
+  height: 18px;
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+/* ── Slide counter ── */
+#counter {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.12em;
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* ── Arrow buttons ── */
+#arrows {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 2.2rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 200;
+}
+.arrow-btn {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+.arrow-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,0,0,0.8);
+}
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S01 · OPENING HOOK · HERO                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide active" id="s01">
+  <div class="photo-bg" style="background-image:url('https://images.pexels.com/photos/7192878/pexels-photo-7192878.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+  <div class="overlay-45"></div>
+  <div class="content center">
+    <p class="label a">Linz &nbsp;·&nbsp; Ars Electronica &nbsp;·&nbsp; 2026</p>
+    <h1 class="a d1" style="font-size:clamp(2.4rem,4.2vw,4rem);max-width:820px;margin-bottom:1.8rem;">Every September, 122,000 people come to Linz to experience the future.</h1>
+    <p class="italic-orange a d2" style="font-size:clamp(1.3rem,2.2vw,1.9rem);">Where do they go at night?</p>
+  </div>
+  <div class="info-strip">Linz Hostel: The Social Impact Hub &nbsp;·&nbsp; A Partnership Proposal for Ars Electronica &nbsp;·&nbsp; 2026</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S02 · THE TEAM · SPLIT RIGHT                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s02">
+  <div class="split split-r" style="height:100%;">
+    <div class="black-col">
+      <p class="label a">The Team</p>
+      <h2 class="a d1" style="font-size:clamp(2rem,3.2vw,3rem);margin-bottom:1.8rem;">Built by<br>a Team Ready<br>to Deliver</h2>
+      <div style="margin-bottom:1rem;">
+        <p class="a d2" style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.2rem;">Daniel Kruger</p>
+        <p class="italic-orange a d2" style="font-size:0.82rem;margin-bottom:0.6rem;">Founder &amp; Hospitality Strategist</p>
+        <p class="a d2" style="font-size:0.82rem;color:var(--light);margin-bottom:1.1rem;">Backed by a dedicated team spanning operations, design, community strategy, and finance — already working together.</p>
+      </div>
+      <ul class="dot-list a d3" style="margin-bottom:1.6rem;">
+        <li><span><strong style="color:var(--white)">Financing:</strong> Sparkasse OÖ — conversations active</span></li>
+        <li><span><strong style="color:var(--white)">Architecture:</strong> VantArc Agency — design partner</span></li>
+        <li><span><strong style="color:var(--white)">City support:</strong> Linz economic development — confirmed</span></li>
+      </ul>
+      <div class="a d4" style="background:var(--accent);padding:0.85rem 1.2rem;">
+        <p style="color:var(--white);font-size:0.82rem;font-weight:500;line-height:1.5;">€400,000 total funding &nbsp;·&nbsp; €100k equity &nbsp;·&nbsp; €220k Sparkasse &nbsp;·&nbsp; €80k grants</p>
+      </div>
+    </div>
+    <div class="photo-col" style="background-image:url('photos/team-hands.jpg')"></div>
+    <div class="split-line"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S03 · MOMENTUM · PURE TYPE                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s03">
+  <div style="background:var(--black);height:100%;">
+    <div class="content" style="max-width:900px;">
+      <p class="label a">Momentum</p>
+      <h1 class="a d1" style="font-size:clamp(2.8rem,5vw,4.5rem);margin-bottom:2.2rem;">Already<br>in Motion</h1>
+      <ul class="dot-list">
+        <li class="a d2"><span>Dozens of conversations with politicians, institutional leaders, and creative organisations across Linz — consistently positive reception</span></li>
+        <li class="a d3"><span>Active presence at the Linz creative district — project known in the rooms where decisions get made</span></li>
+        <li class="a d4"><span>Financing conversations with Sparkasse OÖ underway</span></li>
+        <li class="a d5"><span>Architecture &amp; design partnership with VantArc Agency active</span></li>
+        <li class="a d6"><span>City of Linz economic development support confirmed</span></li>
+      </ul>
+      <p class="italic-orange a d7" style="margin-top:2rem;font-size:0.9rem;">This is not a concept on paper. It's a project with momentum.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S04 · THE SCENE · IMMERSIVE + BOTTOM PANEL      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s04">
+  <div class="tb-wrap">
+    <div class="tb-photo" style="background-image:url('https://images.pexels.com/photos/2041000/pexels-photo-2041000.jpeg?auto=compress&cs=tinysrgb&w=1920');flex:0 0 52%;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.6) 100%)"></div>
+      <div style="position:relative;z-index:10;padding:2.8rem 4.5rem;height:100%;display:flex;flex-direction:column;justify-content:flex-end;">
+        <h1 class="a" style="font-size:clamp(3rem,5.5vw,5rem);line-height:1;">September.<br>Linz.</h1>
+      </div>
+    </div>
+    <div class="tb-line a"></div>
+    <div class="tb-black a d1">
+      <p style="max-width:820px;margin-bottom:1rem;">A sound artist from Tokyo lands at 4 PM. A computational biologist from Lagos checks in at 6. A 19-year-old from Graz who just won a Create Your World prize carries her suitcase through the door at 8.</p>
+      <p class="italic-orange d2 a" style="font-size:0.92rem;">By 10 PM, they're sitting in the same kitchen. Nobody planned this. The building did.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S05 · WHAT ARS BUILT · SPLIT RIGHT              -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s05">
+  <div class="split split-r" style="height:100%;">
+    <div class="black-col">
+      <p class="label a">A Legacy</p>
+      <h2 class="a d1" style="font-size:clamp(1.8rem,2.8vw,2.6rem);margin-bottom:2rem;">What Ars<br>Electronica Built</h2>
+      <div class="tl-row a d2">
+        <div class="tl-year">1979</div>
+        <p>A festival in a city nobody associated with technology. Art, technology, and society belong together. It worked.</p>
+      </div>
+      <div class="tl-row a d3">
+        <div class="tl-year">2009</div>
+        <p>Linz becomes European Capital of Culture. 3.5 million attendances. Tabakfabrik begins its transformation.</p>
+      </div>
+      <div class="tl-row a d4">
+        <div class="tl-year">2025</div>
+        <p>122,000 visitors. Prix Ars. Futurelab. Create Your World. Festival University. An ecosystem recognised worldwide.</p>
+      </div>
+      <p class="italic-orange a d5" style="font-size:0.82rem;margin-top:0.5rem;">"You built the stages, the galleries, the labs. We'd like to add one more room."</p>
+    </div>
+    <div class="photo-col" style="background-image:url('https://images.pexels.com/photos/6208398/pexels-photo-6208398.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+    <div class="split-line"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S06 · BEST MOMENTS · TOP/BOTTOM                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s06">
+  <div class="tb-wrap">
+    <div class="tb-photo" style="background-image:url('https://images.pexels.com/photos/6232561/pexels-photo-6232561.jpeg?auto=compress&cs=tinysrgb&w=1920');flex:0 0 50%;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.15) 60%)"></div>
+      <div style="position:relative;z-index:10;padding:2.5rem 4.5rem;">
+        <h1 class="a" style="font-size:clamp(2.2rem,4vw,3.6rem);">The Best Moments<br>Aren't Programmed</h1>
+      </div>
+    </div>
+    <div class="tb-line"></div>
+    <div class="tb-black">
+      <p class="a" style="max-width:820px;margin-bottom:1.1rem;">Every festival has them — the breakfast conversation between two people who would never have met inside the official programme. The late-night idea in a shared kitchen. The lobby encounter that turns into a three-year collaboration.</p>
+      <p class="italic-orange a d2" style="font-size:0.92rem;">Imagine a place designed to make them happen — every night of the year.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S07 · THE BREAKFAST TABLE · HERO                -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s07">
+  <div class="photo-bg" style="background-image:url('https://images.pexels.com/photos/2874780/pexels-photo-2874780.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.72) 100%)"></div>
+  <div class="content" style="justify-content:space-between;padding-top:3rem;padding-bottom:3rem;">
+    <div>
+      <p class="label a">Vision</p>
+      <h1 class="a d1" style="font-size:clamp(2rem,3.8vw,3.5rem);font-style:italic;max-width:820px;">A place where strangers arrive — and collaborators leave.</h1>
+    </div>
+    <div class="prose a d2" style="max-width:820px;">
+      <p style="margin-bottom:0.9rem;">At one end: a robotics PhD from ETH Zurich, in Linz for a Futurelab residency. Next to her: a 17-year-old from Graz who has never left Austria. Across from them: a festival volunteer from Brazil who is also a street artist. At the far end: a Prix Ars jury member eating toast — until the Brazilian mentions a project, and the jury member puts his phone down.</p>
+      <p class="italic-orange a d3">This is the kind of encounter Ars has been creating for 45 years. Just in a new form.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S08 · TWO EVENINGS · DUAL PHOTO                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s08">
+  <div class="two-photo">
+    <div class="panel">
+      <div class="panel-bg" style="background-image:url('https://images.pexels.com/photos/5610117/pexels-photo-5610117.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+      <div class="panel-overlay" style="background:rgba(5,8,18,0.48)"></div>
+      <div class="panel-content">
+        <p class="panel-label a" style="color:var(--gray);font-family:var(--sans);">A TYPICAL FESTIVAL EVENING</p>
+        <p class="a d1" style="color:var(--light);font-size:0.95rem;line-height:1.9;">An exhibitor finishes their session at 9 PM.<br>Takes a taxi across town.<br>Orders room service.<br>Checks email.<br>Goes to sleep.</p>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-bg" style="background-image:url('https://images.pexels.com/photos/4412789/pexels-photo-4412789.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+      <div class="panel-overlay" style="background:rgba(18,8,0,0.42)"></div>
+      <div class="panel-content">
+        <p class="panel-label a" style="color:var(--accent);font-family:var(--sans);">AN EVENING AT THE BASECAMP</p>
+        <p class="a d1" style="color:var(--white);font-size:0.95rem;line-height:1.9;">Same exhibitor walks five minutes.<br>Finds people cooking dinner.<br>Joins.<br>By dessert, they're sketching a project<br>together on a napkin.</p>
+      </div>
+    </div>
+    <div class="divider-line"></div>
+    <div class="footer-bar">
+      <p class="a" style="font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--white);">Same festival. Same people. Different architecture.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S09 · WHY ARCHITECTURE MATTERS · PURE BLACK     -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s09">
+  <div class="photo-bg" style="background-image:url('https://images.pexels.com/photos/36181951/pexels-photo-36181951.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+  <div class="overlay-82"></div>
+  <div class="content">
+    <p class="label a">The Research</p>
+    <h2 class="a d1" style="font-size:clamp(2rem,3.5vw,3.2rem);margin-bottom:1.8rem;">Why Architecture Matters</h2>
+    <div class="g3 a d2">
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">01</p>
+        <h3>Third Places</h3>
+        <p class="italic-orange" style="font-size:0.75rem;margin-bottom:0.6rem;font-style:italic;">Oldenburg, 1989</p>
+        <p>Spaces that are neither home nor work — cafés, lounges, squares — are where communities actually form. 35+ years of peer-reviewed validation.</p>
+        <p style="margin-top:0.7rem;">Our Flow Zone is designed as exactly this.</p>
+      </div>
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">02</p>
+        <h3>Weak Ties</h3>
+        <p class="italic-orange" style="font-size:0.75rem;margin-bottom:0.6rem;font-style:italic;">Granovetter, 1973</p>
+        <p>The person who changes your career is rarely your best friend — it's the stranger you sat next to at breakfast.</p>
+        <p style="margin-top:0.7rem;">Casual encounters produce more novel ideas. One of the most-cited findings in social science.</p>
+      </div>
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">03</p>
+        <h3>Serendipity by Design</h3>
+        <p class="italic-orange" style="font-size:0.75rem;margin-bottom:0.6rem;font-style:italic;">MIT Building 20 · Pixar HQ</p>
+        <p>MIT Building 20: 9 Nobel laureates. Pixar HQ: one central atrium, maximum collision.</p>
+        <p style="margin-top:0.7rem;">Proximity + shared space + no agenda = unexpected connection.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S10 · MISSION ALIGNMENT · SPLIT LEFT            -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="split split-l" style="height:100%;">
+    <div class="photo-col" style="background-image:url('https://images.pexels.com/photos/4046793/pexels-photo-4046793.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+    <div class="black-col">
+      <p class="label a">Mission Alignment</p>
+      <h2 class="a d1" style="font-size:clamp(1.8rem,3.2vw,3rem);font-style:italic;margin-bottom:2rem;">"Same mission.<br>New room."</h2>
+      <div style="margin-bottom:0.9rem;" class="a d2">
+        <p style="color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.25rem;">GEMeinsam</p>
+        <p>Artistic exploration of loneliness and connection through spatial design — multiple festival editions</p>
+      </div>
+      <div style="margin-bottom:0.9rem;" class="a d3">
+        <p style="color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.25rem;">Kyrielle</p>
+        <p>2025 Prix Ars Award of Distinction — a meditation on human connection</p>
+      </div>
+      <div class="a d4">
+        <p style="color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.25rem;">Social Play</p>
+        <p>Five projects addressing urban isolation through VR, AI, and interactive media</p>
+      </div>
+    </div>
+    <div class="split-line"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S11 · THE BASECAMP · PURE TYPE                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div style="background:var(--black);height:100%;">
+    <div class="content" style="padding-top:2.5rem;">
+      <h1 class="a" style="font-size:clamp(3rem,5.5vw,5rem);margin-bottom:0.5rem;">The Basecamp</h1>
+      <div class="a d1" style="height:3px;background:var(--line);width:100%;margin-bottom:1.5rem;"></div>
+      <table class="spec-table a d2">
+        <tr><td class="spec-key">90 Beds</td><td><p style="color:var(--white);">Pod-style, design-led, built for creative professionals</p></td></tr>
+        <tr><td class="spec-key">Shared Kitchen</td><td><p style="color:var(--white);">Communal by design — the heart of the building, open to everyone</p></td></tr>
+        <tr><td class="spec-key">Flow Zone</td><td><p style="color:var(--white);">100m² community lounge open 24/7 — the "third place" of the creative district</p></td></tr>
+        <tr><td class="spec-key">Location</td><td><p style="color:var(--white);">Linz creative district — walking distance from Postcity &amp; the Ars Center</p></td></tr>
+        <tr><td class="spec-key">Installation Space</td><td><p style="color:var(--white);">Permanent lobby gallery, curated by cultural partners year-round</p></td></tr>
+        <tr><td class="spec-key">Pricing</td><td><p style="color:var(--white);">€28–50/night vs. €90+ at Linz hotels during festival week</p></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S12 · A DAY IN FESTIVAL WEEK · IMMERSIVE        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="photo-bg" style="background-image:url('https://images.pexels.com/photos/3121302/pexels-photo-3121302.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+  <div class="overlay-55"></div>
+  <div class="content">
+    <p class="label a">September 2027</p>
+    <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.4rem;">A Day During Festival Week</h2>
+    <div class="g2 a d2">
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:1.6rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">08:00</p>
+        <p>Breakfast. Futurelab researcher + Create Your World winner + curator. The curator mentions a residency. The 19-year-old applies the next week.</p>
+      </div>
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:1.6rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">14:00</p>
+        <p>Flow Zone hosts an informal Ars workshop. 30 people, standing room. Not in the official programme. Participants call it the best session of the day.</p>
+      </div>
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:1.6rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">20:00</p>
+        <p>Dinner in the shared kitchen. A jury member cooks with exhibitors from São Paulo. They talk about home, not awards.</p>
+      </div>
+      <div class="card">
+        <p style="font-family:var(--serif);font-size:1.6rem;font-weight:900;color:var(--accent);margin-bottom:0.6rem;">23:00</p>
+        <p>The lobby installation — curated by Ars — glows quietly. A digital nomad discovers the festival. She buys a ticket for tomorrow.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S13 · WHO STAYS HERE · SPLIT LEFT               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="split split-l" style="height:100%;">
+    <div class="photo-col" style="background-image:url('https://images.pexels.com/photos/4907201/pexels-photo-4907201.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+    <div class="black-col">
+      <p class="label a">The Community</p>
+      <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:0.6rem;">Who Stays Here</h2>
+      <p class="a d1" style="font-size:0.78rem;color:var(--gray);margin-bottom:1.4rem;font-style:italic;">Imagine the kinds of people this space is built for:</p>
+      <div class="a d2" style="margin-bottom:1rem;">
+        <p style="font-family:var(--serif);font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:0.2rem;">A young artist from Latin America</p>
+        <p>Award of Distinction winner. Her stipend doesn't cover €90/night. At the Basecamp: €28 — she meets a Futurelab scientist at breakfast and gets invited to collaborate.</p>
+      </div>
+      <div class="a d3" style="margin-bottom:1rem;">
+        <p style="font-family:var(--serif);font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:0.2rem;">A veteran researcher from abroad</p>
+        <p>Jury member at the Prix. Has dinner with exhibitors she's been reading about for months — finally meets the humans behind the work.</p>
+      </div>
+      <div class="a d4" style="margin-bottom:1rem;">
+        <p style="font-family:var(--serif);font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:0.2rem;">A festival volunteer and street artist</p>
+        <p>Paints a mural in the common room during the festival. It's still there the following year.</p>
+      </div>
+      <div class="a d5">
+        <p style="font-family:var(--serif);font-size:0.92rem;font-weight:700;color:var(--white);margin-bottom:0.2rem;">A group of students on a budget</p>
+        <p>Festival University participants sharing a room. The only place they can afford — and still feel they belong to the festival.</p>
+      </div>
+    </div>
+    <div class="split-line"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S14 · THE NUMBERS · PURE TYPE                   -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div style="background:var(--black);height:100%;">
+    <div class="content">
+      <p class="label a">The Opportunity</p>
+      <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.6rem;">The Practical Picture</h2>
+      <div class="g3 a d2" style="margin-bottom:0.9rem;">
+        <div class="card">
+          <p class="stat-num" style="font-size:clamp(1.8rem,3.5vw,3rem);">122,000</p>
+          <p class="stat-label">Ars visitors annually (2025)</p>
+        </div>
+        <div class="card">
+          <p class="stat-num" style="font-size:clamp(1.8rem,3.5vw,3rem);">€90+</p>
+          <p class="stat-label">Avg Linz hotel rate in festival week</p>
+        </div>
+        <div class="card">
+          <p class="stat-num" style="font-size:clamp(1.8rem,3.5vw,3rem);">€28–50</p>
+          <p class="stat-label">Basecamp rate — 45–70% savings</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;max-width:66%;" class="a d3">
+        <div class="card">
+          <p class="stat-num" style="font-size:clamp(1.8rem,3.5vw,3rem);">€300–600</p>
+          <p class="stat-label">Savings per exhibitor over 7 nights</p>
+        </div>
+        <div class="card">
+          <p class="stat-num" style="font-size:clamp(1.8rem,3.5vw,3rem);">365</p>
+          <p class="stat-label">Days/year — not just September</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S15 · PROOF OF CONCEPT · IMMERSIVE              -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="photo-bg" style="background-image:url('https://images.pexels.com/photos/36184950/pexels-photo-36184950.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+  <div class="overlay-55"></div>
+  <div class="content">
+    <p class="label a">Proof of Concept</p>
+    <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.6rem;">It Works Elsewhere.<br>It Will Work Here.</h2>
+    <div class="g3 a d2">
+      <div class="card">
+        <h3>magdas Hotel, Vienna</h3>
+        <p class="italic-orange" style="font-size:0.78rem;margin-bottom:0.6rem;font-style:italic;">Austria's first profitable social-mission hotel.</p>
+        <p>Proof that purpose-driven hospitality works in this exact market — same country, same culture.</p>
+      </div>
+      <div class="card">
+        <h3>Largo Residências, Lisbon</h3>
+        <p class="italic-orange" style="font-size:0.78rem;margin-bottom:0.6rem;font-style:italic;">Built next to the arts district.</p>
+        <p>Creative-neighbourhood symbiosis generates higher revenue and deeper community engagement than standard hotels.</p>
+      </div>
+      <div class="card">
+        <h3>The Social Hub — Amsterdam &amp; Vienna</h3>
+        <p class="italic-orange" style="font-size:0.78rem;margin-bottom:0.6rem;font-style:italic;">Hybrid community accommodation, design-led.</p>
+        <p>Maximising revenue and human connection. The scalable blueprint for this category. Already in Vienna.</p>
+      </div>
+    </div>
+    <p class="italic-orange a d3" style="font-size:0.82rem;margin-top:1.2rem;">The category is proven. The conditions in Linz are uniquely right.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S16 · TWO WAYS TO JOIN · PURE TYPE + ORANGE     -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div style="background:var(--black);height:100%;">
+    <div class="content">
+      <p class="label a">The Offer</p>
+      <h2 class="a d1" style="font-size:clamp(2rem,3.5vw,3.2rem);margin-bottom:1.4rem;">Two Ways to Join</h2>
+      <div class="g2 a d2" style="align-items:start;">
+        <div class="card" style="padding:1.8rem 2rem;">
+          <h3 style="font-size:1.1rem;margin-bottom:0.6rem;">Letter of Intent</h3>
+          <p style="font-family:var(--serif);font-size:3rem;font-weight:900;color:var(--light);line-height:1;margin-bottom:1rem;">€0</p>
+          <p style="margin-bottom:0.7rem;">A one-page statement of interest. No financial commitment, no legal complexity.</p>
+          <p>It simply signals that Ars Electronica sees value in having reserved beds during festival week — and helps us demonstrate institutional support to our financing partners.</p>
+        </div>
+        <div class="card-orange" style="padding:1.8rem 2rem;">
+          <h3 style="font-size:1.1rem;margin-bottom:0.6rem;color:var(--white);">Founding Partner</h3>
+          <p style="font-family:var(--serif);font-size:2.4rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:1rem;">€15,000 / 3 years</p>
+          <ul class="dot-list" style="margin-bottom:0;">
+            <li style="margin-bottom:0.5rem;"><span style="color:var(--white);">Pre-purchased bed-nights as transferable vouchers</span></li>
+            <li style="margin-bottom:0.5rem;"><span style="color:var(--white);">Priority booking year-round for Futurelab &amp; residency guests</span></li>
+            <li style="margin-bottom:0.5rem;"><span style="color:var(--white);">Permanent lobby installation space — curated entirely by Ars</span></li>
+            <li style="margin-bottom:0.5rem;"><span style="color:var(--white);">Tax-deductible as Betriebsausgabe</span></li>
+            <li><span style="color:var(--white);">Full refund if we don't open</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S17 · OUR COMMITMENTS · SPLIT RIGHT              -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s17">
+  <div class="split split-r" style="height:100%;">
+    <div class="black-col">
+      <p class="label a">Our Commitments</p>
+      <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.8rem;">Structured to<br>Protect You</h2>
+      <div class="a d2" style="margin-bottom:1.2rem;">
+        <p style="display:flex;gap:0.7rem;align-items:center;margin-bottom:0.3rem;"><span style="width:6px;height:6px;background:var(--accent);flex-shrink:0;display:inline-block;"></span><strong style="color:var(--white);font-size:0.9rem;">Full Refund</strong></p>
+        <p style="padding-left:1.3rem;">If the hostel doesn't open by the agreed date, every cent is returned — cleanly, automatically, without conditions.</p>
+      </div>
+      <div class="a d3" style="margin-bottom:1.2rem;">
+        <p style="display:flex;gap:0.7rem;align-items:center;margin-bottom:0.3rem;"><span style="width:6px;height:6px;background:var(--accent);flex-shrink:0;display:inline-block;"></span><strong style="color:var(--white);font-size:0.9rem;">Minimum Viability Threshold</strong></p>
+        <p style="padding-left:1.3rem;">Contract activates only when total commitments reach €80,000. No single partner carries the weight alone.</p>
+      </div>
+      <div class="a d4" style="margin-bottom:1.2rem;">
+        <p style="display:flex;gap:0.7rem;align-items:center;margin-bottom:0.3rem;"><span style="width:6px;height:6px;background:var(--accent);flex-shrink:0;display:inline-block;"></span><strong style="color:var(--white);font-size:0.9rem;">Transferable Vouchers</strong></p>
+        <p style="padding-left:1.3rem;">Bundle bed-nights into exhibitor packages or distribute to artists and staff. Full control on your side.</p>
+      </div>
+      <div class="a d5">
+        <p style="display:flex;gap:0.7rem;align-items:center;margin-bottom:0.3rem;"><span style="width:6px;height:6px;background:var(--accent);flex-shrink:0;display:inline-block;"></span><strong style="color:var(--white);font-size:0.9rem;">3-Year Rate Lock</strong></p>
+        <p style="padding-left:1.3rem;">Fixed €28–50/night for three years from signing — while Linz hotel rates keep rising. Predictable, stable, built into your planning.</p>
+      </div>
+    </div>
+    <div class="photo-col" style="background-image:url('https://images.pexels.com/photos/36297599/pexels-photo-36297599.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+    <div class="split-line"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S18 · BENEFITS FOR ARS · DARK + CARDS           -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="photo-bg" style="background-image:url('https://images.pexels.com/photos/3767508/pexels-photo-3767508.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+  <div class="overlay-82"></div>
+  <div class="content">
+    <p class="label a">Your Benefits</p>
+    <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.4rem;">What This Means for Ars</h2>
+    <div class="g2 a d2">
+      <div class="card">
+        <h3>Festival Accommodation Simplified</h3>
+        <p style="margin-top:0.5rem;">One address, one booking, one invoice. Artists, jury, and staff together — not scattered across six hotels.</p>
+      </div>
+      <div class="card">
+        <h3>Year-Round Residency Access</h3>
+        <p style="margin-top:0.5rem;">Reserved beds for Futurelab visitors, artist-in-residence guests, and Festival University students — not just September.</p>
+      </div>
+      <div class="card">
+        <h3>Your Installation, Your Space</h3>
+        <p style="margin-top:0.5rem;">A permanent lobby gallery curated entirely by Ars. Rotating exhibitions year-round. Your creative presence in the building 365 days.</p>
+      </div>
+      <div class="card">
+        <h3>Satellite Venue During Festival</h3>
+        <p style="margin-top:0.5rem;">The Flow Zone (100m²) available for overflow workshops, screenings, and informal sessions at no additional cost.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S19 · MORE THAN HOSPITALITY · SPLIT LEFT        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s19">
+  <div class="split split-l" style="height:100%;">
+    <div class="photo-col" style="background-image:url('https://images.pexels.com/photos/4920848/pexels-photo-4920848.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
+    <div class="black-col">
+      <p class="label a">Context</p>
+      <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.4rem;">More Than<br>Hospitality</h2>
+      <p class="a d2" style="margin-bottom:0.9rem;">Austria officially recognises social prescribing — connecting people to community spaces as a health intervention. Six federal states are running pilots, with an 86% success rate.</p>
+      <p class="a d3" style="margin-bottom:0.9rem;">The Basecamp's model is designed around the same principle: shared spaces that reduce isolation and build connection for the young, mobile, international populations of the creative district.</p>
+      <p class="italic-orange a d4" style="font-size:0.88rem;">Grant opportunities. Research partnerships. Real impact metrics.</p>
+    </div>
+    <div class="split-line"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S20 · LINZ ECOSYSTEM · IMMERSIVE + GRID         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s20">
+  <div class="photo-bg" style="background-image:url('photos/ars-immersive-color.webp')"></div>
+  <div class="overlay-55"></div>
+  <div class="content">
+    <p class="label a">Ecosystem</p>
+    <h2 class="a d1" style="font-size:clamp(1.8rem,3vw,2.8rem);margin-bottom:1.4rem;">Part of the Linz Ecosystem</h2>
+    <div class="g2 a d2">
+      <div class="card">
+        <h3>Tabakfabrik</h3>
+        <p style="margin-top:0.4rem;">Creative district anchor. Walking distance from the Basecamp. The centre of gravity of Linz's creative scene.</p>
+      </div>
+      <div class="card">
+        <h3>JKU Linz</h3>
+        <p style="margin-top:0.4rem;">Festival University co-organiser. International student pipeline. Hundreds of young creatives need affordable beds every September.</p>
+      </div>
+      <div class="card">
+        <h3>City of Linz</h3>
+        <p style="margin-top:0.4rem;">European Capital of Culture legacy. Active cultural investment. Conversations ongoing at economic development level.</p>
+      </div>
+      <div class="card-orange">
+        <h3 style="color:var(--white);">Ars Electronica</h3>
+        <p style="margin-top:0.4rem;color:var(--white);">The reason 122,000 people come to Linz every September. The cultural heartbeat around which everything here is built.</p>
+      </div>
+    </div>
+    <p class="a d3" style="font-size:0.78rem;color:var(--gray);margin-top:1rem;font-style:italic;">The project grows stronger with each institution that joins — not as sponsors, but as partners who benefit directly.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S21 · THE INVITATION · CTA                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s21">
+  <div class="photo-bg" style="background-image:url('photos/ars-deepspace.webp')"></div>
+  <div class="overlay-82"></div>
+  <div class="content center">
+    <p class="label a">Let's Talk</p>
+    <h1 class="a d1" style="font-size:clamp(2.5rem,5vw,4.5rem);max-width:760px;margin-bottom:1.4rem;">Let's Have<br>a Conversation</h1>
+    <p class="a d2" style="max-width:600px;text-align:center;margin-bottom:2rem;font-size:0.92rem;">We'd love 30 minutes of your time — in person or remote, whenever suits you.<br>If it resonates, the simplest next step is a one-page Letter of Intent:<br>no financial commitment, just a signal that this conversation is worth continuing.</p>
+    <div class="a d3" style="background:var(--accent);padding:1.3rem 2.5rem;text-align:center;">
+      <p style="color:var(--white);font-size:1rem;font-weight:600;margin-bottom:0.25rem;">Daniel Kruger</p>
+      <p style="color:var(--white);font-size:0.82rem;margin-bottom:0.25rem;">info@linzhostel.com &nbsp;·&nbsp; +43 677 64417074 &nbsp;·&nbsp; <a href="https://www.linzhostel.com/partnerships" target="_blank" style="color:var(--white);text-decoration:underline;">www.linzhostel.com/partnerships</a></p>
+      <p style="color:rgba(255,255,255,0.75);font-size:0.75rem;">Letter of Intent ready to share &nbsp;·&nbsp; Full proposal on request</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- S22 · CLOSING · HERO                            -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="slide" id="s22">
+  <div class="photo-bg" style="background-image:url('photos/linz-freinberg-sunset.webp')"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.35) 50%,rgba(0,0,0,0.65) 100%)"></div>
+  <div class="content center">
+    <h1 class="a" style="font-size:clamp(2.5rem,5.5vw,5rem);font-style:italic;max-width:820px;margin-bottom:1.4rem;">"Where the festival continues."</h1>
+    <p class="a d1" style="font-size:1rem;color:var(--light);margin-bottom:0.8rem;">Linz Hostel: The Social Impact Hub</p>
+    <div class="a d2" style="width:3rem;height:3px;background:var(--line);margin:0 auto 0.9rem;"></div>
+    <p class="a d2" style="font-size:0.75rem;color:var(--gray);letter-spacing:0.1em;">Opening 2027 &nbsp;·&nbsp; 90 Beds &nbsp;·&nbsp; Linz Creative District &nbsp;·&nbsp; Founding Partners Welcome</p>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+
+<!-- ── Navigation ── -->
+<div id="nav"></div>
+
+<div id="counter">01 / 22</div>
+
+<div id="arrows">
+  <button class="arrow-btn" id="btn-prev">&#8593;</button>
+  <button class="arrow-btn" id="btn-next">&#8595;</button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const navEl = document.getElementById('nav');
+const counterEl = document.getElementById('counter');
+let cur = 0;
+
+// Build nav dots
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' on' : '');
+  d.addEventListener('click', () => goTo(i));
+  navEl.appendChild(d);
+});
+
+function goTo(n) {
+  n = Math.max(0, Math.min(n, slides.length - 1));
+  if (n === cur) return;
+  slides[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+  counterEl.textContent = String(cur + 1).padStart(2, '0') + ' / ' + slides.length;
+}
+
+document.getElementById('btn-next').addEventListener('click', () => goTo(cur + 1));
+document.getElementById('btn-prev').addEventListener('click', () => goTo(cur - 1));
+
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown','Space','PageDown'].includes(e.code)) { e.preventDefault(); goTo(cur + 1); }
+  if (['ArrowLeft','ArrowUp','PageUp'].includes(e.code)) { e.preventDefault(); goTo(cur - 1); }
+});
+
+// Touch swipe
+let tx = 0, ty = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  const dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 40) {
+    goTo(dy < 0 ? cur + 1 : cur - 1);
+  }
+}, {passive:true});
+
+// Click to advance (anywhere except nav)
+document.getElementById('deck').addEventListener('click', e => {
+  if (!e.target.closest('#nav') && !e.target.closest('#arrows')) goTo(cur + 1);
+});
+
+// Scroll wheel — throttled so one scroll = one slide
+let lastScroll = 0;
+document.addEventListener('wheel', e => {
+  e.preventDefault();
+  const now = Date.now();
+  if (now - lastScroll < 700) return; // throttle: 700ms between slides
+  lastScroll = now;
+  if (e.deltaY > 0) goTo(cur + 1);
+  else goTo(cur - 1);
+}, { passive: false });
+</script>
+</body>
+</html>

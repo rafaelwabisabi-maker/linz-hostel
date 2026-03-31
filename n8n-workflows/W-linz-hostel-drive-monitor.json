@@ -1,0 +1,121 @@
+{
+  "_setup_notes": {
+    "purpose": "Linz Hostel Google Drive Monitor — polls the Linz Hostel shared Drive folder every 6h, notifies Rafael via Telegram when files are added or modified.",
+    "folder_id": "1kvo9hqem5e-fFzj8XclmEq6_M2xRBcXJ",
+    "prereqs": [
+      "n8n Google Drive OAuth2 credential — same Google account that has access to the Linz Hostel Drive folder",
+      "Telegram API credential (Semeadora bot — already configured)",
+      "n8n v1.x+ (Google Drive Trigger node available)"
+    ],
+    "activation": "1. Import JSON into n8n UI. 2. Connect 'Google Drive OAuth2' credential to the Google Drive Trigger node. 3. Test: click 'Test workflow' — should list recent files in the folder. 4. Toggle workflow Active.",
+    "poll_interval": "Every 6 hours (cron: 0 */6 * * *). Adjust in the Schedule Trigger node if needed.",
+    "telegram_chat": "757037706 (Rafael)",
+    "notion_note": "Daniel's Notion workspace — Friedo controls access. When Rafael gets invite, add Notion → Telegram monitor as a separate workflow (use HTTP Request to Notion API GET /databases/... → compare last_edited_time)."
+  },
+  "name": "Linz Hostel — Google Drive Monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "hours", "hoursInterval": 6}]
+        }
+      },
+      "id": "schedule-01",
+      "name": "Schedule: Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "getFiles",
+        "driveId": "root",
+        "folderId": "1kvo9hqem5e-fFzj8XclmEq6_M2xRBcXJ",
+        "returnAll": true,
+        "fields": ["id", "name", "modifiedTime", "createdTime", "mimeType", "webViewLink", "parents"],
+        "options": {
+          "orderBy": "modifiedTime desc"
+        }
+      },
+      "id": "gdrive-list-02",
+      "name": "List Linz Hostel Drive Files",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [500, 300],
+      "credentials": {
+        "googleDriveOAuth2Api": {"id": "gdrive", "name": "Google Drive OAuth2"}
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filter for files modified in the last 6 hours and 10 minutes\n// (slightly longer than poll interval to avoid edge-case misses)\nconst items = $input.all();\nconst now = new Date();\nconst cutoffMs = 6 * 60 * 60 * 1000 + 10 * 60 * 1000; // 6h 10min\n\nconst recent = items.filter(item => {\n  const file = item.json;\n  const modTime = new Date(file.modifiedTime || file.createdTime || 0);\n  return (now - modTime) < cutoffMs;\n});\n\nif (recent.length === 0) {\n  // No recent changes — return a sentinel to signal 'skip'\n  return [{ json: { _noChanges: true, checkedAt: now.toISOString(), totalFiles: items.length } }];\n}\n\n// Build a readable summary\nconst lines = recent.map(item => {\n  const f = item.json;\n  const modTime = new Date(f.modifiedTime || f.createdTime);\n  const isNew = (now - new Date(f.createdTime)) < cutoffMs;\n  const action = isNew ? '🆕' : '✏️';\n  const timeStr = modTime.toLocaleTimeString('de-AT', { hour: '2-digit', minute: '2-digit' });\n  // Strip Google Docs MIME type to readable\n  const typeMap = {\n    'application/vnd.google-apps.document': 'Doc',\n    'application/vnd.google-apps.spreadsheet': 'Sheet',\n    'application/vnd.google-apps.presentation': 'Slides',\n    'application/vnd.google-apps.folder': 'Folder',\n    'application/pdf': 'PDF',\n    'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'PPTX',\n    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'DOCX',\n    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'XLSX'\n  };\n  const type = typeMap[f.mimeType] || 'File';\n  const link = f.webViewLink ? ` — [open](${f.webViewLink})` : '';\n  return `${action} *${f.name}* (${type}) — ${timeStr}${link}`;\n});\n\nreturn [{\n  json: {\n    _noChanges: false,\n    changeCount: recent.length,\n    summary: lines.join('\\n'),\n    checkedAt: now.toISOString()\n  }\n}];\n"
+      },
+      "id": "filter-recent-03",
+      "name": "Filter Recent Changes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": false, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "no-changes-check",
+              "leftValue": "={{ $json._noChanges }}",
+              "rightValue": false,
+              "operator": {"type": "boolean", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-changes-04",
+      "name": "IF: Changes Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "757037706",
+        "text": "=📁 *KraftWerk Drive Update*\n{{ $('Filter Recent Changes').first().json.changeCount }} file(s) changed in the last 6h:\n\n{{ $('Filter Recent Changes').first().json.summary }}\n\n🔗 [Open Folder](https://drive.google.com/drive/folders/1kvo9hqem5e-fFzj8XclmEq6_M2xRBcXJ)",
+        "additionalFields": {
+          "parse_mode": "Markdown",
+          "disable_web_page_preview": true
+        }
+      },
+      "id": "telegram-notify-05",
+      "name": "Telegram: Drive Update",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1250, 200],
+      "credentials": {
+        "telegramApi": {"id": "1", "name": "Telegram API"}
+      }
+    }
+  ],
+  "connections": {
+    "Schedule: Every 6 Hours": {
+      "main": [[{"node": "List Linz Hostel Drive Files", "type": "main", "index": 0}]]
+    },
+    "List Linz Hostel Drive Files": {
+      "main": [[{"node": "Filter Recent Changes", "type": "main", "index": 0}]]
+    },
+    "Filter Recent Changes": {
+      "main": [[{"node": "IF: Changes Found?", "type": "main", "index": 0}]]
+    },
+    "IF: Changes Found?": {
+      "main": [
+        [{"node": "Telegram: Drive Update", "type": "main", "index": 0}],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {"executionOrder": "v1"},
+  "id": "W-kraftwerk-drive-monitor",
+  "meta": {"templateCredsSetupCompleted": true},
+  "tags": ["kraftwerk", "gdrive", "monitor", "telegram"]
+}

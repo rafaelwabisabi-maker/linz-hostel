@@ -1,0 +1,25 @@
+/**
+ * export-srt.ts — SRT closed caption export for Linz Hostel V3
+ *
+ * INSTALL: cp export-srt.ts.staged ~/remotion-videos/src/LinzHostelV3/export-srt.ts
+ * RUN:     cd ~/remotion-videos && npx ts-node src/LinzHostelV3/export-srt.ts > out/linz-hostel-v3.srt
+ *
+ * Output: SRT file ready for YouTube (upload under subtitles) + LinkedIn video upload.
+ */
+
+import { captions } from './captions';
+
+const toSRTTime = (sec: number): string => {
+  const h = Math.floor(sec / 3600).toString().padStart(2, '0');
+  const m = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+  const s = Math.floor(sec % 60).toString().padStart(2, '0');
+  const ms = Math.round((sec % 1) * 1000).toString().padStart(3, '0');
+  return `${h}:${m}:${s},${ms}`;
+};
+
+captions.forEach((c, i) => {
+  console.log(`${i + 1}`);
+  console.log(`${toSRTTime(c.startSec)} --> ${toSRTTime(c.endSec)}`);
+  console.log(c.text);
+  console.log('');
+});

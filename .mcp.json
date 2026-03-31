@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "mlx-whisper": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "/Users/apple/Desktop/PROJECTS/linz-hostel/.mcp/mlx-whisper/mlx_whisper_mcp.py"
+      ],
+      "env": {}
+    },
+    "elevenlabs": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "elevenlabs-mcp"
+      ],
+      "env": {
+        "ELEVENLABS_API_KEY": "sk_dc69881aba20cf60f4ff58b9e12351709abe87fa95a930c2"
+      }
+    }
+  }
+}

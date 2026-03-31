@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KRAFTWERK — Build the Hostel</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --kw-charcoal: #1a1a1a;
+    --kw-dark: #2a2a2a;
+    --kw-cream: #f5f0e8;
+    --kw-copper: #c07a4a;
+    --kw-copper-glow: rgba(192, 122, 74, 0.6);
+    --kw-terracotta: #a86644;
+    --kw-peach: #e8a876;
+    --kw-coral: #e97c6a;
+    --kw-teal: #5eb8a8;
+    --kw-teal-dim: rgba(94, 184, 168, 0.3);
+    --kw-warm-white: #faf7f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--kw-charcoal);
+    color: var(--kw-cream);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ========== INTRO SCREEN ========== */
+  #intro-screen {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    background: var(--kw-charcoal);
+    cursor: pointer;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  #intro-screen.hidden {
+    opacity: 0; transform: scale(1.05);
+    pointer-events: none;
+  }
+
+  .intro-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(192,122,74,0.08) 0%, transparent 60%),
+      var(--kw-charcoal);
+  }
+
+  /* Animated blueprint grid */
+  .blueprint-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(192,122,74,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(192,122,74,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridPulse 4s ease-in-out infinite;
+  }
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Scan line */
+  .scan-line {
+    position: absolute; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(
+      transparent 0%,
+      rgba(192,122,74,0.03) 40%,
+      rgba(192,122,74,0.08) 50%,
+      rgba(192,122,74,0.03) 60%,
+      transparent 100%
+    );
+    animation: scanMove 6s linear infinite;
+  }
+  @keyframes scanMove {
+    0% { top: -200px; }
+    100% { top: calc(100% + 200px); }
+  }
+
+  .intro-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 2rem;
+  }
+
+  .intro-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--kw-copper);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+  .intro-title span {
+    display: block;
+    background: linear-gradient(135deg, var(--kw-cream) 0%, var(--kw-copper) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .intro-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-weight: 300;
+    color: rgba(245,240,232,0.5);
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .intro-shell-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.35);
+    max-width: 400px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .intro-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--kw-copper);
+    border: 1px solid rgba(192,122,74,0.3);
+    padding: 0.8rem 2rem;
+    border-radius: 2px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.5s forwards, ctaPulse 3s ease-in-out 2.5s infinite;
+  }
+  @keyframes ctaPulse {
+    0%, 100% { border-color: rgba(192,122,74,0.3); box-shadow: none; }
+    50% { border-color: rgba(192,122,74,0.7); box-shadow: 0 0 20px rgba(192,122,74,0.15); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== GAME SCREEN ========== */
+  #game-screen {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  #game-screen.active { display: flex; }
+
+  /* Top bar */
+  .top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(192,122,74,0.15);
+    backdrop-filter: blur(10px);
+    background: rgba(26,26,26,0.9);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .top-bar-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .top-bar-step {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+
+  /* Progress dots */
+  .progress-bar {
+    display: flex; gap: 6px;
+    padding: 0.8rem 1.5rem;
+    justify-content: center;
+  }
+  .progress-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(192,122,74,0.2);
+    transition: all 0.5s ease;
+  }
+  .progress-dot.done {
+    background: var(--kw-copper);
+    box-shadow: 0 0 8px rgba(192,122,74,0.5);
+  }
+  .progress-dot.current {
+    background: var(--kw-copper);
+    box-shadow: 0 0 12px rgba(192,122,74,0.7);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+  }
+
+  /* Scene area — the "photo + overlay" zone */
+  .scene {
+    position: relative;
+    flex: 1;
+    min-height: 320px;
+    max-height: 450px;
+    overflow: hidden;
+    margin: 0 1rem;
+    border-radius: 4px;
+    border: 1px solid rgba(192,122,74,0.1);
+  }
+
+  /* Factory photo simulation (SVG illustration since we can't embed real photos in a standalone HTML) */
+  .scene-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, #1e1e1e 0%, #2a2520 50%, #1e1e1e 100%);
+    opacity: 0.9;
+  }
+
+  /* Factory structural elements (SVG) */
+  .factory-svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* Blueprint overlay grid */
+  .scene-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(192,122,74,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(192,122,74,0.04) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  /* Construction elements that appear */
+  .build-element {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .build-element.visible {
+    opacity: 1;
+    transform: scale(1) !important;
+  }
+  .build-element.wireframe {
+    opacity: 0.6;
+    filter: brightness(1.2);
+  }
+
+  /* Glow effect for newly placed elements */
+  @keyframes materialize {
+    0% { opacity: 0; filter: brightness(2) blur(4px); }
+    40% { opacity: 0.7; filter: brightness(1.5) blur(1px); }
+    100% { opacity: 1; filter: brightness(1) blur(0); }
+  }
+  .build-element.materializing {
+    animation: materialize 1.5s ease forwards;
+  }
+
+  /* ========== METERS ========== */
+  .meters {
+    display: flex; gap: 1rem;
+    padding: 1rem 1.5rem;
+    justify-content: center;
+  }
+  .meter {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(42,42,42,0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    border: 1px solid rgba(192,122,74,0.1);
+    min-width: 100px;
+  }
+  .meter-icon { font-size: 1rem; }
+  .meter-info { display: flex; flex-direction: column; }
+  .meter-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+  .meter-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: all 0.5s ease;
+  }
+  .meter-value.up { color: var(--kw-teal); }
+  .meter-value.down { color: var(--kw-coral); }
+
+  /* ========== CHARACTER CARD ========== */
+  .character-area {
+    padding: 1.5rem;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 1rem;
+  }
+
+  .character-card {
+    background: linear-gradient(135deg, rgba(42,42,42,0.95), rgba(26,26,26,0.95));
+    border: 1px solid rgba(192,122,74,0.2);
+    border-radius: 6px;
+    padding: 1.5rem;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .character-card.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  .character-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .character-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--kw-copper);
+    margin-bottom: 0.8rem;
+  }
+
+  .character-question {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--kw-cream);
+    margin-bottom: 0.6rem;
+  }
+
+  .character-detail {
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.45);
+    line-height: 1.5;
+  }
+
+  /* ========== BUTTONS ========== */
+  .buttons {
+    display: flex; gap: 1rem;
+    justify-content: center;
+    padding-bottom: 2rem;
+  }
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, var(--kw-copper), var(--kw-terracotta));
+    color: var(--kw-cream);
+  }
+  .btn-yes:hover {
+    box-shadow: 0 0 25px rgba(192,122,74,0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-no {
+    background: transparent;
+    color: rgba(245,240,232,0.6);
+    border: 1px solid rgba(245,240,232,0.2);
+  }
+  .btn-no:hover {
+    border-color: rgba(245,240,232,0.5);
+    color: var(--kw-cream);
+    transform: translateY(-2px);
+  }
+
+  /* Button ripple */
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%),
+      rgba(255,255,255,0.2) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn:active::after { opacity: 1; }
+
+  /* ========== ENDING SCREEN ========== */
+  #ending-screen {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  #ending-screen.active { display: flex; }
+
+  .ending-badge {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--kw-copper);
+    box-shadow: 0 0 30px rgba(192,122,74,0.3);
+    animation: badgePulse 3s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(192,122,74,0.3); }
+    50% { box-shadow: 0 0 50px rgba(192,122,74,0.5); }
+  }
+
+  .ending-type {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--kw-copper);
+    margin-bottom: 0.5rem;
+  }
+  .ending-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--kw-cream), var(--kw-peach));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .ending-stats {
+    display: flex; gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .ending-stat {
+    text-align: center;
+  }
+  .ending-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+    color: var(--kw-copper);
+  }
+  .ending-stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+  }
+
+  .ending-divider {
+    width: 60px; height: 1px;
+    background: rgba(192,122,74,0.3);
+    margin: 1.5rem auto;
+  }
+
+  .ending-real {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.6);
+    max-width: 380px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .ending-real strong {
+    color: var(--kw-cream);
+  }
+
+  .ending-cta-group {
+    display: flex; flex-direction: column; gap: 0.8rem;
+    align-items: center;
+  }
+
+  .btn-follow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border: none; border-radius: 3px;
+    background: linear-gradient(135deg, var(--kw-copper), var(--kw-terracotta));
+    color: var(--kw-cream);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: ctaGlow 3s ease-in-out infinite;
+  }
+  .btn-follow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(192,122,74,0.5);
+  }
+  @keyframes ctaGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(192,122,74,0.2); }
+    50% { box-shadow: 0 4px 30px rgba(192,122,74,0.4); }
+  }
+
+  .btn-share {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.5);
+    background: none; border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .btn-share:hover { color: var(--kw-cream); }
+
+  /* ========== SHARE CARD PREVIEW ========== */
+  .share-card {
+    background: var(--kw-dark);
+    border: 1px solid rgba(192,122,74,0.2);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    max-width: 320px;
+    margin-top: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .share-card.visible { opacity: 1; }
+  .share-card-line { color: rgba(245,240,232,0.7); }
+  .share-card-url {
+    color: var(--kw-copper);
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* ========== MOBILE RESPONSIVE ========== */
+  @media (max-width: 600px) {
+    .meters { gap: 0.5rem; }
+    .meter { padding: 0.4rem 0.6rem; min-width: 80px; }
+    .meter-value { font-size: 0.9rem; }
+    .scene { min-height: 240px; max-height: 300px; }
+    .buttons { gap: 0.7rem; }
+    .btn { padding: 0.8rem 1.8rem; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== INTRO SCREEN ==================== -->
+<div id="intro-screen" onclick="startGame()">
+  <div class="intro-bg"></div>
+  <div class="blueprint-grid"></div>
+  <div class="scan-line"></div>
+
+  <div class="intro-content">
+    <div class="intro-label">Tabakfabrik · Linz · Austria</div>
+    <h1 class="intro-title"><span>KRAFTWERK</span></h1>
+    <p class="intro-sub">Build the Hostel</p>
+    <p class="intro-shell-text">
+      400m² of concrete columns, factory windows,<br>
+      and terracotta floors. An empty shell<br>
+      in Linz's innovation hub.<br><br>
+      You have 15 decisions to fill it.
+    </p>
+    <div class="intro-cta">
+      <span>▸</span> Tap to begin
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GAME SCREEN ==================== -->
+<div id="game-screen">
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-logo">KRAFTWERK</div>
+    <div class="top-bar-step" id="step-label">Decision 1 of 15</div>
+  </div>
+
+  <!-- Progress dots -->
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <!-- Scene: the factory visualization -->
+  <div class="scene" id="scene">
+    <div class="scene-bg"></div>
+
+    <!-- Factory SVG illustration -->
+    <svg class="factory-svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+      <!-- Floor -->
+      <rect x="0" y="350" width="800" height="100" fill="#3d2b1a" opacity="0.7"/>
+      <line x1="0" y1="350" x2="800" y2="350" stroke="rgba(192,122,74,0.3)" stroke-width="1"/>
+
+      <!-- Terracotta floor tiles (subtle) -->
+      <g id="floor-tiles" opacity="0.15">
+        <rect x="0" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="50" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="100" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="150" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="200" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="250" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="300" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="350" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="400" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="450" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="500" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="550" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="600" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="650" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="700" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+        <rect x="750" y="355" width="50" height="25" fill="none" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+      </g>
+
+      <!-- Concrete columns -->
+      <rect x="100" y="50" width="30" height="300" fill="#3a3530" opacity="0.8" rx="2"/>
+      <rect x="300" y="50" width="30" height="300" fill="#3a3530" opacity="0.8" rx="2"/>
+      <rect x="500" y="50" width="30" height="300" fill="#3a3530" opacity="0.8" rx="2"/>
+      <rect x="700" y="50" width="30" height="300" fill="#3a3530" opacity="0.8" rx="2"/>
+
+      <!-- Column glow outlines -->
+      <rect x="100" y="50" width="30" height="300" fill="none" stroke="rgba(192,122,74,0.15)" stroke-width="1" rx="2"/>
+      <rect x="300" y="50" width="30" height="300" fill="none" stroke="rgba(192,122,74,0.15)" stroke-width="1" rx="2"/>
+      <rect x="500" y="50" width="30" height="300" fill="none" stroke="rgba(192,122,74,0.15)" stroke-width="1" rx="2"/>
+      <rect x="700" y="50" width="30" height="300" fill="none" stroke="rgba(192,122,74,0.15)" stroke-width="1" rx="2"/>
+
+      <!-- Ceiling beams -->
+      <rect x="0" y="40" width="800" height="15" fill="#2d2825" opacity="0.9"/>
+      <line x1="0" y1="55" x2="800" y2="55" stroke="rgba(192,122,74,0.2)" stroke-width="0.5"/>
+
+      <!-- Factory windows (tall, industrial) -->
+      <g opacity="0.6">
+        <rect x="140" y="70" width="150" height="180" fill="none" stroke="rgba(192,122,74,0.2)" stroke-width="1.5" rx="1"/>
+        <line x1="215" y1="70" x2="215" y2="250" stroke="rgba(192,122,74,0.15)" stroke-width="1"/>
+        <line x1="140" y1="160" x2="290" y2="160" stroke="rgba(192,122,74,0.15)" stroke-width="1"/>
+        <!-- Window light -->
+        <rect x="141" y="71" width="148" height="178" fill="url(#windowLight)" rx="1"/>
+
+        <rect x="340" y="70" width="150" height="180" fill="none" stroke="rgba(192,122,74,0.2)" stroke-width="1.5" rx="1"/>
+        <line x1="415" y1="70" x2="415" y2="250" stroke="rgba(192,122,74,0.15)" stroke-width="1"/>
+        <line x1="340" y1="160" x2="490" y2="160" stroke="rgba(192,122,74,0.15)" stroke-width="1"/>
+        <rect x="341" y="71" width="148" height="178" fill="url(#windowLight)" rx="1"/>
+
+        <rect x="540" y="70" width="150" height="180" fill="none" stroke="rgba(192,122,74,0.2)" stroke-width="1.5" rx="1"/>
+        <line x1="615" y1="70" x2="615" y2="250" stroke="rgba(192,122,74,0.15)" stroke-width="1"/>
+        <line x1="540" y1="160" x2="690" y2="160" stroke="rgba(192,122,74,0.15)" stroke-width="1"/>
+        <rect x="541" y="71" width="148" height="178" fill="url(#windowLight)" rx="1"/>
+      </g>
+
+      <!-- Gradients -->
+      <defs>
+        <linearGradient id="windowLight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(192,170,140,0.08)"/>
+          <stop offset="100%" stop-color="rgba(192,170,140,0.02)"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ===== BUILD ELEMENTS (hidden by default, shown on decisions) ===== -->
+
+      <!-- Element 1: Terracotta floor highlight (decision 1) -->
+      <g id="el-floor" class="build-el" opacity="0">
+        <rect x="0" y="350" width="800" height="100" fill="url(#terracottaGrad)"/>
+        <defs>
+          <linearGradient id="terracottaGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(168,102,68,0.25)"/>
+            <stop offset="50%" stop-color="rgba(168,102,68,0.35)"/>
+            <stop offset="100%" stop-color="rgba(168,102,68,0.25)"/>
+          </linearGradient>
+        </defs>
+      </g>
+
+      <!-- Element 2: Window restoration glow (decision 2) -->
+      <g id="el-windows" class="build-el" opacity="0">
+        <rect x="141" y="71" width="148" height="178" fill="rgba(192,170,140,0.12)" rx="1"/>
+        <rect x="341" y="71" width="148" height="178" fill="rgba(192,170,140,0.12)" rx="1"/>
+        <rect x="541" y="71" width="148" height="178" fill="rgba(192,170,140,0.12)" rx="1"/>
+        <!-- Light rays -->
+        <line x1="215" y1="160" x2="180" y2="345" stroke="rgba(245,240,232,0.04)" stroke-width="40"/>
+        <line x1="415" y1="160" x2="380" y2="345" stroke="rgba(245,240,232,0.04)" stroke-width="40"/>
+        <line x1="615" y1="160" x2="580" y2="345" stroke="rgba(245,240,232,0.04)" stroke-width="40"/>
+      </g>
+
+      <!-- Element 3: Bed pods (decision 3) -->
+      <g id="el-beds" class="build-el" opacity="0">
+        <!-- Row of pod-like beds on the right -->
+        <g transform="translate(560, 270)">
+          <rect x="0" y="0" width="60" height="75" rx="3" fill="none" stroke="rgba(192,122,74,0.5)" stroke-width="1.5"/>
+          <rect x="5" y="40" width="50" height="20" rx="2" fill="rgba(192,122,74,0.15)"/>
+          <line x1="0" y1="40" x2="60" y2="40" stroke="rgba(192,122,74,0.3)" stroke-width="0.5" stroke-dasharray="3"/>
+        </g>
+        <g transform="translate(630, 270)">
+          <rect x="0" y="0" width="60" height="75" rx="3" fill="none" stroke="rgba(192,122,74,0.5)" stroke-width="1.5"/>
+          <rect x="5" y="40" width="50" height="20" rx="2" fill="rgba(192,122,74,0.15)"/>
+          <line x1="0" y1="40" x2="60" y2="40" stroke="rgba(192,122,74,0.3)" stroke-width="0.5" stroke-dasharray="3"/>
+        </g>
+      </g>
+
+      <!-- Element 4: Kitchen / dining area (decision 4) -->
+      <g id="el-kitchen" class="build-el" opacity="0">
+        <g transform="translate(140, 275)">
+          <!-- Long communal table -->
+          <rect x="0" y="30" width="140" height="8" rx="2" fill="rgba(192,122,74,0.3)" stroke="rgba(192,122,74,0.5)" stroke-width="1"/>
+          <!-- Chairs (dots) -->
+          <circle cx="20" cy="22" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="50" cy="22" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="80" cy="22" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="110" cy="22" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="20" cy="46" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="50" cy="46" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="80" cy="46" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <circle cx="110" cy="46" r="4" fill="rgba(192,122,74,0.2)" stroke="rgba(192,122,74,0.4)" stroke-width="0.5"/>
+          <!-- Warm glow above table -->
+          <ellipse cx="70" cy="10" rx="50" ry="15" fill="rgba(232,168,118,0.08)"/>
+        </g>
+      </g>
+
+      <!-- Element 5: Yoga / movement area (decision 5) -->
+      <g id="el-yoga" class="build-el" opacity="0">
+        <g transform="translate(350, 290)">
+          <!-- Yoga mats -->
+          <rect x="0" y="20" width="35" height="50" rx="3" fill="rgba(94,184,168,0.15)" stroke="rgba(94,184,168,0.3)" stroke-width="0.5"/>
+          <rect x="40" y="20" width="35" height="50" rx="3" fill="rgba(94,184,168,0.15)" stroke="rgba(94,184,168,0.3)" stroke-width="0.5"/>
+          <rect x="80" y="20" width="35" height="50" rx="3" fill="rgba(94,184,168,0.15)" stroke="rgba(94,184,168,0.3)" stroke-width="0.5"/>
+          <!-- Calm ambiance circle -->
+          <circle cx="57" cy="10" r="20" fill="rgba(94,184,168,0.06)" stroke="rgba(94,184,168,0.1)" stroke-width="0.5"/>
+        </g>
+      </g>
+
+      <!-- Element 6: Coworking zone (decision 11) -->
+      <g id="el-cowork" class="build-el" opacity="0">
+        <g transform="translate(145, 270)">
+          <!-- Desk -->
+          <rect x="0" y="15" width="80" height="6" rx="1" fill="rgba(94,184,168,0.25)" stroke="rgba(94,184,168,0.5)" stroke-width="1"/>
+          <!-- Laptop shapes -->
+          <rect x="10" y="5" width="15" height="10" rx="1" fill="none" stroke="rgba(94,184,168,0.4)" stroke-width="0.5"/>
+          <rect x="35" y="5" width="15" height="10" rx="1" fill="none" stroke="rgba(94,184,168,0.4)" stroke-width="0.5"/>
+          <rect x="60" y="5" width="15" height="10" rx="1" fill="none" stroke="rgba(94,184,168,0.4)" stroke-width="0.5"/>
+          <!-- WiFi icon -->
+          <path d="M42 -5 Q47 -12 52 -5" fill="none" stroke="rgba(94,184,168,0.3)" stroke-width="0.5"/>
+          <path d="M39 -2 Q47 -12 55 -2" fill="none" stroke="rgba(94,184,168,0.2)" stroke-width="0.5"/>
+        </g>
+      </g>
+
+      <!-- Element 7: Art installation (decision 9) -->
+      <g id="el-art" class="build-el" opacity="0">
+        <g transform="translate(380, 80)">
+          <!-- Abstract light sculpture -->
+          <circle cx="35" cy="35" r="25" fill="none" stroke="rgba(233,124,106,0.3)" stroke-width="1">
+            <animate attributeName="r" values="25;28;25" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="35" cy="35" r="15" fill="none" stroke="rgba(232,168,118,0.4)" stroke-width="1">
+            <animate attributeName="r" values="15;18;15" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="35" cy="35" r="5" fill="rgba(232,168,118,0.3)">
+            <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Hanging wire -->
+          <line x1="35" y1="0" x2="35" y2="10" stroke="rgba(245,240,232,0.2)" stroke-width="0.5"/>
+        </g>
+      </g>
+
+      <!-- Element 8: Upcycled furniture markers (decision 7) -->
+      <g id="el-upcycle" class="build-el" opacity="0">
+        <!-- Scatter some handmade-looking furniture icons -->
+        <g transform="translate(460, 310)">
+          <!-- Stool -->
+          <rect x="0" y="10" width="20" height="3" rx="1" fill="rgba(192,122,74,0.3)"/>
+          <line x1="3" y1="13" x2="3" y2="30" stroke="rgba(192,122,74,0.3)" stroke-width="1.5"/>
+          <line x1="17" y1="13" x2="17" y2="30" stroke="rgba(192,122,74,0.3)" stroke-width="1.5"/>
+          <!-- ♻ tag -->
+          <text x="5" y="6" font-size="8" fill="rgba(94,184,168,0.5)">♻</text>
+        </g>
+        <g transform="translate(200, 305)">
+          <!-- Shelf -->
+          <rect x="0" y="0" width="30" height="3" rx="1" fill="rgba(192,122,74,0.3)"/>
+          <rect x="0" y="12" width="30" height="3" rx="1" fill="rgba(192,122,74,0.3)"/>
+          <line x1="2" y1="0" x2="2" y2="35" stroke="rgba(192,122,74,0.3)" stroke-width="1"/>
+          <line x1="28" y1="0" x2="28" y2="35" stroke="rgba(192,122,74,0.3)" stroke-width="1"/>
+        </g>
+      </g>
+
+    </svg>
+
+    <div class="scene-grid"></div>
+  </div>
+
+  <!-- Meters -->
+  <div class="meters">
+    <div class="meter">
+      <div class="meter-icon">💰</div>
+      <div class="meter-info">
+        <div class="meter-label">Budget</div>
+        <div class="meter-value" id="meter-budget">€400K</div>
+      </div>
+    </div>
+    <div class="meter">
+      <div class="meter-icon">🛏️</div>
+      <div class="meter-info">
+        <div class="meter-label">Beds</div>
+        <div class="meter-value" id="meter-beds">0</div>
+      </div>
+    </div>
+    <div class="meter">
+      <div class="meter-icon">❤️</div>
+      <div class="meter-info">
+        <div class="meter-label">Connection</div>
+        <div class="meter-value" id="meter-connection">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Character + Decision -->
+  <div class="character-area">
+    <div class="character-card" id="character-card">
+      <div class="character-emoji" id="char-emoji">🏗️</div>
+      <div class="character-name" id="char-name">The Architect</div>
+      <div class="character-question" id="char-question">"The shell has original terracotta floors. Keep them?"</div>
+      <div class="character-detail" id="char-detail">Preserves industrial heritage. Saves €15K vs new flooring.</div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-yes" onclick="decide(true)">Yes</button>
+      <button class="btn btn-no" onclick="decide(false)">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ENDING SCREEN ==================== -->
+<div id="ending-screen">
+  <div class="ending-badge" id="ending-badge">❤️</div>
+  <div class="ending-type">You built</div>
+  <h2 class="ending-title" id="ending-title">The Connection Engine</h2>
+
+  <div class="ending-stats">
+    <div class="ending-stat">
+      <div class="ending-stat-value" id="end-beds">78</div>
+      <div class="ending-stat-label">Beds</div>
+    </div>
+    <div class="ending-stat">
+      <div class="ending-stat-value" id="end-connection">87</div>
+      <div class="ending-stat-label">Connection</div>
+    </div>
+    <div class="ending-stat">
+      <div class="ending-stat-value" id="end-budget">€320K</div>
+      <div class="ending-stat-label">Budget Left</div>
+    </div>
+  </div>
+
+  <div class="ending-divider"></div>
+
+  <p class="ending-real">
+    This isn't just a game.<br><br>
+    <strong>KraftWerk is being built right now</strong> — in Linz's Tabakfabrik,
+    from the same empty shell you just filled.<br><br>
+    Want to see it happen?
+  </p>
+
+  <div class="ending-cta-group">
+    <button class="btn-follow" onclick="followBuild()">🔔 Follow the Build</button>
+    <button class="btn-share" onclick="showShareCard()">Share your build →</button>
+  </div>
+
+  <div class="share-card" id="share-card">
+    <div class="share-card-line">🏗️ My KraftWerk Build:</div>
+    <div class="share-card-line" id="share-line-1"></div>
+    <div class="share-card-line" id="share-line-2"></div>
+    <div class="share-card-line" id="share-line-3"></div>
+    <div class="share-card-line" id="share-line-4"></div>
+    <div class="share-card-line" id="share-line-5"></div>
+    <span class="share-card-url">Build yours → kraftwerk.game</span>
+  </div>
+</div>
+
+<script>
+// ==================== GAME STATE ====================
+const state = {
+  step: 0,
+  budget: 400,
+  beds: 0,
+  connection: 0,
+  choices: [],
+  tags: { heritage: 0, community: 0, revenue: 0, impact: 0 }
+};
+
+// ==================== DECISIONS DATA ====================
+const decisions = [
+  {
+    emoji: '🏗️', name: 'The Architect',
+    question: '"The shell has original terracotta floors. Keep them?"',
+    detail: 'Preserves industrial heritage. Saves €15K vs new flooring.',
+    yes: { budget: 15, beds: 0, connection: 5, tags: ['heritage'], el: 'el-floor' },
+    no: { budget: -15, beds: 0, connection: 0, tags: [] }
+  },
+  {
+    emoji: '🪟', name: 'The Glazier',
+    question: '"These factory windows are massive. Restore the originals?"',
+    detail: 'Floods the space with natural light. Major heritage value.',
+    yes: { budget: -20, beds: 0, connection: 8, tags: ['heritage'], el: 'el-windows' },
+    no: { budget: -10, beds: 0, connection: 2, tags: [] }
+  },
+  {
+    emoji: '🛏️', name: 'The Designer',
+    question: '"Privacy pods with curtains, or open-plan bunks?"',
+    detail: 'Pods = premium pricing but fewer beds. Bunks = max capacity.',
+    yes: { budget: -25, beds: 65, connection: 5, tags: ['revenue'], el: 'el-beds' },
+    no: { budget: -10, beds: 90, connection: 8, tags: ['community'] }
+  },
+  {
+    emoji: '👩‍🍳', name: 'The Community Chef',
+    question: '"Nightly community dinners, 6-8pm. Every single night?"',
+    detail: 'The soul of the Anchor Model. Where strangers become friends.',
+    yes: { budget: -30, beds: 0, connection: 20, tags: ['community', 'community'], el: 'el-kitchen' },
+    no: { budget: 0, beds: 0, connection: 0, tags: [] }
+  },
+  {
+    emoji: '🧘', name: 'The Yoga Teacher',
+    question: '"Morning flow classes in the common room?"',
+    detail: 'Movement builds connection. But the room could hold 6 more beds.',
+    yes: { budget: -5, beds: -6, connection: 12, tags: ['community'], el: 'el-yoga' },
+    no: { budget: 0, beds: 6, connection: 0, tags: ['revenue'] }
+  },
+  {
+    emoji: '🎓', name: 'The JKU Student',
+    question: '"She needs a room for 3 months. Offer long-term beds?"',
+    detail: '24,000 international students at JKU. Stable income stream.',
+    yes: { budget: 10, beds: 0, connection: 6, tags: ['revenue'], el: null },
+    no: { budget: 0, beds: 5, connection: 0, tags: [] }
+  },
+  {
+    emoji: '🔧', name: 'The Grand Garage Maker',
+    question: '"Upcycled furniture from the makerspace?"',
+    detail: 'Every piece has a story. Saves €20K. Sustainability cred.',
+    yes: { budget: 20, beds: 0, connection: 8, tags: ['heritage', 'impact'], el: 'el-upcycle' },
+    no: { budget: -20, beds: 0, connection: 2, tags: [] }
+  },
+  {
+    emoji: '🏛️', name: 'The City Official',
+    question: '"He wants to inspect progress. Open the doors early?"',
+    detail: 'Builds credibility with the Magistrat. But delays the build.',
+    yes: { budget: 0, beds: 0, connection: 10, tags: ['impact'], el: null },
+    no: { budget: 5, beds: 0, connection: -3, tags: [] }
+  },
+  {
+    emoji: '🎨', name: 'The Ars Electronica Artist',
+    question: '"An interactive light sculpture in the lobby?"',
+    detail: 'Linz = City of Media Arts. This puts you on the cultural map.',
+    yes: { budget: -15, beds: 0, connection: 15, tags: ['heritage'], el: 'el-art' },
+    no: { budget: 0, beds: 0, connection: 0, tags: [] }
+  },
+  {
+    emoji: '🤝', name: 'The Volkshilfe Partner',
+    question: '"Hire refugees and disabled youth for staffing?"',
+    detail: 'Inclusive employment. Unlocks social impact grants.',
+    yes: { budget: 15, beds: 0, connection: 12, tags: ['impact', 'impact'], el: null },
+    no: { budget: 0, beds: 0, connection: 0, tags: [] }
+  },
+  {
+    emoji: '💻', name: 'The Digital Nomad',
+    question: '"A dedicated coworking Flow Zone with fast wifi?"',
+    detail: 'Recurring revenue from memberships. Attracts remote workers.',
+    yes: { budget: -10, beds: -4, connection: 6, tags: ['revenue'], el: 'el-cowork' },
+    no: { budget: 0, beds: 4, connection: 0, tags: [] }
+  },
+  {
+    emoji: '🏭', name: 'The Tabakfabrik Manager',
+    question: '"He offers a pop-up event space next door. Take it?"',
+    detail: 'Brand association with Linz\'s innovation hub.',
+    yes: { budget: -8, beds: 0, connection: 10, tags: ['revenue', 'heritage'], el: null },
+    no: { budget: 0, beds: 0, connection: 0, tags: [] }
+  },
+  {
+    emoji: '📚', name: 'The Workshop Leader',
+    question: '"Run a \u2018Build a Social Hostel\u2019 course for visitors?"',
+    detail: 'Teachcation. Guests pay to learn your model. Nobody else does this.',
+    yes: { budget: 5, beds: 0, connection: 10, tags: ['revenue', 'impact'], el: null },
+    no: { budget: 0, beds: 0, connection: 0, tags: [] }
+  },
+  {
+    emoji: '💰', name: 'The Angel Investor',
+    question: '"€100K for an advisory role and a small equity stake?"',
+    detail: 'Unlocks €300K+ in matching grants. But you share ownership.',
+    yes: { budget: 100, beds: 0, connection: 5, tags: ['revenue'], el: null },
+    no: { budget: 0, beds: 0, connection: 3, tags: ['heritage'] }
+  },
+  {
+    emoji: '🌍', name: 'The First Guest',
+    question: '"Opening night. Throw a community launch party?"',
+    detail: 'Invite the city. Press. Partners. Make it a moment.',
+    yes: { budget: -10, beds: 0, connection: 20, tags: ['community', 'impact'], el: null },
+    no: { budget: 0, beds: 0, connection: 5, tags: [] }
+  }
+];
+
+// ==================== INIT ====================
+function initProgressDots() {
+  const bar = document.getElementById('progress-bar');
+  bar.innerHTML = '';
+  for (let i = 0; i < decisions.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'progress-dot' + (i === 0 ? ' current' : '');
+    dot.id = 'dot-' + i;
+    bar.appendChild(dot);
+  }
+}
+
+function startGame() {
+  document.getElementById('intro-screen').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('game-screen').classList.add('active');
+    initProgressDots();
+    showCharacter(0);
+  }, 400);
+}
+
+// ==================== SHOW CHARACTER ====================
+function showCharacter(index) {
+  const d = decisions[index];
+  const card = document.getElementById('character-card');
+  card.classList.remove('visible');
+
+  setTimeout(() => {
+    document.getElementById('char-emoji').textContent = d.emoji;
+    document.getElementById('char-name').textContent = d.name;
+    document.getElementById('char-question').textContent = d.question;
+    document.getElementById('char-detail').textContent = d.detail;
+    document.getElementById('step-label').textContent = `Decision ${index + 1} of ${decisions.length}`;
+    card.classList.add('visible');
+  }, 200);
+}
+
+// ==================== DECIDE ====================
+function decide(yes) {
+  const d = decisions[state.step];
+  const effect = yes ? d.yes : d.no;
+
+  // Apply effects
+  state.budget += effect.budget;
+  state.beds += effect.beds;
+  state.connection += effect.connection;
+  effect.tags.forEach(t => state.tags[t]++);
+  state.choices.push(yes);
+
+  // Update meters with flash
+  updateMeter('meter-budget', `€${state.budget}K`, effect.budget);
+  updateMeter('meter-beds', Math.max(0, state.beds), effect.beds);
+  updateMeter('meter-connection', Math.max(0, state.connection), effect.connection);
+
+  // Show build element if yes
+  if (yes && effect.el) {
+    const el = document.getElementById(effect.el);
+    if (el) {
+      el.style.transition = 'opacity 1.2s ease';
+      el.style.opacity = '1';
+    }
+  }
+
+  // Update progress dots
+  const currentDot = document.getElementById('dot-' + state.step);
+  if (currentDot) {
+    currentDot.classList.remove('current');
+    currentDot.classList.add('done');
+  }
+
+  state.step++;
+
+  if (state.step < decisions.length) {
+    const nextDot = document.getElementById('dot-' + state.step);
+    if (nextDot) nextDot.classList.add('current');
+    showCharacter(state.step);
+  } else {
+    showEnding();
+  }
+}
+
+function updateMeter(id, value, delta) {
+  const el = document.getElementById(id);
+  el.textContent = value;
+  if (delta > 0) {
+    el.classList.add('up');
+    setTimeout(() => el.classList.remove('up'), 800);
+  } else if (delta < 0) {
+    el.classList.add('down');
+    setTimeout(() => el.classList.remove('down'), 800);
+  }
+}
+
+// ==================== ENDING ====================
+function showEnding() {
+  document.getElementById('game-screen').classList.remove('active');
+  document.getElementById('game-screen').style.display = 'none';
+
+  const screen = document.getElementById('ending-screen');
+  screen.classList.add('active');
+
+  // Determine ending type
+  const tags = state.tags;
+  const max = Math.max(tags.heritage, tags.community, tags.revenue, tags.impact);
+  let type, badge, title;
+
+  if (max === tags.community) {
+    badge = '❤️'; title = 'The Connection Engine';
+  } else if (max === tags.heritage) {
+    badge = '🏛️'; title = 'The Heritage Hub';
+  } else if (max === tags.revenue) {
+    badge = '📈'; title = 'The Smart Build';
+  } else {
+    badge = '🌍'; title = 'The Impact Machine';
+  }
+
+  document.getElementById('ending-badge').textContent = badge;
+  document.getElementById('ending-title').textContent = title;
+  document.getElementById('end-beds').textContent = Math.max(0, state.beds);
+  document.getElementById('end-connection').textContent = Math.max(0, state.connection);
+  document.getElementById('end-budget').textContent = `€${state.budget}K`;
+
+  // Build share card
+  const lines = [
+    state.choices[0] ? '🟫🟫🟫 Heritage floors ✓' : '⬜⬜⬜ Modern floors',
+    state.choices[3] ? '🍳🍳🍳 Community kitchen ✓' : '⬜⬜⬜ No kitchen',
+    state.choices[4] ? '🧘🧘🧘 Yoga studio ✓' : '⬜⬜⬜ Extra beds instead',
+    `🛏️ ${Math.max(0, state.beds)} beds · ❤️ ${Math.max(0, state.connection)}`,
+    `${badge} ${title}`
+  ];
+  for (let i = 0; i < 5; i++) {
+    document.getElementById('share-line-' + (i + 1)).textContent = lines[i];
+  }
+}
+
+function followBuild() {
+  alert('🔔 Newsletter signup would go here!\n\nIn the real build, this opens an email capture form.');
+}
+
+function showShareCard() {
+  document.getElementById('share-card').classList.add('visible');
+}
+</script>
+</body>
+</html>

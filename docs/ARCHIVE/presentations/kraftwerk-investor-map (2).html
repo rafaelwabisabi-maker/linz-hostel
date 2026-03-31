@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kraftwerk Hostel Linz — Investor Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* ── CANVAS: warm eggshell — the lightest surface ── */
+  --bg:#EDE5D8;
+  --bg2:#E8DDD0;
+  --bg3:#F0E8DC;
+  /* ── INFO & LEAF NODES: slightly more cream than bg ── */
+  --card:#E4D8C8;
+  --card2:#DCCFBB;
+  /* ── PANEL: rich dark cognac (user loves this) ── */
+  --panel-bg:#1e1008;
+  --panel-header:#180d05;
+  /* ── SURFACES & BORDERS ── */
+  --surface:rgba(160,110,60,0.06);
+  --surface2:rgba(160,110,60,0.10);
+  --surface3:rgba(160,110,60,0.15);
+  --border:rgba(160,110,60,0.18);
+  --border-h:rgba(160,110,60,0.40);
+  /* ── NODE TEXT (on light cards) ── */
+  --text:#1e1008;
+  --text2:#7a5030;
+  --text3:#a07850;
+  /* ── PANEL TEXT (light on dark) ── */
+  --panel-text:#f0e4cc;
+  --panel-text2:#b8956a;
+  --panel-text3:#7a5a38;
+  /* ── BRAND ACCENTS ── */
+  --copper:#B8743A;
+  --copper-light:#D4945A;
+  --coral:#D9552E;
+  --teal:#3A6E70;
+  --peach:#C8A882;
+  --cream:#EDE5D8;
+  --dark:#1e1008;
+  --terracotta:#8C4020;
+  --sage:#6A8A6A;
+  --font:'Inter',system-ui,sans-serif;
+  --heading:'Cormorant Garamond',Georgia,serif;
+  --mono:'IBM Plex Mono',monospace;
+  --panel-w:460px;
+}
+html{font-size:14px}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--text);
+  overflow:hidden;height:100vh;width:100vw;cursor:grab;
+}
+body.grabbing{cursor:grabbing}
+body.panel-open{cursor:default}
+
+/* Atmospheric texture overlay */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 5% 95%,  rgba(180,130,70,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 5%,  rgba(58,110,112,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,  rgba(180,130,70,0.04) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+#canvas{position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;z-index:1}
+
+/* SVG connections */
+#connections{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2}
+#connections line{stroke:rgba(160,110,60,0.20);stroke-width:1.5;transition:stroke 0.3s,opacity 0.3s}
+#connections line.active{stroke:var(--copper);stroke-width:2;opacity:0.75;filter:drop-shadow(0 0 4px rgba(160,110,60,0.35))}
+#connections line.track-line{
+  stroke:rgba(160,110,60,0.28);stroke-width:2;stroke-dasharray:16 8;
+  animation:flow 9s linear infinite;
+}
+#connections line.track-line.active{stroke:var(--copper);stroke-width:2.5;opacity:0.9;filter:drop-shadow(0 0 7px rgba(196,133,90,0.5))}
+@keyframes flow{
+  0%  {stroke-dashoffset:0;   stroke:rgba(160,110,60,0.28)}
+  40% {stroke:rgba(180,80,40,0.25)}
+  80% {stroke:rgba(58,110,112,0.22)}
+  100%{stroke-dashoffset:-24; stroke:rgba(160,110,60,0.28)}
+}
+
+/* ═══ NODE BASE ═══ */
+.node{
+  position:absolute;border-radius:14px;cursor:pointer;
+  transition:transform 0.25s ease,box-shadow 0.25s ease,border-color 0.25s ease;
+  user-select:none;z-index:10;
+}
+.node:hover{transform:scale(1.03);z-index:20}
+.node.active{z-index:30;transform:scale(1.05)}
+
+/* ═══ PHASE NODES ═══ */
+.node-phase{
+  width:228px;border-radius:22px;overflow:hidden;
+  border:1px solid rgba(210,185,150,0.35);
+  box-shadow:0 6px 28px rgba(80,50,20,0.18), 0 2px 6px rgba(80,50,20,0.10);
+  background:#F5EDD8;
+}
+.node-phase:hover{
+  border-color:rgba(240,210,170,0.55);
+  box-shadow:0 14px 56px rgba(10,5,0,0.65), 0 4px 12px rgba(0,0,0,0.4), 0 0 24px rgba(196,133,90,0.12);
+}
+.node-phase.active{
+  border-color:rgba(240,210,170,0.8);
+  box-shadow:0 16px 64px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.45), 0 0 32px rgba(210,155,95,0.22);
+}
+.node-phase .ph-img{
+  width:100%;height:80px;overflow:hidden;position:relative;
+}
+.node-phase .ph-img img{
+  width:100%;height:100%;object-fit:cover;
+  filter:sepia(0.15) saturate(1.0) brightness(0.95);
+  transition:transform 0.4s ease;
+}
+.node-phase:hover .ph-img img{transform:scale(1.06)}
+.node-phase .ph-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom, transparent 35%, #F5EDD8 100%);
+}
+.node-phase .ph-body{padding:14px 16px 16px}
+.phase-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:6px;font-size:10px;font-weight:700;
+  font-family:var(--mono);margin-bottom:9px;
+}
+.node-phase h3{
+  font-family:var(--heading);font-size:17px;font-weight:700;
+  letter-spacing:0.2px;margin-bottom:5px;line-height:1.2;color:var(--dark);
+}
+.node-phase .n-sub{font-size:10.5px;color:var(--text2);line-height:1.5;margin-bottom:10px}
+.node-phase .n-time{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9.5px;font-weight:600;font-family:var(--mono);
+  padding:3px 9px;border-radius:5px;letter-spacing:0.5px;
+}
+
+/* ═══ INFO NODES ═══ */
+.node-info{
+  width:172px;padding:15px 16px;border-radius:14px;
+  background:var(--card);border:1px solid rgba(180,145,95,0.25);
+  box-shadow:0 3px 16px rgba(80,50,20,0.14), 0 1px 4px rgba(80,50,20,0.08);
+}
+.node-info:hover{border-color:rgba(180,140,80,0.45);background:var(--card2);box-shadow:0 6px 22px rgba(80,50,20,0.20)}
+.node-info.active{border-color:rgba(180,140,80,0.60);box-shadow:0 8px 26px rgba(80,50,20,0.26)}
+.node-info .n-icon{font-size:18px;margin-bottom:7px}
+.node-info h4{font-family:var(--heading);font-size:14px;font-weight:700;margin-bottom:3px;color:var(--dark)}
+.node-info .n-sub{font-size:10.5px;color:var(--text2);line-height:1.4}
+.node-info .n-tag{
+  display:inline-block;font-size:8px;font-weight:600;letter-spacing:1.1px;
+  text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-top:7px;font-family:var(--mono);
+}
+
+/* ═══ LEAF NODES ═══ */
+.node-leaf{
+  width:158px;padding:12px 14px;border-radius:12px;
+  background:var(--card);border:1px solid rgba(240,215,180,0.18);
+  box-shadow:0 5px 22px rgba(10,5,0,0.48), 0 1px 5px rgba(0,0,0,0.28);
+}
+.node-leaf:hover{border-color:rgba(240,210,160,0.40);background:var(--card2);box-shadow:0 8px 32px rgba(10,5,0,0.58),0 0 18px rgba(196,133,90,0.09)}
+.node-leaf.active{border-color:rgba(240,210,160,0.60);box-shadow:0 10px 38px rgba(10,5,0,0.65),0 0 24px rgba(196,133,90,0.12)}
+.node-leaf h4{font-size:11px;font-weight:600;margin-bottom:3px;color:var(--dark)}
+.node-leaf p{font-size:9.5px;color:var(--text2);line-height:1.4}
+.node-leaf .n-val{font-size:13px;font-weight:700;font-family:var(--mono);margin-top:6px}
+
+/* ═══ TRACK LABELS ═══ */
+.track-label{
+  position:absolute;z-index:5;
+  font-size:9px;font-weight:600;font-family:var(--mono);color:rgba(150,100,50,0.55);
+  letter-spacing:0.8px;white-space:nowrap;text-transform:uppercase;
+  padding:3px 9px;border-radius:9px;
+  background:rgba(150,100,50,0.05);border:1px solid rgba(150,100,50,0.12);
+}
+
+/* ═══ DETAIL PANEL ═══ */
+#detail-panel{
+  position:fixed;right:calc(-1 * var(--panel-w) - 2px);top:0;bottom:0;
+  width:var(--panel-w);
+  background:var(--panel-bg);
+  border-left:1px solid rgba(196,133,90,0.15);
+  box-shadow:-16px 0 80px rgba(0,0,0,0.7), -2px 0 12px rgba(0,0,0,0.4);
+  z-index:1000;
+  transition:right 0.45s cubic-bezier(0.16,1,0.3,1);
+  overflow-y:auto;
+  display:flex;flex-direction:column;
+  color:var(--panel-text);
+}
+#detail-panel.open{right:0}
+#detail-panel::-webkit-scrollbar{width:4px}
+#detail-panel::-webkit-scrollbar-thumb{background:rgba(196,133,90,0.3);border-radius:4px}
+#detail-panel::-webkit-scrollbar-track{background:transparent}
+
+/* Panel hero */
+.dp-hero{
+  width:100%;height:200px;overflow:hidden;position:relative;flex-shrink:0;
+}
+.dp-hero img{width:100%;height:100%;object-fit:cover;filter:sepia(0.2) saturate(0.8) brightness(0.85)}
+.dp-hero .dp-hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom, rgba(26,16,8,0) 40%, rgba(26,16,8,1) 100%);
+}
+.dp-hero-empty{
+  width:100%;height:60px;
+  background:linear-gradient(135deg,rgba(140,64,32,0.3),rgba(58,110,112,0.2));
+  border-bottom:1px solid rgba(100,60,20,0.3);flex-shrink:0;
+}
+
+/* Panel header */
+.dp-header{
+  padding:0 24px 18px;flex-shrink:0;
+  border-bottom:1px solid rgba(196,133,90,0.2);
+  position:sticky;top:0;z-index:2;
+  background:var(--panel-header);
+}
+.dp-close{
+  position:fixed;top:14px;right:14px;
+  width:32px;height:32px;border-radius:9px;
+  background:rgba(20,12,4,0.96);border:1px solid rgba(196,133,90,0.25);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--panel-text3);transition:all 0.15s;z-index:1001;
+}
+.dp-close:hover{border-color:var(--copper);color:var(--panel-text)}
+.dp-phase-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  font-family:var(--mono);color:var(--panel-text3);
+  margin-bottom:8px;margin-top:0;
+}
+.dp-header h2{
+  font-family:var(--heading);font-size:28px;font-weight:700;
+  letter-spacing:0.2px;line-height:1.1;color:var(--panel-text);
+  margin-bottom:6px;
+}
+.dp-header .dp-lead{
+  font-size:13px;color:var(--panel-text2);line-height:1.6;
+}
+
+/* Panel body */
+.dp-body{padding:20px 24px 56px;flex:1;background:var(--panel-bg)}
+
+/* Body components */
+.dp-section-title{
+  font-size:9px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--panel-text3);font-family:var(--mono);
+  padding:0 0 8px;margin:24px 0 10px;
+  border-bottom:1px solid rgba(196,133,90,0.2);
+  display:flex;align-items:center;gap:8px;
+}
+.dp-section-title::before{
+  content:'';display:block;width:16px;height:1px;
+  background:var(--copper);flex-shrink:0;
+}
+.dp-metric{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:9px 13px;
+  background:rgba(196,133,90,0.08);
+  border-radius:9px;border:1px solid rgba(210,155,95,0.22);
+  margin-bottom:5px;
+}
+.dp-metric .dm-lbl{font-size:12px;color:var(--panel-text2)}
+.dp-metric .dm-val{font-size:13.5px;font-weight:700;font-family:var(--mono)}
+.dp-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:9px 13px;
+  background:rgba(196,133,90,0.06);
+  border-radius:9px;border:1px solid rgba(196,133,90,0.14);
+  font-size:12.5px;line-height:1.6;margin-bottom:5px;color:var(--panel-text);
+}
+.dp-item .di-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:8px}
+.dp-item .di-txt{flex:1}
+.dp-quote{
+  padding:14px 18px;
+  background:rgba(196,133,90,0.1);
+  border-left:3px solid var(--copper);
+  border-radius:0 10px 10px 0;
+  font-family:var(--heading);font-style:italic;
+  font-size:15.5px;line-height:1.65;color:var(--copper-light);
+  margin:16px 0;
+}
+.dp-img-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:4px 0 8px;
+}
+.dp-img-grid img{
+  width:100%;height:90px;object-fit:cover;border-radius:9px;
+  border:1px solid rgba(196,133,90,0.2);
+  filter:sepia(0.15) saturate(0.85) brightness(0.9);
+  transition:transform 0.3s ease;
+}
+.dp-img-grid img:hover{transform:scale(1.03)}
+.dp-img-grid.three{grid-template-columns:1fr 1fr 1fr}
+.dp-img-grid.three img{height:70px}
+
+/* Highlight number/stat box */
+.dp-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:4px 0}
+.dp-stat-box{
+  padding:12px 14px;
+  background:rgba(196,133,90,0.09);
+  border:1px solid rgba(196,133,90,0.2);
+  border-radius:10px;text-align:center;
+}
+.dp-stat-box .sb-val{
+  font-family:var(--heading);font-size:26px;font-weight:700;
+  line-height:1.1;margin-bottom:3px;
+}
+.dp-stat-box .sb-lbl{font-size:10px;color:var(--panel-text2);line-height:1.3}
+
+/* Pill tag */
+.dp-tag{
+  display:inline-flex;align-items:center;
+  font-size:9.5px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;font-family:var(--mono);margin:2px 3px 2px 0;
+}
+
+/* Divider */
+.dp-divider{
+  height:1px;background:rgba(196,133,90,0.15);margin:20px 0;
+}
+
+/* Table */
+.dp-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.dp-table td{
+  padding:7px 10px;font-size:11.5px;
+  border-bottom:1px solid rgba(196,133,90,0.12);color:var(--panel-text);
+}
+.dp-table td:first-child{color:var(--panel-text2);width:55%}
+.dp-table td:last-child{font-weight:600;font-family:var(--mono);text-align:right}
+
+/* CTA area */
+.dp-cta-area{
+  margin-top:24px;padding:18px 20px;
+  background:rgba(196,133,90,0.1);
+  border:1px solid rgba(196,133,90,0.25);
+  border-radius:14px;
+  text-align:center;
+}
+.dp-cta-area .cta-pre{font-size:11px;color:var(--panel-text3);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-family:var(--mono)}
+.dp-cta-area .cta-main{
+  display:block;padding:11px 20px;
+  background:linear-gradient(135deg,var(--copper),var(--terracotta));
+  border-radius:9px;color:#fff;font-size:13px;font-weight:600;
+  text-decoration:none;letter-spacing:0.3px;transition:opacity 0.2s;
+  margin-bottom:8px;
+}
+.dp-cta-area .cta-main:hover{opacity:0.88}
+.dp-cta-area .cta-sec{
+  display:block;font-size:11px;color:var(--panel-text3);text-decoration:none;
+  padding:3px 0;transition:color 0.15s;
+}
+.dp-cta-area .cta-sec:hover{color:var(--copper-light)}
+
+/* ═══ HUD ═══ */
+#hud{
+  position:fixed;top:16px;left:16px;z-index:500;
+  display:flex;flex-direction:column;gap:7px;
+}
+.hud-card{
+  padding:11px 16px;
+  background:#F5EDD8;
+  border:1px solid rgba(160,100,50,0.18);border-radius:13px;
+  box-shadow:0 2px 14px rgba(80,40,10,0.12), 0 1px 3px rgba(80,40,10,0.07);
+}
+.hw-main{
+  font-family:var(--heading);font-size:22px;font-weight:700;letter-spacing:0.3px;
+  color:#1e1008;display:block;line-height:1;
+}
+.hw-sub{
+  font-size:9px;color:rgba(140,85,35,0.60);font-weight:500;letter-spacing:1.8px;
+  text-transform:uppercase;display:block;margin-top:4px;font-family:var(--mono);
+}
+.hud-meta{display:flex;align-items:center;gap:8px}
+.hud-meta .hm-pill{
+  font-size:9px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;font-family:var(--mono);
+  background:rgba(184,116,58,0.12);color:#B8743A;
+  border:1px solid rgba(184,116,58,0.22);
+}
+.hud-meta .hm-link{
+  font-size:9px;color:rgba(140,85,35,0.70);text-decoration:none;
+  border:1px solid rgba(160,100,50,0.18);padding:2px 9px;border-radius:20px;
+  transition:all 0.2s;font-family:var(--mono);
+}
+.hud-meta .hm-link:hover{color:#B8743A;border-color:rgba(184,116,58,0.40)}
+
+/* ═══ CONTROLS ═══ */
+#controls{position:fixed;bottom:20px;left:16px;z-index:500;display:flex;gap:5px}
+.ctrl-btn{
+  width:34px;height:34px;border-radius:9px;
+  background:#F5EDD8;
+  border:1px solid rgba(160,100,50,0.18);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:rgba(140,85,35,0.70);transition:all 0.2s;
+  box-shadow:0 1px 6px rgba(80,40,10,0.10);
+}
+.ctrl-btn:hover{border-color:rgba(184,116,58,0.40);color:#B8743A;background:#EDE5D4}
+
+/* ═══ MINIMAP ═══ */
+#minimap{
+  position:fixed;bottom:20px;right:16px;width:170px;height:76px;
+  background:#F5EDD8;
+  border:1px solid rgba(160,100,50,0.18);border-radius:10px;z-index:500;overflow:hidden;
+  box-shadow:0 1px 8px rgba(80,40,10,0.10);
+}
+#minimap-canvas{width:100%;height:100%}
+
+/* ═══ GUIDE ═══ */
+#guide{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:500;
+  background:#F5EDD8;
+  border:1px solid rgba(160,100,50,0.18);border-radius:12px;
+  padding:8px 18px;font-size:11px;color:rgba(140,85,35,0.65);
+  display:flex;align-items:center;gap:14px;transition:opacity 0.5s;
+  box-shadow:0 1px 8px rgba(80,40,10,0.10);
+}
+#guide kbd{
+  display:inline-flex;padding:2px 6px;border-radius:4px;
+  background:rgba(184,116,58,0.10);border:1px solid rgba(184,116,58,0.20);
+  font-family:var(--mono);font-size:9.5px;color:#B8743A;
+}
+
+/* ═══ INVEST BADGE ═══ */
+#invest-badge{
+  position:fixed;top:16px;right:16px;z-index:500;
+  display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+}
+.ib-pill{
+  padding:8px 14px;
+  background:#F5EDD8;
+  border:1px solid rgba(160,100,50,0.18);border-radius:10px;
+  box-shadow:0 2px 10px rgba(80,40,10,0.10);
+  display:flex;align-items:center;gap:8px;
+}
+.ib-pill .ib-dot{width:7px;height:7px;border-radius:50%;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.ib-pill .ib-txt{font-size:10px;font-weight:600;font-family:var(--mono);letter-spacing:0.5px;color:rgba(140,85,35,0.75)}
+.ib-link{
+  font-size:10.5px;color:rgba(140,85,35,0.70);text-decoration:none;
+  padding:5px 12px;border-radius:9px;
+  background:#F5EDD8;
+  border:1px solid rgba(160,100,50,0.18);
+  transition:all 0.2s;font-family:var(--mono);
+  box-shadow:0 1px 6px rgba(80,40,10,0.08);
+}
+.ib-link:hover{background:#B8743A;color:#fff;border-color:#B8743A}
+</style>
+</head>
+<body>
+
+<!-- ═══ HUD ═══ -->
+<div id="hud">
+  <div class="hud-card">
+    <span class="hw-main">Kraftwerk</span>
+    <span class="hw-sub">Hostel Linz · Investor Roadmap</span>
+  </div>
+  <div class="hud-card" style="padding:8px 14px">
+    <div class="hud-meta">
+      <span class="hm-pill">€400K Round</span>
+      <span class="hm-pill" style="background:rgba(58,110,112,0.1);color:var(--teal);border-color:rgba(58,110,112,0.2)">SROI 1:4.5</span>
+      <a class="hm-link" href="https://www.linzhostel.com" target="_blank">linzhostel.com ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INVEST BADGE ═══ -->
+<div id="invest-badge">
+  <div class="ib-pill">
+    <span class="ib-dot" style="background:#B8784A"></span>
+    <span class="ib-txt">75% FUNDED · SEEKING GAP PARTNERS</span>
+  </div>
+  <a class="ib-link" href="mailto:info@linzhostel.com">✉ info@linzhostel.com</a>
+  <a class="ib-link" href="https://www.linzhostel.com" target="_blank">🌐 linzhostel.com</a>
+</div>
+
+<!-- ═══ CONTROLS ═══ -->
+<div id="controls">
+  <button class="ctrl-btn" onclick="zoomIn()" title="Zoom in">+</button>
+  <button class="ctrl-btn" onclick="zoomOut()" title="Zoom out">−</button>
+  <button class="ctrl-btn" onclick="resetView()" title="Reset view">⌂</button>
+</div>
+
+<div id="guide">
+  <span><kbd>Drag</kbd> pan</span>
+  <span><kbd>Scroll</kbd> zoom</span>
+  <span><kbd>Click</kbd> any node</span>
+  <span><kbd>Esc</kbd> close</span>
+</div>
+
+<div id="minimap"><canvas id="minimap-canvas"></canvas></div>
+<svg id="connections" xmlns="http://www.w3.org/2000/svg"></svg>
+
+<!-- ═══ CANVAS ═══ -->
+<div id="canvas">
+
+  <!-- ═══════════════════════════════════════════
+       LAYOUT: Phase spacing = 520px centres
+       ph1 @ 160   ph2 @ 680   ph3 @ 1200   ph4 @ 1720   ph5 @ 2240
+       (each 228px wide, so gap between right edge and next left = 520-228 = 292px)
+  ═══════════════════════════════════════════ -->
+
+  <!-- ═══ PHASE TRACK (y=460) ═══ -->
+  <div class="node node-phase" id="ph1" data-detail="phase1" style="left:160px;top:460px">
+    <div class="ph-img"><img src="/Users/apple/Desktop/PROJECTS/hostel-pitch-ai/public/images/moodboard/anchor_personal_story.png" alt=""></div>
+    <div class="ph-body">
+      <div class="phase-num" style="background:rgba(196,133,90,0.2);color:var(--copper)">01</div>
+      <h3>Secure the Space</h3>
+      <div class="n-sub">Bridge funding locks Tabakfabrik. Angel round unlocks €300K in grants.</div>
+      <span class="n-time" style="background:rgba(196,133,90,0.12);color:var(--copper)">● Q1 2026</span>
+    </div>
+  </div>
+
+  <div class="node node-phase" id="ph2" data-detail="phase2" style="left:680px;top:460px">
+    <div class="ph-img"><img src="/Users/apple/Desktop/PROJECTS/hostel-pitch-ai/public/images/moodboard/anchor_common_room.png" alt=""></div>
+    <div class="ph-body">
+      <div class="phase-num" style="background:rgba(58,110,112,0.2);color:var(--teal)">02</div>
+      <h3>Build the Community</h3>
+      <div class="n-sub">Renovate the shell, pop-up events, onboard partners, grow audience.</div>
+      <span class="n-time" style="background:rgba(58,110,112,0.12);color:var(--teal)">● Q2 2026</span>
+    </div>
+  </div>
+
+  <div class="node node-phase" id="ph3" data-detail="phase3" style="left:1200px;top:460px">
+    <div class="ph-img"><img src="/Users/apple/Desktop/PROJECTS/hostel-pitch-ai/public/images/moodboard/anchor_festivals.png" alt=""></div>
+    <div class="ph-body">
+      <div class="phase-num" style="background:rgba(217,85,46,0.2);color:var(--coral)">03</div>
+      <h3>Open the Doors</h3>
+      <div class="n-sub">Soft launch at Ars Electronica. 90 beds live. Three revenue streams active.</div>
+      <span class="n-time" style="background:rgba(217,85,46,0.12);color:var(--coral)">● Sept 2026</span>
+    </div>
+  </div>
+
+  <div class="node node-phase" id="ph4" data-detail="phase4" style="left:1720px;top:460px">
+    <div class="ph-img"><img src="/Users/apple/Desktop/PROJECTS/hostel-pitch-ai/public/images/moodboard/anchor_revenue_linz_skyline.png" alt=""></div>
+    <div class="ph-body">
+      <div class="phase-num" style="background:rgba(140,64,32,0.2);color:var(--terracotta)">04</div>
+      <h3>Reach Profitability</h3>
+      <div class="n-sub">48% occupancy breaks even. €920K Year 1. €402K EBITDA.</div>
+      <span class="n-time" style="background:rgba(140,64,32,0.12);color:var(--terracotta)">● Month 14</span>
+    </div>
+  </div>
+
+  <div class="node node-phase" id="ph5" data-detail="phase5" style="left:2240px;top:460px">
+    <div class="ph-img"><img src="/Users/apple/Desktop/PROJECTS/hostel-pitch-ai/public/images/moodboard/anchor_closing_linz.png" alt=""></div>
+    <div class="ph-body">
+      <div class="phase-num" style="background:rgba(106,138,106,0.2);color:var(--sage)">05</div>
+      <h3>Expand the Model</h3>
+      <div class="n-sub">Sister hostel in nature. Franchise Anchor. Teachcation licensing.</div>
+      <span class="n-time" style="background:rgba(106,138,106,0.12);color:var(--sage)">● 2027+</span>
+    </div>
+  </div>
+
+  <!-- Track labels (centred between phase midpoints) -->
+  <div class="track-label" style="left:448px;top:510px">bridge secured →</div>
+  <div class="track-label" style="left:978px;top:510px">renovation done →</div>
+  <div class="track-label" style="left:1500px;top:510px">revenues flowing →</div>
+  <div class="track-label" style="left:2028px;top:510px">payback complete →</div>
+
+  <!-- ═══ INFO NODES (y=240) — aligned above each phase ═══ -->
+  <div class="node node-info" id="inf-problem" data-detail="problem" style="left:183px;top:160px">
+    <div class="n-icon">🌍</div>
+    <h4>The Problem</h4>
+    <div class="n-sub">Austria #49/53 for expat friendliness. 16K new Linz residents. Zero third places.</div>
+    <span class="n-tag" style="background:rgba(217,85,46,0.15);color:var(--coral)">MARKET GAP</span>
+  </div>
+
+  <div class="node node-info" id="inf-model" data-detail="model" style="left:703px;top:160px">
+    <div class="n-icon">⚓</div>
+    <h4>The Anchor Model</h4>
+    <div class="n-sub">Community Catalyst replaces reception. Designed to force human connection.</div>
+    <span class="n-tag" style="background:rgba(196,133,90,0.15);color:var(--copper)">INNOVATION</span>
+  </div>
+
+  <div class="node node-info" id="inf-teachcation" data-detail="teachcation" style="left:1223px;top:160px">
+    <div class="n-icon">🎓</div>
+    <h4>Teachcation™</h4>
+    <div class="n-sub">Sleep → Create → Teach. Educational tourism captured. The moat no one else has.</div>
+    <span class="n-tag" style="background:rgba(58,110,112,0.15);color:var(--teal)">SECRET SAUCE</span>
+  </div>
+
+  <div class="node node-info" id="inf-numbers" data-detail="numbers" style="left:1743px;top:160px">
+    <div class="n-icon">📈</div>
+    <h4>The Numbers</h4>
+    <div class="n-sub">€920K Year 1. 48% margin. Break-even month 14. Full payback Year 3.</div>
+    <span class="n-tag" style="background:rgba(196,133,90,0.15);color:var(--copper)">FINANCIALS</span>
+  </div>
+
+  <div class="node node-info" id="inf-team" data-detail="team" style="left:2263px;top:160px">
+    <div class="n-icon">👥</div>
+    <h4>Daniel &amp; Anna</h4>
+    <div class="n-sub">Vision + Execution. 8 yrs running hostels in India. Built to execute this.</div>
+    <span class="n-tag" style="background:rgba(106,138,106,0.15);color:var(--sage)">FOUNDERS</span>
+  </div>
+
+  <!-- ═══ LEAF NODES (below track, y=690 & y=830) — each with UNIQUE data-detail ═══ -->
+
+  <!-- Phase 1 leaves -->
+  <div class="node node-leaf" id="d1a" data-detail="leaf-bridge" style="left:80px;top:760px">
+    <h4>Bridge Funding</h4><p>Lock Tabakfabrik lease before it's gone</p>
+    <div class="n-val" style="color:var(--copper)">€25K</div>
+  </div>
+  <div class="node node-leaf" id="d1b" data-detail="leaf-angel" style="left:290px;top:760px">
+    <h4>Angel Round</h4><p>€100K unlocks €300K+ in grants &amp; bank loans</p>
+    <div class="n-val" style="color:var(--copper)">€100K lever</div>
+  </div>
+  <div class="node node-leaf" id="d1c" data-detail="leaf-kgg" style="left:185px;top:920px">
+    <h4>KGG / UBG Cover</h4><p>80% bank risk guarantee — powerful de-risk</p>
+    <div class="n-val" style="color:var(--teal)">€220K</div>
+  </div>
+
+  <!-- Phase 2 leaves -->
+  <div class="node node-leaf" id="d2a" data-detail="leaf-shell" style="left:598px;top:760px">
+    <h4>Shell Conversion</h4><p>Tabakfabrik industrial shell → 90-bed hostel</p>
+    <div class="n-val" style="color:var(--teal)">Low risk</div>
+  </div>
+  <div class="node node-leaf" id="d2b" data-detail="leaf-popup" style="left:800px;top:760px">
+    <h4>Pop-up Events</h4><p>Community dinners &amp; workshops pre-launch</p>
+    <div class="n-val" style="color:var(--teal)">Audience build</div>
+  </div>
+  <div class="node node-leaf" id="d2c" data-detail="leaf-partners" style="left:700px;top:920px">
+    <h4>Partners Locked</h4><p>JKU · Grand Garage · factory300 signed</p>
+    <div class="n-val" style="color:var(--teal)">Q2 2026</div>
+  </div>
+
+  <!-- Phase 3 leaves -->
+  <div class="node node-leaf" id="d3a" data-detail="leaf-beds" style="left:1118px;top:760px">
+    <h4>90 Beds Live</h4><p>Dorms + privates, soft launch Sept</p>
+    <div class="n-val" style="color:var(--coral)">Day 1</div>
+  </div>
+  <div class="node node-leaf" id="d3b" data-detail="leaf-festival" style="left:1320px;top:760px">
+    <h4>Festival Traffic</h4><p>Ars Electronica 112K · Klangwolke 60K</p>
+    <div class="n-val" style="color:var(--coral)">Sept '26</div>
+  </div>
+  <div class="node node-leaf" id="d3c" data-detail="leaf-aiops" style="left:1220px;top:920px">
+    <h4>AI Ops Active</h4><p>Self check-in + AI PMS — 30% cost save</p>
+    <div class="n-val" style="color:var(--coral)">30% ↓ ops</div>
+  </div>
+
+  <!-- Phase 4 leaves -->
+  <div class="node node-leaf" id="d4a" data-detail="leaf-breakeven" style="left:1638px;top:760px">
+    <h4>Break-even</h4><p>48% occupancy — very conservative target</p>
+    <div class="n-val" style="color:var(--terracotta)">Month 14</div>
+  </div>
+  <div class="node node-leaf" id="d4b" data-detail="leaf-revenue" style="left:1840px;top:760px">
+    <h4>Year 1 Revenue</h4><p>At 82% occupancy (conservative model)</p>
+    <div class="n-val" style="color:var(--terracotta)">€920K</div>
+  </div>
+  <div class="node node-leaf" id="d4c" data-detail="leaf-ebitda" style="left:1740px;top:920px">
+    <h4>EBITDA Year 1</h4><p>Net operating profit after all costs</p>
+    <div class="n-val" style="color:var(--teal)">€402K</div>
+  </div>
+
+  <!-- Phase 5 leaves -->
+  <div class="node node-leaf" id="d5a" data-detail="leaf-sister" style="left:2158px;top:760px">
+    <h4>Sister Hostel</h4><p>Nature retreat — complete urban ↔ nature ecosystem</p>
+    <div class="n-val" style="color:var(--sage)">2027</div>
+  </div>
+  <div class="node node-leaf" id="d5b" data-detail="leaf-franchise" style="left:2360px;top:760px">
+    <h4>Franchise</h4><p>Clone Anchor model to other Austrian cities</p>
+    <div class="n-val" style="color:var(--sage)">2028+</div>
+  </div>
+  <div class="node node-leaf" id="d5c" data-detail="leaf-payback" style="left:2260px;top:920px">
+    <h4>Full Payback</h4><p>Complete investor return + SROI delivered</p>
+    <div class="n-val" style="color:var(--teal)">Year 3</div>
+  </div>
+
+</div>
+
+<!-- ═══ DETAIL PANEL ═══ -->
+<div id="detail-panel">
+  <button class="dp-close" onclick="closePanel()">✕</button>
+  <div class="dp-hero" id="dp-hero" style="display:none">
+    <img id="dp-hero-img" src="" alt="">
+    <div class="dp-hero-grad"></div>
+  </div>
+  <div class="dp-hero-empty" id="dp-hero-empty"></div>
+  <div class="dp-header">
+    <div class="dp-phase-badge" id="dp-badge"></div>
+    <h2 id="dp-title"></h2>
+    <p class="dp-lead" id="dp-desc"></p>
+  </div>
+  <div class="dp-body" id="dp-body"></div>
+</div>
+
+<script>
+(function(){
+  var BASE = '/Users/apple/Desktop/PROJECTS/hostel-pitch-ai/public/images';
+
+  var TRACK_EDGES = [['ph1','ph2'],['ph2','ph3'],['ph3','ph4'],['ph4','ph5']];
+  var BRANCH_EDGES = [
+    ['ph1','inf-problem'],['ph2','inf-model'],['ph3','inf-teachcation'],['ph4','inf-numbers'],['ph5','inf-team'],
+    ['ph1','d1a'],['ph1','d1b'],['ph1','d1c'],
+    ['ph2','d2a'],['ph2','d2b'],['ph2','d2c'],
+    ['ph3','d3a'],['ph3','d3b'],['ph3','d3c'],
+    ['ph4','d4a'],['ph4','d4b'],['ph4','d4c'],
+    ['ph5','d5a'],['ph5','d5b'],['ph5','d5c'],
+  ];
+
+  /* ── LEAF-SPECIFIC DETAILS ── */
+  var LEAF_DETAILS = {
+    'leaf-bridge': function(c){
+      c.appendChild(secTitle('What This €25K Does'));
+      c.appendChild(quote('Miss this window, start over. The Tabakfabrik location is the single biggest competitive moat.'));
+      c.appendChild(item('Secures the Tabakfabrik lease — Linz\'s premier innovation hub with existing foot traffic, cultural credibility, and social impact narrative.','var(--copper)'));
+      c.appendChild(item('January 2026 site visit confirmed: ideal shell layout, 90-bed configuration fits perfectly, no structural changes required.','var(--copper)'));
+      c.appendChild(item('Bridge note converts into equity at the next round — bridge investors get the best entry terms.','var(--coral)'));
+      c.appendChild(secTitle('Why Tabakfabrik and Nothing Else'));
+      c.appendChild(item('Historic tobacco factory with concrete columns, factory windows, terracotta floors — authentic character no competitor can replicate.','var(--teal)'));
+      c.appendChild(item('Social Impact Discount: property offers low-cost lease in exchange for community activation of a vacant space.','var(--teal)'));
+      c.appendChild(item('Already home to Grand Garage, factory300, and tech2b — our partners are already in the building.','var(--teal)'));
+    },
+    'leaf-angel': function(c){
+      c.appendChild(secTitle('The Multiplier Effect'));
+      c.appendChild(statRow([
+        ['€100K','Angel ask','var(--coral)'],
+        ['€275K','Unlocked in grants + bank','var(--teal)'],
+        ['3x','Your capital multiplied','var(--copper)'],
+        ['€400K','Total raised','var(--dark)']
+      ]));
+      c.appendChild(quote('This is not a €100K investment. This is a key that opens €275K of doors.'));
+      c.appendChild(item('AWS (Austria Wirtschafts Service) social grants: available only because of our SROI model. Angel round proves commercial viability.','var(--teal)'));
+      c.appendChild(item('KGG/UBG bank guarantee: 80% of bank loan risk covered. Bank only exposed to 20% — dramatically lowers approval barrier.','var(--teal)'));
+      c.appendChild(item('Grant committees require proof of private investor confidence before releasing public funds. Angel = signal.','var(--copper)'));
+      c.appendChild(secTitle('Return Profile'));
+      c.appendChild(table([
+        ['Investment','€100,000','var(--coral)'],
+        ['Entry valuation','Pre-revenue, best terms','var(--copper)'],
+        ['Break-even','Month 14','var(--teal)'],
+        ['Full payback','Year 3','var(--teal)'],
+        ['SROI generated','€4.50 per €1 invested','var(--sage)']
+      ]));
+    },
+    'leaf-kgg': function(c){
+      c.appendChild(secTitle('The KGG / UBG Lever'));
+      c.appendChild(quote('Austria\'s social enterprise financing tools exist precisely for this model. We\'ve designed our structure to capture them.'));
+      c.appendChild(item('KGG (Kreditgarantiegesellschaft) and UBG (Unternehmensbeteiligungs GmbH) are Austrian state-backed guarantee instruments.','var(--teal)'));
+      c.appendChild(item('They cover 80% of bank loan risk — the bank is only exposed to €44K on a €220K loan. This changes the bank conversation entirely.','var(--teal)'));
+      c.appendChild(item('Available to us because of our verified SROI model, social enterprise structure, and Sozialministeriumservice partnership.','var(--teal)'));
+      c.appendChild(secTitle('De-Risk Stack — All Together'));
+      c.appendChild(table([
+        ['Shell conversion only','No heavy construction risk','var(--teal)'],
+        ['KGG/UBG 80% cover','Bank exposed to only €44K','var(--teal)'],
+        ['Live-in staff WG','€150K annual payroll saving','var(--teal)'],
+        ['Social Impact Discount','Low-cost Tabakfabrik lease','var(--teal)'],
+        ['3 revenue streams','No single point of failure','var(--teal)']
+      ]));
+    },
+    'leaf-shell': function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/anchor_before_after.png',BASE+'/moodboard/anchor_common_room.png']));
+      c.appendChild(secTitle('Shell Strategy — Why It Changes Everything'));
+      c.appendChild(quote('A commercial shell conversion, not a new build. Less risk, faster timeline, lower permits.'));
+      c.appendChild(item('The Tabakfabrik unit is already a completed commercial shell — walls, floors, utilities roughed in. We are fitting out an interior, not building from ground up.','var(--copper)'));
+      c.appendChild(item('Dramatically reduces construction permits, structural engineering requirements, and timeline risk.','var(--teal)'));
+      c.appendChild(item('Industrial architecture does the design work for us — concrete, timber, factory glass create the aesthetic authentically.','var(--copper)'));
+      c.appendChild(secTitle('Renovation Scope'));
+      c.appendChild(table([
+        ['What we\'re doing','Interior fit-out only','var(--teal)'],
+        ['Beds','90 — dorm + private mix','var(--copper)'],
+        ['Community Catalyst space','Replaces traditional lobby','var(--copper)'],
+        ['Kitchen + F&B','Full service setup','var(--copper)'],
+        ['Flow Zone coworking','Integrated into ground floor','var(--teal)'],
+        ['AI / self check-in','Installed during fit-out','var(--teal)']
+      ]));
+    },
+    'leaf-popup': function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/anchor_common_room.png',BASE+'/moodboard/anchor_team_superheroes.png']));
+      c.appendChild(secTitle('Why Pre-Launch Community Matters'));
+      c.appendChild(quote('We don\'t open the doors and hope. We build the community first, then give them a home.'));
+      c.appendChild(item('Nightly community dinners (6–8pm) begin in the shell space during renovation — early members experience the concept before a single bed exists.','var(--coral)'));
+      c.appendChild(item('Pop-up workshops generate early media, social content, and press coverage. The story writes itself in a Tabakfabrik industrial shell.','var(--coral)'));
+      c.appendChild(item('Early-bird bookings open online — paying guests are committed before the doors open. Reduces launch-day cash flow risk.','var(--coral)'));
+      c.appendChild(secTitle('Pre-Launch Timeline'));
+      c.appendChild(table([
+        ['First pop-up dinner','Month 1 of renovation','var(--coral)'],
+        ['Early-bird bookings open','Month 2','var(--copper)'],
+        ['Partner events launch','Month 3 (JKU, Grand Garage)','var(--teal)'],
+        ['Media + press coverage','Organic from pop-up activity','var(--sage)'],
+        ['Community waitlist target','500+ before opening','var(--copper)']
+      ]));
+    },
+    'leaf-partners': function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/anchor_partners.png',BASE+'/moodboard/teach_linz_tabakfabrik_map.png']));
+      c.appendChild(secTitle('Partner Network — Already Built'));
+      c.appendChild(quote('We are not starting from scratch. We are plugging into an existing machine.'));
+      c.appendChild(table([
+        ['JKU (24K students)','Soft landing for int\'l students · consistent funnel','var(--teal)'],
+        ['Grand Garage','Teachcation content · makerspace · DIY workshops','var(--teal)'],
+        ['factory300 / tech2b','Startup bootcamp · gov. credibility · grant access','var(--teal)'],
+        ['Tabakfabrik','Foot traffic · innovation hub association · brand','var(--teal)'],
+        ['AMS','Employment integration · supported job subsidies','var(--sage)'],
+        ['Volkshilfe','Social services · live-in WG payroll reduction','var(--sage)'],
+        ['Linz Tourismus','Festival pipeline · booking channel access','var(--copper)'],
+        ['Sozialministeriumservice','Inclusive employment · SROI validation','var(--sage)']
+      ]));
+      c.appendChild(item('Partners are not future conversations — they are existing relationships. Daniel\'s 36K LinkedIn network is already activated.','var(--copper)'));
+    },
+    'leaf-beds': function(c){
+      c.appendChild(imgGrid([BASE+'/location-1.jpg',BASE+'/location-2.jpg']));
+      c.appendChild(secTitle('90 Beds — Configuration'));
+      c.appendChild(quote('Not just beds. A community designed to make isolation impossible.'));
+      c.appendChild(item('Full 90-bed configuration from Day 1 — no phased opening. All beds live for Ars Electronica window.','var(--coral)'));
+      c.appendChild(item('Dorm mix (4-8 beds) optimized for social interaction — bed placement designed to create organic conversation.','var(--coral)'));
+      c.appendChild(item('Private rooms for couples, long-term residents, and premium travelers — higher RevPAR, lower sensitivity to occupancy.','var(--copper)'));
+      c.appendChild(secTitle('Bed Economics'));
+      c.appendChild(table([
+        ['Total beds','90','var(--copper)'],
+        ['Avg nightly rate (RevPAB)','€28.00','var(--copper)'],
+        ['Cost per bed per night','€14.50','var(--teal)'],
+        ['Break-even occupancy','48%','var(--coral)'],
+        ['Launch target occupancy','60%+','var(--coral)'],
+        ['AI reduces ops cost by','30%','var(--teal)']
+      ]));
+    },
+    'leaf-festival': function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/anchor_festivals.png',BASE+'/moodboard/anchor_linz_map_stats.png']));
+      c.appendChild(secTitle('Launch Into the Wave'));
+      c.appendChild(quote('Timing is everything. We open into 172,000 festival visitors in a single month.'));
+      c.appendChild(item('Ars Electronica: 112K+ visitors over 5 days in early September — Linz\'s biggest international cultural event. Our target demographic.','var(--coral)'));
+      c.appendChild(item('Linzer Klangwolke: 60K visitors in a single evening, same September window. Accommodation demand spikes.','var(--coral)'));
+      c.appendChild(item('Linz Tourismus partnership gives us direct access to the festival accommodation pipeline — we\'re in the booking flow from Day 1.','var(--copper)'));
+      c.appendChild(secTitle('Full Festival Calendar'));
+      c.appendChild(table([
+        ['Crossing Europe','Late April · 6 days · 17K attendees','var(--sage)'],
+        ['Urfahraner Frühjahrsmarkt','Apr/May · 9 days · ~300K visitors','var(--sage)'],
+        ['Bubble Days','Early June · 2 days · ~30K','var(--sage)'],
+        ['Pflasterspektakel','Mid-July · 3 days · 200K+ visitors','var(--copper)'],
+        ['Linzer Klangwolke','Early Sept · 1 evening · ~60K','var(--coral)'],
+        ['Ars Electronica','Early Sept · 5 days · 112K+ ← launch','var(--coral)'],
+        ['Urfahraner Herbstmarkt','Sept/Oct · 9 days · ~300K visitors','var(--sage)']
+      ]));
+    },
+    'leaf-aiops': function(c){
+      c.appendChild(secTitle('AI Operations — 30% Cost Reduction'));
+      c.appendChild(quote('No front desk. No check-in queue. The system handles everything. Staff are catalysts, not administrators.'));
+      c.appendChild(item('AI-driven Property Management System (PMS) handles reservations, room allocation, check-in, check-out — all automated.','var(--coral)'));
+      c.appendChild(item('Self check-in kiosks + mobile flow: guests arrive, check in on their phone, and are welcomed by a community catalyst, not a receptionist.','var(--coral)'));
+      c.appendChild(item('Automated guest communication: pre-arrival info, community event schedule, check-out reminders, post-stay follow-up.','var(--teal)'));
+      c.appendChild(item('Live-in staff freed from admin — 100% of their time goes to community building, events, and guest experience.','var(--teal)'));
+      c.appendChild(secTitle('Operational Savings'));
+      c.appendChild(table([
+        ['AI PMS cost reduction','30% off standard ops model','var(--teal)'],
+        ['Front desk headcount','Zero — fully automated','var(--teal)'],
+        ['Live-in WG saves annually','~€150K in payroll','var(--teal)'],
+        ['Festival booking automation','Direct Linz Tourismus integration','var(--coral)']
+      ]));
+    },
+    'leaf-breakeven': function(c){
+      c.appendChild(secTitle('Why 48% is Very Conservative'));
+      c.appendChild(quote('Linz hostels average 65%+ occupancy. We need 48% to break even. The math strongly favours us.'));
+      c.appendChild(item('48% occupancy = 43 beds filled per night on average. In a city with 1.02M overnight stays per year and zero community-focused hostels.','var(--terracotta)'));
+      c.appendChild(item('Festival calendar alone (Ars Electronica, Klangwolke, Pflasterspektakel) generates 100% occupancy windows covering weeks of the year.','var(--coral)'));
+      c.appendChild(item('JKU partnership provides mid-term student rentals that guarantee baseline occupancy in off-peak months.','var(--teal)'));
+      c.appendChild(item('Flow Zone coworking and workshop revenue mean we generate income even when beds are empty.','var(--teal)'));
+      c.appendChild(secTitle('Break-even Model'));
+      c.appendChild(table([
+        ['Break-even occupancy','48%','var(--terracotta)'],
+        ['Month achieved','Month 14','var(--terracotta)'],
+        ['Linz hostel market avg.','65%+','var(--teal)'],
+        ['Our gap to market avg.','17 percentage points buffer','var(--teal)'],
+        ['Off-peak protection','Coworking + workshops + student lets','var(--teal)']
+      ]));
+    },
+    'leaf-revenue': function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/anchor_revenue_linz_skyline.png']));
+      c.appendChild(secTitle('€920K Year 1 — How We Get There'));
+      c.appendChild(statRow([
+        ['€920K','Year 1 total','var(--copper)'],
+        ['82%','Occupancy assumed','var(--teal)'],
+        ['€402K','EBITDA','var(--teal)'],
+        ['~48%','Net margin','var(--teal)']
+      ]));
+      c.appendChild(secTitle('Revenue by Stream'));
+      c.appendChild(table([
+        ['Accommodation (dorms + privates)','Primary engine · €28 RevPAB','var(--copper)'],
+        ['Long-term student/expat rentals','Off-peak fill + predictable income','var(--copper)'],
+        ['Food & Beverage','Breakfast + bar + community meals','var(--copper)'],
+        ['Teachcation — Maker\'s Week (B2C)','Educational tourism capture','var(--teal)'],
+        ['The Residency (B2B)','Long-term social impact guests','var(--teal)'],
+        ['Flow Zone coworking','Off-peak revenue fill','var(--sage)'],
+        ['B2B events & workshops','Partnership activation','var(--sage)']
+      ]));
+      c.appendChild(secTitle('Year 2 & 3'));
+      c.appendChild(table([
+        ['Year 2 (academy expansion)','€1,050,000','var(--copper)'],
+        ['Year 3 (full maturity)','€1,180,000','var(--copper)'],
+        ['Full investor payback','Year 3','var(--teal)']
+      ]));
+    },
+    'leaf-ebitda': function(c){
+      c.appendChild(secTitle('€402K EBITDA — The Margin Story'));
+      c.appendChild(quote('The business model is designed so that social impact and financial return are not in conflict. They reinforce each other.'));
+      c.appendChild(statRow([
+        ['€920K','Revenue','var(--copper)'],
+        ['€518K','Operating costs','var(--text2)'],
+        ['€402K','EBITDA','var(--teal)'],
+        ['48%','Margin','var(--teal)']
+      ]));
+      c.appendChild(secTitle('Why Margins Are High'));
+      c.appendChild(item('Live-in staff WG: ~€150K annual payroll reduction vs. standard staffing model. Staff are paid partly in housing.','var(--teal)'));
+      c.appendChild(item('AI PMS reduces operational labour by 30% — no front desk, automated guest flows.','var(--teal)'));
+      c.appendChild(item('Social Impact Discount on lease: low-cost Tabakfabrik tenancy vs. market rate commercial space.','var(--teal)'));
+      c.appendChild(item('Three revenue streams share the same fixed cost base — incremental revenue from F&B and workshops is nearly pure margin.','var(--copper)'));
+      c.appendChild(secTitle('Cost Structure'));
+      c.appendChild(table([
+        ['Biggest cost saving','Live-in WG: ~€150K/yr','var(--teal)'],
+        ['Second saving','AI ops: 30% labour reduction','var(--teal)'],
+        ['Third saving','Social Impact lease discount','var(--teal)'],
+        ['Gross margin per bed/night','€13.50 (€28 - €14.50)','var(--copper)']
+      ]));
+    },
+    'leaf-sister': function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/teach_residency_room.png',BASE+'/moodboard/anchor_closing_linz.png']));
+      c.appendChild(secTitle('Sister Hostel — The Complete Ecosystem'));
+      c.appendChild(quote('Urban energy and countryside healing. Two nodes, one community. The complete answer to loneliness.'));
+      c.appendChild(item('Nature retreat hostel — outside Linz, accessible by train. Complete the ecosystem: guests move between city intensity and rural restoration.','var(--sage)'));
+      c.appendChild(item('Cross-booking model: guests at Anchor Linz get a package deal for the Sister Hostel and vice versa. Lifetime value multiplied.','var(--sage)'));
+      c.appendChild(item('Nature programming: foraging, outdoor building, natural movement, wilderness education — extends the Teachcation model into a new context.','var(--teal)'));
+      c.appendChild(secTitle('2027 Targets'));
+      c.appendChild(table([
+        ['Sister hostel location','Within 60 min of Linz by train','var(--sage)'],
+        ['Capacity','30-50 beds (smaller, more intimate)','var(--sage)'],
+        ['Revenue model','Accommodation + nature workshops','var(--teal)'],
+        ['Cross-booking uplift','+15-20% lifetime value per guest','var(--copper)']
+      ]));
+    },
+    'leaf-franchise': function(c){
+      c.appendChild(secTitle('Franchise — Cloning the Model'));
+      c.appendChild(quote('Proven playbook. Replicable infrastructure. Every medium-sized Austrian city has the same loneliness problem and zero Anchor-model solutions.'));
+      c.appendChild(item('Once Linz is proven (Year 2), the Anchor model is packaged for franchise: operations manual, partner templates, AI system, brand playbook.','var(--sage)'));
+      c.appendChild(item('Target cities: Graz, Salzburg, Innsbruck — all mid-size Austrian cities with international universities and festival economies.','var(--sage)'));
+      c.appendChild(item('Teachcation licensing: offer the Sleep→Create→Teach model to existing hostels as a standalone revenue add-on. Asset-light expansion.','var(--teal)'));
+      c.appendChild(item('Franchise fees + Teachcation licensing = high-margin revenue that requires no new capital deployment.','var(--copper)'));
+      c.appendChild(secTitle('2028+ Revenue Upside'));
+      c.appendChild(table([
+        ['Franchise launch','2028','var(--sage)'],
+        ['Target franchise cities','Graz · Salzburg · Innsbruck','var(--sage)'],
+        ['Teachcation licensing','2027 (simultaneous with expansion)','var(--teal)'],
+        ['Revenue model','Franchise fees + ongoing royalty','var(--copper)']
+      ]));
+    },
+    'leaf-payback': function(c){
+      c.appendChild(secTitle('Full Payback — Year 3'));
+      c.appendChild(statRow([
+        ['Year 3','Full payback','var(--teal)'],
+        ['1:4.5','SROI ratio','var(--teal)'],
+        ['€1.18M','Year 3 revenue','var(--copper)'],
+        ['3 cities','Franchise target','var(--sage)']
+      ]));
+      c.appendChild(quote('Every euro invested returns four euros and fifty cents of social value — and a full financial return by Year 3.'));
+      c.appendChild(item('Financial payback: full return of capital to investors by end of Year 3, based on conservative 82% occupancy model.','var(--teal)'));
+      c.appendChild(item('Social payback: SROI 1:4.5 — verified by Sozialministeriumservice methodology. Unlocks AWS grants, Green Finance loans, institutional narratives.','var(--teal)'));
+      c.appendChild(item('Post-payback: investors can choose exit (secondary sale), continued dividend flow, or reinvestment into franchise expansion round.','var(--copper)'));
+      c.appendChild(secTitle('SROI Components'));
+      c.appendChild(table([
+        ['Inclusive employment','Supported jobs, disabilities programme','var(--teal)'],
+        ['Real estate revitalization','Vacant Tabakfabrik unit activated','var(--teal)'],
+        ['Community upcycling hub','Circular economy workshops','var(--sage)'],
+        ['Upskilling programmes','Movement + trade + entrepreneurship','var(--sage)'],
+        ['Social model export','Cloning to other cities','var(--copper)']
+      ]));
+      c.appendChild(cta('Discuss investment terms →','mailto:info@linzhostel.com','🌐 linzhostel.com','https://www.linzhostel.com'));
+    }
+  };
+
+  var LEAF_META = {
+    'leaf-bridge':   {badge:'PHASE 01  ·  BRIDGE',title:'€25K Bridge Funding',desc:'Secures the Tabakfabrik lease before another tenant takes it. The single most time-critical action in the entire raise.',img:BASE+'/moodboard/anchor_personal_story.png'},
+    'leaf-angel':    {badge:'PHASE 01  ·  ANGEL',title:'Angel Round — €100K',desc:'€100K unlocks €275K in grants and bank financing. A 3x capital multiplier. This is the key that opens all the other doors.',img:BASE+'/moodboard/anchor_linz_map_stats.png'},
+    'leaf-kgg':      {badge:'PHASE 01  ·  DE-RISK',title:'KGG / UBG Guarantee',desc:'Austrian state-backed instruments cover 80% of bank loan risk. The bank is only exposed to €44K on a €220K loan.',img:BASE+'/moodboard/anchor_personal_story.png'},
+    'leaf-shell':    {badge:'PHASE 02  ·  BUILD',title:'Tabakfabrik Shell Conversion',desc:'Commercial shell fit-out — not a new build. Faster, cheaper, lower risk. The industrial character does the design work for us.',img:BASE+'/moodboard/anchor_before_after.png'},
+    'leaf-popup':    {badge:'PHASE 02  ·  COMMUNITY',title:'Pop-up Pre-Launch Events',desc:'We build the community before the doors open. Nightly dinners, workshops, and early-bird bookings in the renovation shell.',img:BASE+'/moodboard/anchor_common_room.png'},
+    'leaf-partners': {badge:'PHASE 02  ·  ECOSYSTEM',title:'Strategic Partners — All Onboard',desc:'JKU, Grand Garage, factory300, Tabakfabrik, AMS, Volkshilfe, Linz Tourismus. Eight partners already confirmed.',img:BASE+'/moodboard/anchor_partners.png'},
+    'leaf-beds':     {badge:'PHASE 03  ·  LAUNCH',title:'90 Beds — Full Configuration',desc:'All 90 beds live from Day 1. Dorm + private mix optimised for social interaction and RevPAR balance.',img:BASE+'/location-1.jpg'},
+    'leaf-festival': {badge:'PHASE 03  ·  TIMING',title:'Festival Launch Window',desc:'We open into Ars Electronica (112K) and Klangwolke (60K) — 172K visitors in September alone. Timing is the strategy.',img:BASE+'/moodboard/anchor_festivals.png'},
+    'leaf-aiops':    {badge:'PHASE 03  ·  TECHNOLOGY',title:'AI Operations — 30% Cost Save',desc:'No front desk. No check-in queue. AI PMS + self check-in reduces operational cost by 30% from Day 1.',img:BASE+'/moodboard/anchor_revenue_linz_skyline.png'},
+    'leaf-breakeven':{badge:'PHASE 04  ·  MILESTONE',title:'Break-even — Month 14',desc:'48% occupancy breaks even. Linz hostels average 65%+. We have a 17-point buffer before we\'re in trouble.',img:BASE+'/moodboard/anchor_revenue_linz_skyline.png'},
+    'leaf-revenue':  {badge:'PHASE 04  ·  FINANCIALS',title:'€920K Year 1 Revenue',desc:'At 82% occupancy across three streams: accommodation, F&B, and workshops. Conservative model. Real upside in Year 2 and 3.',img:BASE+'/moodboard/anchor_revenue_linz_skyline.png'},
+    'leaf-ebitda':   {badge:'PHASE 04  ·  PROFITABILITY',title:'€402K EBITDA — Year 1',desc:'~48% net margin. Live-in staff WG, AI ops, and social lease discount stack to produce margins far above industry average.',img:BASE+'/moodboard/anchor_before_after.png'},
+    'leaf-sister':   {badge:'PHASE 05  ·  EXPANSION',title:'Sister Hostel in Nature',desc:'The complete ecosystem: urban energy in Linz, nature restoration 60 minutes away. Two nodes, one community.',img:BASE+'/moodboard/teach_residency_room.png'},
+    'leaf-franchise':{badge:'PHASE 05  ·  SCALE',title:'Franchise — Clone the Model',desc:'Graz, Salzburg, Innsbruck. Every Austrian city has the same loneliness problem. Proven playbook, zero new capital needed per city.',img:BASE+'/moodboard/anchor_closing_linz.png'},
+    'leaf-payback':  {badge:'PHASE 05  ·  RETURN',title:'Full Investor Payback — Year 3',desc:'Financial return complete by Year 3. SROI 1:4.5. Post-payback: exit, dividend flow, or franchise expansion reinvestment.',img:BASE+'/moodboard/anchor_closing_linz.png'},
+  };
+
+  /* ── BUILDERS ── */
+  function el(tag){return document.createElement(tag)}
+  function setStyle(e,s){e.style.cssText=s;return e}
+
+  function secTitle(txt){
+    var d=el('div');d.className='dp-section-title';d.textContent=txt;return d;
+  }
+  function metric(lbl,val,color){
+    var r=el('div');r.className='dp-metric';
+    var l=el('span');l.className='dm-lbl';l.textContent=lbl;
+    var v=el('span');v.className='dm-val';v.style.color=color||'var(--copper)';v.textContent=val;
+    r.appendChild(l);r.appendChild(v);return r;
+  }
+  function item(txt,color){
+    var r=el('div');r.className='dp-item';
+    var d=el('div');d.className='di-dot';d.style.background=color||'var(--copper)';
+    var t=el('div');t.className='di-txt';t.textContent=txt;
+    r.appendChild(d);r.appendChild(t);return r;
+  }
+  function quote(txt){
+    var q=el('div');q.className='dp-quote';
+    q.textContent='\u201C'+txt+'\u201D';return q;
+  }
+  function imgGrid(srcs,cls){
+    var g=el('div');g.className='dp-img-grid'+(cls?' '+cls:'');
+    srcs.forEach(function(s){
+      var i=el('img');i.src=s;
+      i.onerror=function(){this.parentNode&&this.parentNode.removeChild(this)};
+      g.appendChild(i);
+    });
+    return g;
+  }
+  function statRow(pairs){
+    var r=el('div');r.className='dp-stat-row';
+    pairs.forEach(function(p){
+      var b=el('div');b.className='dp-stat-box';
+      var v=el('div');v.className='sb-val';v.style.color=p[2]||'var(--copper)';v.textContent=p[0];
+      var l=el('div');l.className='sb-lbl';l.textContent=p[1];
+      b.appendChild(v);b.appendChild(l);r.appendChild(b);
+    });
+    return r;
+  }
+  function divider(){var d=el('div');d.className='dp-divider';return d}
+  function cta(main,mainHref,sec,secHref){
+    var a=el('div');a.className='dp-cta-area';
+    var p=el('div');p.className='cta-pre';p.textContent='Ready to invest?';
+    var m=el('a');m.className='cta-main';m.textContent=main;m.href=mainHref||'mailto:info@linzhostel.com';
+    var s=el('a');s.className='cta-sec';s.textContent=sec||'🌐 linzhostel.com';s.href=secHref||'https://www.linzhostel.com';s.target='_blank';
+    a.appendChild(p);a.appendChild(m);a.appendChild(s);return a;
+  }
+  function table(rows){
+    var t=el('table');t.className='dp-table';
+    rows.forEach(function(r){
+      var tr=el('tr');
+      var td1=el('td');td1.textContent=r[0];
+      var td2=el('td');td2.textContent=r[1];if(r[2])td2.style.color=r[2];
+      tr.appendChild(td1);tr.appendChild(td2);t.appendChild(tr);
+    });
+    return t;
+  }
+
+  /* ── CONTENT ── */
+  var DETAILS = {
+
+    phase1: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_personal_story.png',
+        BASE+'/moodboard/anchor_linz_map_stats.png'
+      ]));
+      c.appendChild(secTitle('The Bridge Moment'));
+      c.appendChild(quote('One decision locks the location. Missing it means starting over.'));
+      c.appendChild(item('€25K bridge funding secures the Tabakfabrik lease before another tenant takes it. This is the critical gate.','var(--copper)'));
+      c.appendChild(item('The Tabakfabrik is Linz\'s premier innovation hub — factory windows, concrete columns, authentic industrial character. No other site compares.','var(--copper)'));
+      c.appendChild(item('January 2026 site visit confirmed: ideal layout for 90-bed configuration, shell ready for conversion.','var(--teal)'));
+      c.appendChild(secTitle('The Funding Stack'));
+      c.appendChild(statRow([
+        ['€25K','Bridge · Location lock','var(--copper)'],
+        ['€100K','Angel · Your opportunity','var(--coral)'],
+        ['€220K','Bank + KGG/UBG guarantee','var(--teal)'],
+        ['€400K','Total capital required','var(--dark)']
+      ]));
+      c.appendChild(secTitle('Why €100K Angel Unlocks Everything'));
+      c.appendChild(item('Angel investment is the key that unlocks €275K+ in social grants and bank financing — a 3x multiplier on your capital.','var(--copper)'));
+      c.appendChild(item('KGG/UBG covers 80% of bank risk — dramatically lowers the barrier to bank approval. This lever is only available with the social impact model we\'ve built.','var(--teal)'));
+      c.appendChild(item('75% of total funding already identified. Seeking gap partners for the final 25%.','var(--sage)'));
+      c.appendChild(secTitle('De-Risking Strategy'));
+      c.appendChild(table([
+        ['Shell conversion only','No heavy permits, fast timeline','var(--teal)'],
+        ['Live-in staff WG','Saves ~€150K payroll annually','var(--teal)'],
+        ['KGG/UBG lever','80% bank risk covered','var(--teal)'],
+        ['Social Impact Discount','Low-cost lease in exchange for community activation','var(--teal)'],
+        ['Revenue diversification','3 streams from Day 1','var(--teal)']
+      ]));
+      c.appendChild(cta('Book a call with Daniel →','mailto:info@linzhostel.com','🌐 linzhostel.com','https://www.linzhostel.com'));
+    },
+
+    phase2: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_common_room.png',
+        BASE+'/moodboard/anchor_partners.png',
+        BASE+'/moodboard/teach_maker_workshop.png'
+      ],'three'));
+      c.appendChild(secTitle('The Build — What We\'re Creating'));
+      c.appendChild(quote('No reception desk. No lobby. The Community Catalyst space IS the arrival experience.'));
+      c.appendChild(item('Industrial Tabakfabrik shell converted to 90-bed hostel. Concrete columns, factory windows, terracotta floors — character you can\'t manufacture.','var(--copper)'));
+      c.appendChild(item('The "Community Catalyst Space" at the center — a living room, workspace, and stage that replaces the traditional lobby entirely.','var(--copper)'));
+      c.appendChild(item('Live-in staff lead by example, fostering a do-it-yourself community ethos. Residents apply new skills directly to the premises.','var(--teal)'));
+      c.appendChild(secTitle('Pre-Launch Community Building'));
+      c.appendChild(item('Nightly community dinners (6–8pm) begin as pop-up format before official opening — audience building from Day 1.','var(--coral)'));
+      c.appendChild(item('Pop-up workshops and cultural events in the shell space attract early members and generate media coverage.','var(--coral)'));
+      c.appendChild(item('Early-bird bookings open during renovation — paying guests committed before the doors open.','var(--coral)'));
+      c.appendChild(secTitle('Strategic Partners — Onboarding Q2'));
+      c.appendChild(table([
+        ['JKU (24K students)','Soft landing for international students','var(--teal)'],
+        ['Grand Garage','Makerspace · Teachcation content provider','var(--teal)'],
+        ['factory300 / tech2b','Startup bootcamp + gov. credibility','var(--teal)'],
+        ['Tabakfabrik','Innovation hub · foot traffic + brand','var(--teal)'],
+        ['AMS / Volkshilfe','Employment integration support','var(--sage)'],
+        ['Linz Tourismus','Festival pipeline access','var(--copper)']
+      ]));
+      c.appendChild(quote('We are not starting from scratch. We are plugging into an existing machine.'));
+    },
+
+    phase3: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_festivals.png',
+        BASE+'/location-1.jpg'
+      ]));
+      c.appendChild(secTitle('Soft Launch — September 2026'));
+      c.appendChild(quote('Timing is everything. We open into 172,000 festival visitors in a single month.'));
+      c.appendChild(item('Open in early September to capture Ars Electronica (112K visitors over 5 days) — Linz\'s biggest international cultural event.','var(--coral)'));
+      c.appendChild(item('Linzer Klangwolke (60K visitors, 1 evening) follows within the same September window.','var(--coral)'));
+      c.appendChild(item('90 beds across dorms and private rooms — full configuration live from Day 1, no partial soft-open.','var(--copper)'));
+      c.appendChild(secTitle('Three Revenue Streams Active from Day 1'));
+      c.appendChild(item('Stream 1 — Accommodation: dorms, privates, long-term student/expat rentals. Core revenue engine.','var(--copper)'));
+      c.appendChild(item('Stream 2 — Food & Beverage: breakfast service + evening bar + nightly community meals.','var(--copper)'));
+      c.appendChild(item('Stream 3 — Workshops & Events: Teachcation programme, Flow Zone coworking, B2B events.','var(--copper)'));
+      c.appendChild(secTitle('AI Operations'));
+      c.appendChild(table([
+        ['Self check-in system','Live Day 1 — zero front desk needed','var(--teal)'],
+        ['AI-driven PMS','30% operational cost reduction','var(--teal)'],
+        ['Automated guest flows','Pre-arrival → check-in → community onboarding','var(--teal)'],
+        ['Festival booking engine','Direct partnership with Linz Tourismus','var(--coral)']
+      ]));
+      c.appendChild(secTitle('Launch Month Benchmarks'));
+      c.appendChild(statRow([
+        ['60%+','Launch target occupancy','var(--coral)'],
+        ['172K','Festival visitors in Sept','var(--copper)'],
+        ['30%','Ops cost saving (AI)','var(--teal)'],
+        ['3','Revenue streams live','var(--sage)']
+      ]));
+    },
+
+    phase4: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_revenue_linz_skyline.png',
+        BASE+'/moodboard/anchor_before_after.png'
+      ]));
+      c.appendChild(secTitle('Revenue Architecture'));
+      c.appendChild(statRow([
+        ['€920K','Year 1 revenue (82% occ.)','var(--copper)'],
+        ['€402K','Year 1 EBITDA','var(--teal)'],
+        ['48%','Operational margin','var(--teal)'],
+        ['Mo. 14','Break-even month','var(--coral)']
+      ]));
+      c.appendChild(secTitle('Revenue Breakdown — Year 1'));
+      c.appendChild(table([
+        ['Accommodation (dorms + privates)','Primary engine','var(--copper)'],
+        ['Long-term student / expat rentals','Off-peak fill','var(--copper)'],
+        ['Food & Beverage','Breakfast + bar + community meals','var(--copper)'],
+        ['Teachcation (B2C Maker\'s Week)','Educational tourism capture','var(--teal)'],
+        ['The Residency (B2B)','Long-term social impact guests','var(--teal)'],
+        ['Flow Zone coworking','Off-peak revenue fill','var(--sage)'],
+        ['B2B events & workshops','Partnership activation','var(--sage)']
+      ]));
+      c.appendChild(secTitle('3-Year Projection'));
+      c.appendChild(table([
+        ['Year 1 (82% occ.)','€920,100','var(--copper)'],
+        ['Year 1 EBITDA','€402,100','var(--teal)'],
+        ['Year 2 (academy expansion)','€1,050,000','var(--copper)'],
+        ['Year 3 (full maturity)','€1,180,000','var(--copper)'],
+        ['Break-even occupancy','48% — highly achievable','var(--teal)'],
+        ['Full investor payback','Year 3','var(--teal)'],
+        ['SROI ratio','1 : 4.5','var(--sage)']
+      ]));
+      c.appendChild(secTitle('Unit Economics'));
+      c.appendChild(table([
+        ['Beds','90',''],
+        ['Avg nightly rate (RevPAB)','€28.00','var(--copper)'],
+        ['Cost per bed per night','€14.50','var(--teal)'],
+        ['AI cost reduction','30%','var(--teal)'],
+        ['Live-in WG saves annually','~€150K payroll','var(--teal)']
+      ]));
+      c.appendChild(quote('The business model is designed so that social impact and financial return are not in conflict. They reinforce each other.'));
+      c.appendChild(cta('Request full financial model →','mailto:info@linzhostel.com','🌐 linzhostel.com','https://www.linzhostel.com'));
+    },
+
+    phase5: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_closing_linz.png',
+        BASE+'/moodboard/teach_residency_room.png'
+      ]));
+      c.appendChild(secTitle('The Vision — Year 3 and Beyond'));
+      c.appendChild(quote('A place where your journey in Linz truly begins — through connection, not isolation. Then we take that to the world.'));
+      c.appendChild(item('Sister Hostel in nature — the complete urban ↔ nature ecosystem. Guests can move between Linz energy and countryside healing.','var(--sage)'));
+      c.appendChild(item('Franchise the Anchor model to other Austrian and European cities. Proven playbook, replicable infrastructure.','var(--sage)'));
+      c.appendChild(item('Teachcation licensing: offer the Sleep→Create→Teach model to existing hostels as a revenue add-on. Asset-light expansion.','var(--teal)'));
+      c.appendChild(item('Social re-investment model: profits fund new community assets in underserved areas. Builds institutional relationships and unlocks new grant categories.','var(--copper)'));
+      c.appendChild(secTitle('Social Impact at Scale'));
+      c.appendChild(statRow([
+        ['1:4.5','SROI ratio','var(--teal)'],
+        ['Year 3','Full investor payback','var(--copper)'],
+        ['2027','Sister hostel target','var(--sage)'],
+        ['2028+','Franchise launch','var(--sage)']
+      ]));
+      c.appendChild(secTitle('SROI Breakdown — What €1 Creates'));
+      c.appendChild(table([
+        ['Inclusive employment (disabilities)','Sozialministeriumservice partnership','var(--teal)'],
+        ['Vacant real estate revitalized','Tabakfabrik asset activation','var(--teal)'],
+        ['Upcycling hub + workshops','Community circular economy','var(--sage)'],
+        ['Upskilling programs','Movement + trade + entrepreneurship','var(--sage)'],
+        ['Social cloning to other cities','Model export value','var(--copper)']
+      ]));
+      c.appendChild(item('SROI 1:4.5 unlocks AWS grants, Green Finance loans, and institutional partner narratives that are not available to standard commercial operators.','var(--teal)'));
+      c.appendChild(cta('Invest in the future of community →','mailto:info@linzhostel.com','🌐 linzhostel.com','https://www.linzhostel.com'));
+    },
+
+    problem: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/daniel_austria_southafrica.jpg',
+        BASE+'/moodboard/anchor_linz_map_stats.png'
+      ]));
+      c.appendChild(secTitle('The Crisis in Numbers'));
+      c.appendChild(statRow([
+        ['#49','Austria expat friendliness rank (of 53)','var(--coral)'],
+        ['16K+','New Linz residents annually','var(--copper)'],
+        ['1.02M','Overnight stays (record 2024)','var(--teal)'],
+        ['ZERO','Third places for locals + visitors','var(--coral)']
+      ]));
+      c.appendChild(secTitle('The Personal Origin'));
+      c.appendChild(quote('South Africa is rated one of the friendliest countries in the world. Austria is nearly last. That gap is our mission.'));
+      c.appendChild(item('Daniel\'s own arrival in Austria in 2022: isolation, rejection, almost giving up. He experienced the problem firsthand before building the solution.','var(--copper)'));
+      c.appendChild(item('Global loneliness pandemic (intensified post-Covid) hits hardest among Gen Z travelers and digital nomads seeking authentic connection.','var(--coral)'));
+      c.appendChild(item('InterNations 2024 ranked Austria #49 out of 53 countries for local friendliness toward expats. South Africa ranked top 10.','var(--coral)'));
+      c.appendChild(secTitle('Linz Specifically — Why Here, Why Now'));
+      c.appendChild(table([
+        ['New residents per year','16,000+','var(--coral)'],
+        ['International students (JKU)','24K+ from 100+ nations','var(--copper)'],
+        ['Overnight stays (2024 record)','1.02 million','var(--teal)'],
+        ['Ars Electronica annual visitors','112,000+','var(--copper)'],
+        ['Pflasterspektakel (3 days)','200,000+ visitors','var(--copper)'],
+        ['Crossing Europe film festival','17,000 attendees','var(--sage)'],
+        ['Meaningful third places','Zero','var(--coral)']
+      ]));
+      c.appendChild(secTitle('Major Festival Calendar'));
+      c.appendChild(item('Crossing Europe — late April, 6 days, 17K+ attendees','var(--sage)'));
+      c.appendChild(item('Urfahraner Frühjahrsmarkt — Apr/May, 9 days, ~300K visitors','var(--sage)'));
+      c.appendChild(item('Bubble Days — early June, 2 days, ~30K','var(--sage)'));
+      c.appendChild(item('Pflasterspektakel — mid-July, 3 days, 200K+ visitors','var(--copper)'));
+      c.appendChild(item('Linzer Klangwolke — early Sept, 1 evening, ~60K','var(--coral)'));
+      c.appendChild(item('Ars Electronica — early Sept, 5 days, 112K+ — our launch window','var(--coral)'));
+      c.appendChild(item('Urfahraner Herbstmarkt — Sept/Oct, 9 days, ~300K visitors','var(--sage)'));
+    },
+
+    model: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_common_room.png',
+        BASE+'/moodboard/anchor_team_superheroes.png'
+      ]));
+      c.appendChild(secTitle('Old Model vs The Anchor Model'));
+      c.appendChild(table([
+        ['Traditional hostel','Reception → Hallway → Bed','var(--coral)'],
+        ['The Anchor','Community Catalyst → Connection → Bed','var(--teal)'],
+        ['Traditional lobby','Transactional, isolating, forgotten','var(--coral)'],
+        ['Catalyst space','The first thing you see. The last thing you leave.','var(--teal)'],
+        ['Staff','Behind a desk','var(--coral)'],
+        ['Our staff','Living on-site. Part of the community.','var(--teal)']
+      ]));
+      c.appendChild(quote('A professionally-managed social-impact Community Hub — a true Kraftplatz in the middle of the city.'));
+      c.appendChild(secTitle('The Space — Tabakfabrik Linz'));
+      c.appendChild(item('Historic tobacco factory, now Linz\'s premier innovation hub. Our location puts us at the center of the city\'s creative and entrepreneurial ecosystem.','var(--copper)'));
+      c.appendChild(item('Industrial architecture: concrete columns, factory windows, terracotta floors — authentic character that can\'t be manufactured or replicated.','var(--copper)'));
+      c.appendChild(item('Commercial shell conversion: reduced construction complexity, faster timeline, lower permitting risk vs. new build.','var(--teal)'));
+      c.appendChild(item('Social Impact Discount: low-cost lease in exchange for community activation. We revitalize a vacant space into a measurable community benefit.','var(--teal)'));
+      c.appendChild(secTitle('Design Principles'));
+      c.appendChild(item('90 beds psychologically arranged to make accidental conversation unavoidable.','var(--copper)'));
+      c.appendChild(item('Nightly community dinners at 6–8pm. Every single day. Built into the calendar, not optional.','var(--coral)'));
+      c.appendChild(item('Live-in staff are community catalysts, not concierges. They participate in the events they host.','var(--sage)'));
+      c.appendChild(item('Flow Zone coworking open to neighborhood locals — hostel guests and Linz residents share the same table.','var(--teal)'));
+      c.appendChild(secTitle('The Four Target Markets'));
+      c.appendChild(item('Travelers: Major festival partnerships. 172K visitors in September alone.','var(--copper)'));
+      c.appendChild(item('New Residents: Essential "soft landing" for students, new hires, immigrants entering Linz.','var(--coral)'));
+      c.appendChild(item('Local Community: Subscription programming, workshops, events. Recurring revenue.','var(--teal)'));
+      c.appendChild(item('Our Own Events: Dancing, cultural experiences, maker evenings. Brand-building.','var(--sage)'));
+    },
+
+    teachcation: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/teach_circular_journey.png',
+        BASE+'/moodboard/teach_makers_week.png',
+        BASE+'/moodboard/teach_maker_workshop.png'
+      ],'three'));
+      c.appendChild(secTitle('The Concept — From Tourists to Makers'));
+      c.appendChild(quote('Modern travelers seek deep connection and purpose, not sightseeing. We built the only product that delivers it.'));
+      c.appendChild(item('The Teachcation™ concept: every guest arrives as a visitor and leaves as a maker, teacher, or contributor.','var(--teal)'));
+      c.appendChild(item('Educational Tourism is one of hospitality\'s fastest-growing segments. No other hostel in Austria is positioned to capture it.','var(--teal)'));
+      c.appendChild(item('Strategic partnership between Anchor Hostel and Grand Garage (Linz\'s premier makerspace) creates a pipeline no competitor can replicate.','var(--copper)'));
+      c.appendChild(secTitle('The Journey — 5 Stages'));
+      c.appendChild(table([
+        ['1. Arrival','Warm welcome, community orientation','var(--copper)'],
+        ['2. Soft Landing','Hostel provides "adulting" life skills','var(--copper)'],
+        ['3. Hard Skills','Grand Garage: machinery + technical expertise','var(--teal)'],
+        ['4. Creation','Guest completes a real community project','var(--teal)'],
+        ['5. Departure','Guest leaves with new skill + certificate','var(--sage)']
+      ]));
+      c.appendChild(secTitle('Two Revenue Products'));
+      c.appendChild(item('Product A — The Maker\'s Week (B2C): 5 nights at Anchor + 1 "Intro to Making" course at Grand Garage. Targets off-season travelers. Fills the calendar in January–March.','var(--copper)'));
+      c.appendChild(item('Product B — The Residency (B2B / Social Impact): Long-term guests receive Social Impact Discount on rent. In return, they use Grand Garage skills to maintain and improve the hostel infrastructure. Turns residents into stakeholders.','var(--teal)'));
+      c.appendChild(secTitle('The Three Pillars'));
+      c.appendChild(item('SLEEP at Anchor — Community-driven accommodation. 90 beds designed for interaction.','var(--copper)'));
+      c.appendChild(item('MOVE & GROW — Yoga, breathing work, flow arts, movement classes. Embodied integration.','var(--coral)'));
+      c.appendChild(item('TEACH & LEARN — Residents become teachers. Sharing expertise: sustainable living, entrepreneurship, making. Courses like "How to Launch a Social Hostel."','var(--teal)'));
+      c.appendChild(secTitle('Partner Ecosystem'));
+      c.appendChild(table([
+        ['Grand Garage','DIY · 3D printing · upcycling · Teachcation core','var(--teal)'],
+        ['factory300 / tech2b','Startup bootcamp · entrepreneurship courses','var(--copper)'],
+        ['JKU','24K student funnel · soft landing pad','var(--sage)'],
+        ['Linz Tourismus','Festival partnerships · booking pipeline','var(--coral)'],
+        ['AMS / Volkshilfe','Employment integration + social grants','var(--sage)']
+      ]));
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/teach_celebration_crowd.png',
+        BASE+'/moodboard/teach_cover_illustration.png'
+      ]));
+    },
+
+    numbers: function(c){
+      c.appendChild(imgGrid([BASE+'/moodboard/anchor_revenue_linz_skyline.png'],null));
+      c.appendChild(secTitle('The Investment Opportunity'));
+      c.appendChild(statRow([
+        ['€400K','Total raise','var(--dark)'],
+        ['75%','Already identified','var(--teal)'],
+        ['1:4.5','SROI ratio','var(--teal)'],
+        ['Yr 3','Full payback','var(--copper)']
+      ]));
+      c.appendChild(secTitle('Funding Stack'));
+      c.appendChild(table([
+        ['Bridge (location lock)','€25,000','var(--copper)'],
+        ['Angel / Private round','€100,000 ← your opportunity','var(--coral)'],
+        ['Bank loan (KGG/UBG 80% cover)','€220,000','var(--teal)'],
+        ['Social grants (AWS etc.)','€55,000','var(--sage)'],
+        ['Total','€400,000','var(--dark)']
+      ]));
+      c.appendChild(secTitle('3-Year P&L Summary'));
+      c.appendChild(table([
+        ['Year 1 Revenue (82% occ.)','€920,100','var(--copper)'],
+        ['Year 1 EBITDA','€402,100','var(--teal)'],
+        ['Year 1 Margin','~48%','var(--teal)'],
+        ['Year 2 Revenue','€1,050,000','var(--copper)'],
+        ['Year 3 Revenue','€1,180,000','var(--copper)'],
+        ['Break-even occupancy','48%','var(--coral)'],
+        ['Break-even month','Month 14','var(--coral)'],
+        ['Full investor payback','Year 3','var(--teal)']
+      ]));
+      c.appendChild(secTitle('Unit Economics'));
+      c.appendChild(table([
+        ['Beds','90',''],
+        ['Avg nightly rate (RevPAB)','€28.00','var(--copper)'],
+        ['Cost per bed per night','€14.50','var(--teal)'],
+        ['Gross margin per bed','€13.50','var(--teal)'],
+        ['AI/tech cost reduction','30%','var(--teal)'],
+        ['Live-in WG annual saving','~€150,000','var(--teal)']
+      ]));
+      c.appendChild(secTitle('Social Return — SROI 1:4.5'));
+      c.appendChild(item('€1 invested generates €4.50 in measurable social value. This is not marketing language — it unlocks AWS grants, Green Finance loans, and Sozialministeriumservice partnerships.','var(--teal)'));
+      c.appendChild(item('Inclusive employment via Sozialministeriumservice: supported jobs for people with disabilities.','var(--sage)'));
+      c.appendChild(item('Upcycling hub: community workshops turning waste into value. Revitalization of a vacant real estate asset.','var(--sage)'));
+      c.appendChild(cta('Request full financial model →','mailto:info@linzhostel.com','🌐 linzhostel.com','https://www.linzhostel.com'));
+    },
+
+    team: function(c){
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/teach_founders_portrait.png',
+        BASE+'/moodboard/daniel_austria_southafrica.jpg'
+      ]));
+      c.appendChild(secTitle('The Founders'));
+      c.appendChild(quote('Daniel provides the Why. Anna provides the How. Together, they cover everything needed to execute.'));
+      c.appendChild(secTitle('Daniel — Visionary & Community Builder'));
+      c.appendChild(item('Journey from South Africa to Linz (2022) taught him firsthand the isolation of arriving in an unfriendly city. The problem is personal.','var(--copper)'));
+      c.appendChild(item('Background in sales, IT, and community building. Brings the business model architecture, investor relationships, and social mission clarity.','var(--copper)'));
+      c.appendChild(item('LinkedIn network of 36K+ — existing platform for launch momentum and partnership development.','var(--copper)'));
+      c.appendChild(secTitle('Anna — Co-Founder & Operations'));
+      c.appendChild(item('Hotelkauffrau with 8 years successfully building and running 2 hostels in India from scratch. Not theoretical — actually built and operated.','var(--teal)'));
+      c.appendChild(item('Brings proven operational playbooks: staffing models, maintenance systems, guest experience flows, financial controls.','var(--teal)'));
+      c.appendChild(item('Has navigated the full lifecycle — from building permit to 5-star reviews — in one of the world\'s most complex hospitality markets.','var(--teal)'));
+      c.appendChild(secTitle('Together — Combined Strengths'));
+      c.appendChild(table([
+        ['Combined hostel experience','8+ years hands-on','var(--copper)'],
+        ['Hostels built from ground up','2 (Anna, India)','var(--teal)'],
+        ['Markets operated','India · South Africa · Austria','var(--sage)'],
+        ['Network for launch','36K LinkedIn (Daniel)','var(--copper)']
+      ]));
+      c.appendChild(secTitle('What We\'re Seeking from Investors'));
+      c.appendChild(item('Gap capital for the final 25% of the €400K round. Seeking strategic partners who share the vision, not just financial backers.','var(--copper)'));
+      c.appendChild(item('Advisory network in hospitality, social enterprise, and community building. The right introduction can save months.','var(--coral)'));
+      c.appendChild(item('Credibility signaling: an anchor investor signals quality to the grant committees and bank partners we\'re approaching.','var(--sage)'));
+      c.appendChild(imgGrid([
+        BASE+'/moodboard/anchor_team_superheroes.png',
+        BASE+'/moodboard/teach_linz_tabakfabrik_map.png'
+      ]));
+      c.appendChild(cta('Meet the founders →','mailto:info@linzhostel.com','🌐 linzhostel.com','https://www.linzhostel.com'));
+    }
+  };
+
+  var META = {
+    phase1: {icon:'01',badge:'PHASE 01  ·  Q1 2026',title:'Secure the Space',desc:'Bridge funding locks the Tabakfabrik location. Angel round unlocks €300K+ in grants and bank financing. This is the gate that opens everything.',img:BASE+'/moodboard/anchor_personal_story.png'},
+    phase2: {icon:'02',badge:'PHASE 02  ·  Q2 2026',title:'Build the Community',desc:'Renovate the industrial shell. Run pop-up events and community dinners. Onboard all strategic partners. Build audience before the doors open.',img:BASE+'/moodboard/anchor_common_room.png'},
+    phase3: {icon:'03',badge:'PHASE 03  ·  SEPT 2026',title:'Open the Doors',desc:'Soft launch timed to Ars Electronica (112K visitors). 90 beds, three revenue streams, AI operations — all live from Day 1.',img:BASE+'/moodboard/anchor_festivals.png'},
+    phase4: {icon:'04',badge:'PHASE 04  ·  MONTH 14',title:'Reach Profitability',desc:'48% occupancy breaks even (very conservative). Year 1 delivers €920K revenue and €402K EBITDA at 82% occupancy.',img:BASE+'/moodboard/anchor_revenue_linz_skyline.png'},
+    phase5: {icon:'05',badge:'PHASE 05  ·  2027+',title:'Expand the Model',desc:'Sister hostel in nature. Franchise the Anchor model to other Austrian and European cities. Teachcation licensing. Full investor payback by Year 3.',img:BASE+'/moodboard/anchor_closing_linz.png'},
+    problem: {icon:'',badge:'CONTEXT  ·  THE PROBLEM',title:'The Loneliness Gap',desc:'Austria ranks #49 of 53 countries for expat friendliness. 16K+ new Linz residents per year arrive into a city with zero meaningful third places.',img:BASE+'/moodboard/daniel_austria_southafrica.jpg'},
+    model:   {icon:'⚓',badge:'CONCEPT  ·  THE MODEL',title:'The Anchor Model',desc:'Community Catalyst space replaces the reception desk. 90 beds designed to force human connection. No lobby. Just community from the moment you arrive.',img:BASE+'/moodboard/anchor_common_room.png'},
+    teachcation:{icon:'',badge:'CONCEPT  ·  THE MOAT',title:'Teachcation™',desc:'Sleep. Create. Teach. The only hostel model capturing the booming Educational Tourism market. Built on an exclusive partnership with Grand Garage.',img:BASE+'/moodboard/teach_circular_journey.png'},
+    numbers: {icon:'',badge:'DATA  ·  FINANCIALS',title:'The Numbers',desc:'€920K Year 1 revenue. €402K EBITDA. 48% margin. Break-even month 14. Full investor payback by Year 3. SROI ratio of 1:4.5.',img:BASE+'/moodboard/anchor_revenue_linz_skyline.png'},
+    team:    {icon:'',badge:'PEOPLE  ·  THE FOUNDERS',title:'Daniel & Anna',desc:'Vision meets execution. 8+ combined years. 2 hostels built from scratch in India. Ready to do it again — bigger, in Linz.',img:BASE+'/moodboard/teach_founders_portrait.png'},
+  };
+
+  /* ── PAN & ZOOM ── */
+  var canvas = document.getElementById('canvas');
+  var panX=-100,panY=-80,zoom=0.85;
+  var isPanning=false,startX,startY;
+
+  function applyTransform(){
+    canvas.style.transform='translate('+panX+'px,'+panY+'px) scale('+zoom+')';
+    canvas.style.transformOrigin='0 0';
+    drawConnections();drawMinimap();
+  }
+  document.addEventListener('mousedown',function(e){
+    if(e.target.closest('#detail-panel')||e.target.closest('#controls')||e.target.closest('#minimap')||e.target.closest('#guide')||e.target.closest('#hud')||e.target.closest('#invest-badge')) return;
+    if(e.target.closest('.node')) return;
+    isPanning=true;startX=e.clientX-panX;startY=e.clientY-panY;
+    document.body.classList.add('grabbing');
+  });
+  document.addEventListener('mousemove',function(e){
+    if(!isPanning) return;
+    panX=e.clientX-startX;panY=e.clientY-startY;applyTransform();
+  });
+  document.addEventListener('mouseup',function(){isPanning=false;document.body.classList.remove('grabbing')});
+  var tSX,tSY,tPX,tPY;
+  document.addEventListener('touchstart',function(e){
+    if(e.target.closest('#detail-panel')||e.target.closest('.node')) return;
+    if(e.touches.length===1){tSX=e.touches[0].clientX;tSY=e.touches[0].clientY;tPX=panX;tPY=panY;}
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(e.target.closest('#detail-panel')) return;
+    if(e.touches.length===1){panX=tPX+(e.touches[0].clientX-tSX);panY=tPY+(e.touches[0].clientY-tSY);applyTransform();}
+  },{passive:true});
+  document.addEventListener('wheel',function(e){
+    if(e.target.closest('#detail-panel')) return;
+    e.preventDefault();
+    var d=e.deltaY>0?0.92:1.08;
+    var nz=Math.min(2.5,Math.max(0.25,zoom*d));
+    panX=e.clientX-(e.clientX-panX)*(nz/zoom);
+    panY=e.clientY-(e.clientY-panY)*(nz/zoom);
+    zoom=nz;applyTransform();
+  },{passive:false});
+  window.zoomIn=function(){zoom=Math.min(2.5,zoom*1.2);applyTransform()};
+  window.zoomOut=function(){zoom=Math.max(0.25,zoom*0.8);applyTransform()};
+  window.resetView=function(){panX=-100;panY=-80;zoom=0.85;applyTransform()};
+
+  /* ── CONNECTIONS ── */
+  var svg=document.getElementById('connections');
+  function drawLine(a,b,cls){
+    var ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
+    var line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',ar.left+ar.width/2);line.setAttribute('y1',ar.top+ar.height/2);
+    line.setAttribute('x2',br.left+br.width/2);line.setAttribute('y2',br.top+br.height/2);
+    if(cls) line.classList.add(cls);
+    line.dataset.from=a.id;line.dataset.to=b.id;
+    svg.appendChild(line);
+  }
+  function drawConnections(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.style.width=document.documentElement.scrollWidth+'px';
+    svg.style.height=document.documentElement.scrollHeight+'px';
+    TRACK_EDGES.forEach(function(e){
+      var a=document.getElementById(e[0]),b=document.getElementById(e[1]);
+      if(a&&b) drawLine(a,b,'track-line');
+    });
+    BRANCH_EDGES.forEach(function(e){
+      var a=document.getElementById(e[0]),b=document.getElementById(e[1]);
+      if(a&&b) drawLine(a,b,null);
+    });
+  }
+
+  /* ── PANEL ── */
+  var panel=document.getElementById('detail-panel');
+  var activeNode=null;
+
+  document.querySelectorAll('.node').forEach(function(node){
+    node.addEventListener('click',function(e){
+      e.stopPropagation();
+      var key=this.dataset.detail;
+      var builder=DETAILS[key]||LEAF_DETAILS[key];
+      var meta=META[key]||LEAF_META[key];
+      if(!builder||!meta){closePanel();return;}
+      if(activeNode) activeNode.classList.remove('active');
+      activeNode=this;this.classList.add('active');
+      svg.querySelectorAll('line').forEach(function(l){
+        l.classList.toggle('active',l.dataset.from===node.id||l.dataset.to===node.id);
+      });
+      /* populate header */
+      document.getElementById('dp-badge').textContent=meta.badge||'';
+      document.getElementById('dp-title').textContent=meta.title;
+      document.getElementById('dp-desc').textContent=meta.desc;
+      /* hero image */
+      var hero=document.getElementById('dp-hero');
+      var heroEmpty=document.getElementById('dp-hero-empty');
+      var heroImg=document.getElementById('dp-hero-img');
+      if(meta.img){
+        heroImg.src=meta.img;
+        heroImg.onerror=function(){hero.style.display='none';heroEmpty.style.display='block'};
+        heroImg.onload=function(){hero.style.display='block';heroEmpty.style.display='none'};
+        hero.style.display='block';heroEmpty.style.display='none';
+      } else {
+        hero.style.display='none';heroEmpty.style.display='block';
+      }
+      /* body */
+      var body=document.getElementById('dp-body');
+      body.textContent='';
+      builder(body);
+      panel.classList.add('open');
+      document.body.classList.add('panel-open');
+      panel.scrollTop=0;
+    });
+  });
+  window.closePanel=function(){
+    panel.classList.remove('open');
+    document.body.classList.remove('panel-open');
+    if(activeNode){activeNode.classList.remove('active');activeNode=null;}
+    svg.querySelectorAll('line').forEach(function(l){l.classList.remove('active')});
+  };
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') closePanel()});
+
+  /* ── MINIMAP ── */
+  var mmc=document.getElementById('minimap-canvas');
+  var mmx=mmc.getContext('2d');
+  function drawMinimap(){
+    var W=170,H=76;mmc.width=W;mmc.height=H;
+    mmx.clearRect(0,0,W,H);
+    var nodes=document.querySelectorAll('.node');
+    var minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    nodes.forEach(function(n){
+      var x=parseInt(n.style.left)||0,y=parseInt(n.style.top)||0;
+      if(x<minX)minX=x;if(y<minY)minY=y;
+      if(x+240>maxX)maxX=x+240;if(y+130>maxY)maxY=y+130;
+    });
+    var scale=Math.min(W/(maxX-minX+200),H/(maxY-minY+200));
+    var p0=document.getElementById('ph1'),p4=document.getElementById('ph5');
+    if(p0&&p4){
+      var tx1=(parseInt(p0.style.left)-minX+100+114)*scale;
+      var tx2=(parseInt(p4.style.left)-minX+100+114)*scale;
+      var ty=(parseInt(p0.style.top)-minY+100+56)*scale;
+      mmx.beginPath();mmx.moveTo(tx1,ty);mmx.lineTo(tx2,ty);
+      mmx.strokeStyle='rgba(196,133,90,0.35)';mmx.lineWidth=1.5;mmx.stroke();
+    }
+    nodes.forEach(function(n){
+      var x=(parseInt(n.style.left)-minX+100)*scale;
+      var y=(parseInt(n.style.top)-minY+100)*scale;
+      var isPh=n.classList.contains('node-phase'),isInf=n.classList.contains('node-info');
+      mmx.beginPath();
+      mmx.arc(x+(isPh?114*scale:80*scale),y+(isPh?56*scale:38*scale),isPh?4:isInf?2.5:1.5,0,Math.PI*2);
+      mmx.fillStyle=isPh?'#C8884A':isInf?'rgba(200,140,80,0.70)':'rgba(200,140,80,0.40)';
+      mmx.fill();
+    });
+    var vx=(-panX/zoom-minX+100)*scale;
+    var vy=(-panY/zoom-minY+100)*scale;
+    var vw=(window.innerWidth/zoom)*scale;
+    var vh=(window.innerHeight/zoom)*scale;
+    mmx.strokeStyle='rgba(196,133,90,0.50)';mmx.lineWidth=1;
+    mmx.strokeRect(vx,vy,vw,vh);
+  }
+
+  /* guide fade */
+  setTimeout(function(){
+    var g=document.getElementById('guide');
+    g.style.opacity='0';setTimeout(function(){g.style.display='none'},500);
+  },6000);
+
+  applyTransform();
+  window.addEventListener('resize',function(){drawConnections();drawMinimap()});
+})();
+</script>
+</body>
+</html>

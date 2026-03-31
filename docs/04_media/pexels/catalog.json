@@ -1,0 +1,55 @@
+{
+  "project": "Linz Hostel / Linz Hostel",
+  "updated": "2026-03-08",
+  "license": "https://www.pexels.com/license/",
+  "photos": [
+    {
+      "id": 34440925,
+      "file": "kw-industrial-warehouse.jpg",
+      "alt": "Spacious industrial warehouse with exposed brick and steel, natural light",
+      "photographer": "Glypse Tan",
+      "use": "hero — investor pitch / landing page",
+      "url": "https://www.pexels.com/photo/industrial-warehouse-interior-with-exposed-brick-and-steel-34440925/"
+    },
+    {
+      "id": 7070,
+      "file": "kw-coworking-open-plan.jpg",
+      "alt": "Open-plan industrial coworking space with modern design and natural lighting",
+      "photographer": "Startup Stock Photos",
+      "use": "coworking / shared workspace section",
+      "url": "https://www.pexels.com/photo/two-men-having-conversation-next-to-desk-in-building-7070/",
+      "cdn": "https://images.pexels.com/photos/7070/space-desk-workspace-coworking.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
+    },
+    {
+      "id": 5505867,
+      "file": "kw-industrial-beams-renovation.jpg",
+      "alt": "Spacious interior with exposed wooden beams and industrial ductwork, modern renovation",
+      "photographer": "Mike van Schoonderwalt",
+      "use": "building transformation / vision section",
+      "url": "https://www.pexels.com/photo/interior-of-an-unfinished-building-5505867/",
+      "cdn": "https://images.pexels.com/photos/5505867/pexels-photo-5505867.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+    },
+    {
+      "id": 35576735,
+      "file": "kw-industrial-loft-renovation.jpg",
+      "alt": "Person in industrial loft under renovation, exposed pipes and stairs",
+      "photographer": "Darya Sannikova",
+      "use": "vision / transformation section",
+      "url": "https://www.pexels.com/photo/industrial-loft-renovation-in-black-and-white-35576735/"
+    },
+    {
+      "id": 7045940,
+      "file": "kw-loft-kitchen-modern.jpg",
+      "alt": "Spacious kitchen in modern loft-style apartment with industrial elements",
+      "photographer": "Max Vakhtbovych",
+      "use": "hostel kitchen / common areas section",
+      "url": "https://www.pexels.com/photo/kitchen-zone-in-apartment-in-loft-style-7045940/",
+      "cdn": "https://images.pexels.com/photos/7045940/pexels-photo-7045940.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+    }
+  ],
+  "broll_queries": [
+    "TabakFabrik Linz industrial building Austria",
+    "hostel common area coworking loft creative",
+    "industrial building transformation renovation timelapse"
+  ]
+}
